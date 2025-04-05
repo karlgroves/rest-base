@@ -4,7 +4,7 @@
 
 * **Backend Framework**: Node.js with Express.js
 * **Database**: MySQL/MariaDB with Sequelize ORM
-* **Deployment**: Docker with Node, Nginx, and PM2
+* **Deployment**: Node, Nginx, and PM2
 * **CI/CD**: Travis CI for automated build, test, and deploy tasks
 * **Package Management**: NPM with Semantic Versioning
 * **Language Features**: ES6

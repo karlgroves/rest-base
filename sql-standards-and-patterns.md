@@ -5,7 +5,7 @@
 All database development for this system is built for MySQL/MariaDB, but should strive for cross-database compatibility when practical. SQL used in the application should adhere to standard SQL syntax where possible, balancing MySQL's specific features with broader compatibility. Where MySQL doesn't support the standard, the MySQL-specific approach should be used. When writing SQL, aim for compatibility with:
 
 1. MySQL/MariaDB (primary)
-2. PostgreSQL 
+2. PostgreSQL
 3. Oracle
 4. SQLite
 
@@ -22,7 +22,7 @@ This document outlines our SQL design patterns, naming conventions, and best pra
 
 1. **CamelCase for Column Names**: All column names use camelCase (e.g., `userId`, `tokenHash`, `permissionId`).
 2. **Primary Keys**:
-   - `id`: Used as an auto-incrementing integer primary key in most tables.
+   - `inc`: Used as an auto-incrementing integer primary key in most tables.
    - Entity-specific IDs: Many tables also include a UUID-based identifier (e.g., `userId`, `teamId`, `logId`).
 
 3. **Common Columns**:
@@ -76,7 +76,7 @@ Use standard SQL operators for better cross-database compatibility:
 
 ### Index Patterns
 
-1. Primary keys on `id` columns.
+1. Primary keys on `inc` columns.
 2. Secondary indexes on UUID columns (e.g., `userId`, `teamId`).
 3. Indexes on frequently searched string columns (e.g., `event` in `logs` table).
 4. Indexes on foreign key columns.

@@ -573,10 +573,10 @@ Always use the literal notation for array declarations (unless there's a good re
 
 ```js
 // Preferred
-const names = ['Karl', 'Lainey', 'Bob'];
+const names = ['Karl', 'Joe', 'Bob'];
 
 // Avoid
-const names = new Array('Karl', 'Lainey', 'Bob');
+const names = new Array('Karl', 'Joe', 'Bob');
 ```
 
 ### Array Methods

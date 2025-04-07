@@ -11,6 +11,13 @@ All database development for this system is built for MySQL/MariaDB, but should 
 
 This document outlines our SQL design patterns, naming conventions, and best practices for use with Node.js applications.
 
+## Table Structures
+
+1. All MySQL databases should use InnoDB as the engine
+2. All MySQL databases should use `DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci`;
+3. All MySQL databases should have a column, `inc` set to be an auto incrementing integer. This should be an index, but not be used as a referenceable primary key. 
+It is rather used to help MySQL indexing.
+
 ## Table Naming Conventions
 
 1. **CamelCase for Table Names**: Tables are named using camelCase (e.g., `refreshTokens`, `teamMembers`, `passwordResetHashes`).

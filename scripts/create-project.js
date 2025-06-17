@@ -21,6 +21,62 @@ const colors = {
   red: '\x1b[31m'
 };
 
+// Cache for configuration data
+const configCache = {
+  eslintConfig: null,
+  envExample: null,
+  packageJsonTemplate: null
+};
+
+/**
+ * Gets cached ESLint configuration or creates it if not cached
+ * @returns {string} ESLint configuration string
+ */
+function getEslintConfig() {
+  if (!configCache.eslintConfig) {
+    configCache.eslintConfig = `module.exports = {
+  extends: 'airbnb-base',
+  env: {
+    node: true,
+    jest: true,
+  },
+  rules: {
+    'comma-dangle': ['error', 'never'],
+    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }]
+  },
+};`;
+  }
+  return configCache.eslintConfig;
+}
+
+/**
+ * Gets cached .env.example content or creates it if not cached
+ * @returns {string} Environment example file content
+ */
+function getEnvExample() {
+  if (!configCache.envExample) {
+    configCache.envExample = `# Server Configuration
+NODE_ENV=development
+PORT=3000
+
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=db_name
+DB_USER=db_user
+DB_PASSWORD=db_password
+
+# JWT Configuration
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRATION=1h
+
+# Logging
+LOG_LEVEL=info
+`;
+  }
+  return configCache.envExample;
+}
+
 /**
  * Logs a colored message to the console
  * @param {string} message - Message to log
@@ -306,38 +362,9 @@ async function copyConfigFiles(projectDir, sourceDir) {
       }
     }));
     
-    // Create ESLint config
-    const eslintConfig = `module.exports = {
-  extends: 'airbnb-base',
-  env: {
-    node: true,
-    jest: true,
-  },
-  rules: {
-    'comma-dangle': ['error', 'never'],
-    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }]
-  },
-};`;
-
-    // Create .env.example
-    const envExample = `# Server Configuration
-NODE_ENV=development
-PORT=3000
-
-# Database Configuration
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=db_name
-DB_USER=db_user
-DB_PASSWORD=db_password
-
-# JWT Configuration
-JWT_SECRET=your_jwt_secret
-JWT_EXPIRATION=1h
-
-# Logging
-LOG_LEVEL=info
-`;
+    // Get cached configuration data
+    const eslintConfig = getEslintConfig();
+    const envExample = getEnvExample();
 
     // Write configuration files in parallel
     await Promise.all([

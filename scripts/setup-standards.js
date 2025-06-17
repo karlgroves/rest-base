@@ -48,6 +48,33 @@ const config = {
   }
 };
 
+// Cache for configuration data
+const configCache = {
+  eslintConfig: null,
+  envExample: null
+};
+
+/**
+ * Gets cached ESLint configuration or creates it if not cached
+ * @returns {string} ESLint configuration string
+ */
+function getEslintConfig() {
+  if (!configCache.eslintConfig) {
+    configCache.eslintConfig = `module.exports = {
+  extends: 'airbnb-base',
+  env: {
+    node: true,
+    jest: true,
+  },
+  rules: {
+    'comma-dangle': ['error', 'never'],
+    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }]
+  },
+};`;
+  }
+  return configCache.eslintConfig;
+}
+
 // Helper functions
 /**
  * Logs a colored message to the console
@@ -410,18 +437,8 @@ async function main() {
     log('✓ Configuration files copied', colors.green);
   
     log('Step 4/5: Creating ESLint configuration...', colors.cyan);
-    // Create ESLint config
-    const eslintConfig = `module.exports = {
-  extends: 'airbnb-base',
-  env: {
-    node: true,
-    jest: true,
-  },
-  rules: {
-    'comma-dangle': ['error', 'never'],
-    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }]
-  },
-};`;
+    // Create ESLint config using cached configuration
+    const eslintConfig = getEslintConfig();
 
     await fs.writeFile(path.join(targetDir, '.eslintrc.js'), eslintConfig);
     log('Created .eslintrc.js', colors.green);

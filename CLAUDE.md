@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Core Standards Reference
 
-This project uses Node.js LTS (defined in .nvmrc) and requires Node.js >=22.12.0 (see package.json engines field).
+This project uses Node.js 22.x LTS (version 22.11.0) as defined in .nvmrc and requires Node.js >=22.11.0 (see package.json engines field). Node.js 22.x "Jod" is the current LTS with Active support until October 2025 and Maintenance support until April 2027.
 
 This project contains comprehensive standards documentation that should be followed for all development:
 

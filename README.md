@@ -1,7 +1,7 @@
 # REST Base
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.12.0-brightgreen.svg)](https://nodejs.org)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.11.0%20(LTS)-brightgreen.svg)](https://nodejs.org)
 [![npm version](https://img.shields.io/npm/v/rest-spec.svg)](https://www.npmjs.com/package/rest-spec)
 
 An opinionated standard for RESTful API projects built with Node.js.
@@ -15,7 +15,7 @@ It serves as a starting point and reference for teams wanting to establish consi
 
 Before using REST Base, ensure you have the following installed:
 
-- **Node.js**: Version 22.12.0 or higher ([Download here](https://nodejs.org))
+- **Node.js**: Version 22.11.0 or higher (Current LTS) ([Download here](https://nodejs.org))
 - **npm**: Comes bundled with Node.js
 - **Git**: For version control ([Download here](https://git-scm.com))
 - **MySQL/MariaDB**: If using database features (optional)
@@ -128,10 +128,10 @@ The key standards files in this repository are:
 #### Node.js version error
 
 ```bash
-Error: This package requires Node.js >= 22.12.0
+Error: This package requires Node.js >= 22.11.0
 ```
 
-Solution: Update Node.js to version 22.12.0 or higher using [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm).
+Solution: Update Node.js to version 22.11.0 or higher using [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm). Use `nvm install --lts` to install the latest LTS version.
 
 #### Permission denied when installing globally
 

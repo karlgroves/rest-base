@@ -69,7 +69,7 @@ function validateDependencies(dependencies) {
     const trimmedDep = dep.trim();
     
     // Check for command injection characters
-    const dangerousChars = /[;&|`$(){}\[\]<>"'\\]/;
+    const dangerousChars = /[;&|`$(){}[\]<>"'\\]/;
     if (dangerousChars.test(trimmedDep)) {
       throw new Error(`Dependency name contains dangerous characters: ${trimmedDep}`);
     }

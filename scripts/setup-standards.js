@@ -139,19 +139,46 @@ function validateTargetPath(targetPath) {
   return normalized;
 }
 
-function createDirectory(dir) {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-    log(`Created directory: ${dir}`, colors.green);
+/**
+ * Safely creates a directory with error handling
+ * @param {string} dir - Directory path to create
+ * @throws {Error} If directory creation fails
+ */
+async function createDirectory(dir) {
+  try {
+    await fs.promises.access(dir);
+    // Directory already exists
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      try {
+        await fs.promises.mkdir(dir, { recursive: true });
+        log(`Created directory: ${dir}`, colors.green);
+      } catch (mkdirError) {
+        throw new Error(`Failed to create directory ${dir}: ${mkdirError.message}`);
+      }
+    } else {
+      throw new Error(`Error checking directory ${dir}: ${error.message}`);
+    }
   }
 }
 
-function copyFile(source, destination) {
+/**
+ * Safely copies a file with error handling
+ * @param {string} source - Source file path
+ * @param {string} destination - Destination file path
+ * @throws {Error} If file copying fails
+ */
+async function copyFile(source, destination) {
   try {
-    fs.copyFileSync(source, destination);
+    // Check if source file exists
+    await fs.promises.access(source);
+    await fs.promises.copyFile(source, destination);
     log(`Copied: ${path.basename(source)} -> ${destination}`, colors.green);
   } catch (error) {
-    log(`Error copying ${source}: ${error.message}`, colors.red);
+    if (error.code === 'ENOENT') {
+      throw new Error(`Source file not found: ${source}`);
+    }
+    throw new Error(`Failed to copy ${source} to ${destination}: ${error.message}`);
   }
 }
 
@@ -221,26 +248,27 @@ async function main() {
   log('REST-Base Standards Setup', colors.blue);
   log('=========================', colors.blue);
   
-  // Create directories
-  createDirectory(path.join(targetDir, 'docs'));
-  createDirectory(standardsDir);
+  try {
+    // Create directories
+    await createDirectory(path.join(targetDir, 'docs'));
+    await createDirectory(standardsDir);
+    
+    // Copy standards files
+    await Promise.all(config.standardsFiles.map(async (file) => {
+      const source = path.join(scriptsDir, file);
+      const destination = path.join(standardsDir, file);
+      await copyFile(source, destination);
+    }));
+    
+    // Copy config files
+    await Promise.all(config.configFiles.map(async (file) => {
+      const source = path.join(scriptsDir, file);
+      const destination = path.join(targetDir, file);
+      await copyFile(source, destination);
+    }));
   
-  // Copy standards files
-  config.standardsFiles.forEach(file => {
-    const source = path.join(scriptsDir, file);
-    const destination = path.join(standardsDir, file);
-    copyFile(source, destination);
-  });
-  
-  // Copy config files
-  config.configFiles.forEach(file => {
-    const source = path.join(scriptsDir, file);
-    const destination = path.join(targetDir, file);
-    copyFile(source, destination);
-  });
-  
-  // Create ESLint config
-  const eslintConfig = `module.exports = {
+    // Create ESLint config
+    const eslintConfig = `module.exports = {
   extends: 'airbnb-base',
   env: {
     node: true,
@@ -252,19 +280,24 @@ async function main() {
   },
 };`;
 
-  fs.writeFileSync(path.join(targetDir, '.eslintrc.js'), eslintConfig);
-  log('Created .eslintrc.js', colors.green);
-  
-  // Update package.json
-  const packageUpdated = updatePackageJson(targetDir);
-  
-  // Install dependencies
-  if (packageUpdated) {
-    await installDependencies(config.dependencies.dev);
+    await fs.promises.writeFile(path.join(targetDir, '.eslintrc.js'), eslintConfig);
+    log('Created .eslintrc.js', colors.green);
+    
+    // Update package.json
+    const packageUpdated = updatePackageJson(targetDir);
+    
+    // Install dependencies
+    if (packageUpdated) {
+      await installDependencies(config.dependencies.dev);
+    }
+    
+    log('\nSetup complete! Standards have been incorporated into your project.', colors.green);
+    log('To get started with the standards, run: npm run lint', colors.yellow);
+  } catch (error) {
+    log(`\nError during setup: ${error.message}`, colors.red);
+    log('Setup failed. Some files may have been partially created.', colors.yellow);
+    process.exit(1);
   }
-  
-  log('\nSetup complete! Standards have been incorporated into your project.', colors.green);
-  log('To get started with the standards, run: npm run lint', colors.yellow);
 }
 
 main().catch(error => {

@@ -8,7 +8,8 @@
  * @author REST-Base Team
  */
 
-const fs = require('fs');
+const fs = require('fs').promises;
+const fsSync = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
@@ -86,7 +87,13 @@ function safeExecSync(command, cwd) {
   }
 }
 
-function createProjectStructure(projectDir) {
+/**
+ * Creates the project directory structure
+ * @param {string} projectDir - The root directory for the new project
+ * @throws {Error} If directory creation fails
+ * @returns {Promise<void>}
+ */
+async function createProjectStructure(projectDir) {
   const directories = [
     'src/config',
     'src/controllers',
@@ -104,15 +111,33 @@ function createProjectStructure(projectDir) {
     'public/scripts'
   ];
   
-  directories.forEach(dir => {
-    const fullPath = path.join(projectDir, dir);
-    fs.mkdirSync(fullPath, { recursive: true });
-  });
-  
-  log('Created project directory structure', colors.green);
+  try {
+    // Create directories in parallel for better performance
+    await Promise.all(directories.map(async (dir) => {
+      const fullPath = path.join(projectDir, dir);
+      try {
+        await fs.mkdir(fullPath, { recursive: true });
+      } catch (error) {
+        if (error.code !== 'EEXIST') {
+          throw new Error(`Failed to create directory ${fullPath}: ${error.message}`);
+        }
+      }
+    }));
+    
+    log('Created project directory structure', colors.green);
+  } catch (error) {
+    throw new Error(`Failed to create project structure: ${error.message}`);
+  }
 }
 
-function createPackageJson(projectDir, projectName) {
+/**
+ * Creates package.json with project configuration
+ * @param {string} projectDir - The project directory path
+ * @param {string} projectName - The project name
+ * @throws {Error} If package.json creation fails
+ * @returns {Promise<void>}
+ */
+async function createPackageJson(projectDir, projectName) {
   const packageJson = {
     name: projectName,
     version: '1.0.0',
@@ -161,16 +186,27 @@ function createPackageJson(projectDir, projectName) {
     }
   };
   
-  fs.writeFileSync(
-    path.join(projectDir, 'package.json'),
-    JSON.stringify(packageJson, null, 2),
-    'utf8'
-  );
-  
-  log('Created package.json', colors.green);
+  try {
+    const packageJsonPath = path.join(projectDir, 'package.json');
+    await fs.writeFile(
+      packageJsonPath,
+      JSON.stringify(packageJson, null, 2),
+      'utf8'
+    );
+    log('Created package.json', colors.green);
+  } catch (error) {
+    throw new Error(`Failed to create package.json: ${error.message}`);
+  }
 }
 
-function copyStandardsFiles(projectDir, sourceDir) {
+/**
+ * Copies standards documentation files
+ * @param {string} projectDir - The project directory path
+ * @param {string} sourceDir - The source directory path
+ * @throws {Error} If file copying fails
+ * @returns {Promise<void>}
+ */
+async function copyStandardsFiles(projectDir, sourceDir) {
   const standardsFiles = [
     'node_structure_and_naming_conventions.md',
     'sql-standards-and-patterns.md',
@@ -182,13 +218,28 @@ function copyStandardsFiles(projectDir, sourceDir) {
     'CLAUDE.md'
   ];
   
-  standardsFiles.forEach(file => {
-    const source = path.join(sourceDir, file);
-    const destination = path.join(projectDir, 'docs', 'standards', file);
-    fs.copyFileSync(source, destination);
-  });
-  
-  log('Copied standards documentation', colors.green);
+  try {
+    // Copy files in parallel for better performance
+    await Promise.all(standardsFiles.map(async (file) => {
+      const source = path.join(sourceDir, file);
+      const destination = path.join(projectDir, 'docs', 'standards', file);
+      
+      try {
+        // Check if source file exists
+        await fs.access(source);
+        await fs.copyFile(source, destination);
+      } catch (error) {
+        if (error.code === 'ENOENT') {
+          throw new Error(`Source file not found: ${source}`);
+        }
+        throw new Error(`Failed to copy ${file}: ${error.message}`);
+      }
+    }));
+    
+    log('Copied standards documentation', colors.green);
+  } catch (error) {
+    throw new Error(`Failed to copy standards files: ${error.message}`);
+  }
 }
 
 function copyConfigFiles(projectDir, sourceDir) {
@@ -460,7 +511,7 @@ function initGit(projectDir) {
   log('Initialized Git repository', colors.green);
 }
 
-function main() {
+async function main() {
   const args = process.argv.slice(2);
   
   if (args.length === 0) {
@@ -482,7 +533,7 @@ function main() {
   const sourceDir = path.join(__dirname, '..');
   
   // Check if directory already exists
-  if (fs.existsSync(projectDir)) {
+  if (fsSync.existsSync(projectDir)) {
     log(`Directory ${projectDir} already exists. Please choose another name.`, colors.red);
     process.exit(1);
   }
@@ -490,32 +541,53 @@ function main() {
   log(`Creating new project: ${projectName}`, colors.blue);
   log('===============================', colors.blue);
   
-  // Create project structure
-  createProjectStructure(projectDir);
-  
-  // Create package.json
-  createPackageJson(projectDir, projectName);
-  
-  // Copy standards files
-  copyStandardsFiles(projectDir, sourceDir);
-  
-  // Copy config files
-  copyConfigFiles(projectDir, sourceDir);
-  
-  // Create app files
-  createAppFiles(projectDir);
-  
-  // Create README
-  createReadme(projectDir, projectName);
-  
-  // Initialize Git repository
-  initGit(projectDir);
-  
-  log('\nProject creation complete!', colors.green);
-  log(`\nTo get started:`, colors.yellow);
-  log(`  cd ${projectName}`, colors.yellow);
-  log(`  npm install`, colors.yellow);
-  log(`  npm run dev`, colors.yellow);
+  try {
+    // Create project structure
+    await createProjectStructure(projectDir);
+    
+    // Create package.json
+    await createPackageJson(projectDir, projectName);
+    
+    // Copy standards files
+    await copyStandardsFiles(projectDir, sourceDir);
+    
+    // Copy config files (convert to async when possible)
+    copyConfigFiles(projectDir, sourceDir);
+    
+    // Create app files (convert to async when possible)
+    createAppFiles(projectDir);
+    
+    // Create README (convert to async when possible)
+    createReadme(projectDir, projectName);
+    
+    // Initialize Git repository
+    initGit(projectDir);
+    
+    log('\nProject creation complete!', colors.green);
+    log(`\nTo get started:`, colors.yellow);
+    log(`  cd ${projectName}`, colors.yellow);
+    log(`  npm install`, colors.yellow);
+    log(`  npm run dev`, colors.yellow);
+  } catch (error) {
+    log(`\nError creating project: ${error.message}`, colors.red);
+    
+    // Attempt to rollback
+    try {
+      if (fsSync.existsSync(projectDir)) {
+        log('Attempting to clean up...', colors.yellow);
+        await fs.rmdir(projectDir, { recursive: true });
+        log('Cleanup completed', colors.yellow);
+      }
+    } catch (rollbackError) {
+      log(`Warning: Could not clean up ${projectDir}: ${rollbackError.message}`, colors.red);
+      log('You may need to manually remove the directory', colors.yellow);
+    }
+    
+    process.exit(1);
+  }
 }
 
-main();
+main().catch(error => {
+  log(`Fatal error: ${error.message}`, colors.red);
+  process.exit(1);
+});

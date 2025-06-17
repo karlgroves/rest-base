@@ -25,6 +25,67 @@ function log(message, color = colors.reset) {
   console.log(`${color}${message}${colors.reset}`);
 }
 
+/**
+ * Validates project name to prevent security issues
+ * @param {string} name - Project name to validate
+ * @throws {Error} If project name is invalid
+ */
+function validateProjectName(name) {
+  // Check for empty or null name
+  if (!name || typeof name !== 'string' || name.trim().length === 0) {
+    throw new Error('Project name cannot be empty');
+  }
+  
+  const trimmedName = name.trim();
+  
+  // Check for invalid characters that could be used for command injection
+  const invalidChars = /[<>:"|?*;\\&$`(){}[\]!]/;
+  if (invalidChars.test(trimmedName)) {
+    throw new Error('Project name contains invalid characters. Only letters, numbers, hyphens, underscores, and dots are allowed.');
+  }
+  
+  // Check for names that start with dots (hidden files/directories)
+  if (trimmedName.startsWith('.')) {
+    throw new Error('Project name cannot start with a dot');
+  }
+  
+  // Check for reserved names
+  const reservedNames = [
+    'con', 'prn', 'aux', 'nul', 'com1', 'com2', 'com3', 'com4', 'com5', 'com6', 'com7', 'com8', 'com9',
+    'lpt1', 'lpt2', 'lpt3', 'lpt4', 'lpt5', 'lpt6', 'lpt7', 'lpt8', 'lpt9', 'node_modules', 'package.json'
+  ];
+  if (reservedNames.includes(trimmedName.toLowerCase())) {
+    throw new Error(`'${trimmedName}' is a reserved name and cannot be used as a project name`);
+  }
+  
+  // Check for directory traversal attempts
+  if (trimmedName.includes('..') || trimmedName.includes('/') || trimmedName.includes('\\')) {
+    throw new Error('Project name cannot contain path separators or parent directory references');
+  }
+  
+  // Check length constraints
+  if (trimmedName.length > 214) {
+    throw new Error('Project name is too long (maximum 214 characters)');
+  }
+  
+  return trimmedName;
+}
+
+/**
+ * Safely executes shell commands with proper error handling
+ * @param {string} command - Command to execute
+ * @param {string} cwd - Working directory
+ * @returns {boolean} Success status
+ */
+function safeExecSync(command, cwd) {
+  try {
+    execSync(command, { cwd, stdio: 'ignore' });
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 function createProjectStructure(projectDir) {
   const directories = [
     'src/config',
@@ -370,15 +431,33 @@ This project is licensed under the MIT License.
 }
 
 function initGit(projectDir) {
-  try {
-    process.chdir(projectDir);
-    execSync('git init', { stdio: 'ignore' });
-    execSync('git add .', { stdio: 'ignore' });
-    execSync('git commit -m "Initial commit with REST-Base standards"', { stdio: 'ignore' });
-    log('Initialized Git repository', colors.green);
-  } catch (error) {
-    log(`Warning: Could not initialize Git repository: ${error.message}`, colors.yellow);
+  // Validate that projectDir is safe to use
+  const normalizedPath = path.normalize(projectDir);
+  if (!normalizedPath || normalizedPath.includes('..')) {
+    log('Warning: Invalid project directory path, skipping Git initialization', colors.yellow);
+    return;
   }
+  
+  // Use safe command execution without changing process directory
+  const initSuccess = safeExecSync('git init', normalizedPath);
+  if (!initSuccess) {
+    log('Warning: Could not initialize Git repository', colors.yellow);
+    return;
+  }
+  
+  const addSuccess = safeExecSync('git add .', normalizedPath);
+  if (!addSuccess) {
+    log('Warning: Could not add files to Git repository', colors.yellow);
+    return;
+  }
+  
+  const commitSuccess = safeExecSync('git commit -m "Initial commit with REST-Base standards"', normalizedPath);
+  if (!commitSuccess) {
+    log('Warning: Could not create initial commit (this is normal if Git user is not configured)', colors.yellow);
+    return;
+  }
+  
+  log('Initialized Git repository', colors.green);
 }
 
 function main() {
@@ -390,7 +469,15 @@ function main() {
     process.exit(1);
   }
   
-  const projectName = args[0];
+  let projectName;
+  try {
+    projectName = validateProjectName(args[0]);
+  } catch (error) {
+    log(`Error: ${error.message}`, colors.red);
+    log('Usage: node create-project.js <project-name>', colors.yellow);
+    process.exit(1);
+  }
+  
   const projectDir = path.join(process.cwd(), projectName);
   const sourceDir = path.join(__dirname, '..');
   

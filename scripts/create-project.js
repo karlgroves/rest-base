@@ -11,7 +11,7 @@
 const fs = require('fs').promises;
 const fsSync = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { spawn } = require('child_process');
 
 // Define colors for terminal output
 const colors = {
@@ -78,18 +78,34 @@ function validateProjectName(name) {
 }
 
 /**
- * Safely executes shell commands with proper error handling
- * @param {string} command - Command to execute
- * @param {string} cwd - Working directory
- * @returns {boolean} Success status
+ * Safely executes shell commands using spawn to prevent command injection
+ * @param {string[]} args - Command arguments array
+ * @param {string} cwd - Working directory (must be an absolute path)
+ * @returns {Promise<boolean>} Success status
  */
-function safeExecSync(command, cwd) {
-  try {
-    execSync(command, { cwd, stdio: 'ignore' });
-    return true;
-  } catch (error) {
-    return false;
-  }
+function safeSpawn(args, cwd) {
+  return new Promise((resolve) => {
+    // Validate working directory path to prevent directory traversal
+    const normalizedCwd = path.resolve(cwd);
+    if (!normalizedCwd.startsWith(process.cwd()) && !path.isAbsolute(normalizedCwd)) {
+      resolve(false);
+      return;
+    }
+
+    const child = spawn(args[0], args.slice(1), {
+      cwd: normalizedCwd,
+      stdio: 'ignore',
+      shell: false // Prevent shell injection
+    });
+
+    child.on('close', (code) => {
+      resolve(code === 0);
+    });
+
+    child.on('error', () => {
+      resolve(false);
+    });
+  });
 }
 
 /**
@@ -541,28 +557,33 @@ This project is licensed under the MIT License.
  * Initializes a Git repository in the project directory
  * @param {string} projectDir - The project directory path
  */
-function initGit(projectDir) {
-  // Validate that projectDir is safe to use
-  const normalizedPath = path.normalize(projectDir);
-  if (!normalizedPath || normalizedPath.includes('..')) {
-    log('Warning: Invalid project directory path, skipping Git initialization', colors.yellow);
+async function initGit(projectDir) {
+  // Enhanced validation to prevent directory traversal attacks
+  const normalizedPath = path.resolve(projectDir);
+  
+  // Ensure the path is safe and within expected bounds
+  if (!normalizedPath || 
+      normalizedPath.includes('..') || 
+      !path.isAbsolute(normalizedPath) ||
+      !fsSync.existsSync(normalizedPath)) {
+    log('Warning: Invalid or unsafe project directory path, skipping Git initialization', colors.yellow);
     return;
   }
   
-  // Use safe command execution without changing process directory
-  const initSuccess = safeExecSync('git init', normalizedPath);
+  // Use secure spawn-based command execution
+  const initSuccess = await safeSpawn(['git', 'init'], normalizedPath);
   if (!initSuccess) {
     log('Warning: Could not initialize Git repository', colors.yellow);
     return;
   }
   
-  const addSuccess = safeExecSync('git add .', normalizedPath);
+  const addSuccess = await safeSpawn(['git', 'add', '.'], normalizedPath);
   if (!addSuccess) {
     log('Warning: Could not add files to Git repository', colors.yellow);
     return;
   }
   
-  const commitSuccess = safeExecSync('git commit -m "Initial commit with REST-Base standards"', normalizedPath);
+  const commitSuccess = await safeSpawn(['git', 'commit', '-m', 'Initial commit with REST-Base standards'], normalizedPath);
   if (!commitSuccess) {
     log('Warning: Could not create initial commit (this is normal if Git user is not configured)', colors.yellow);
     return;
@@ -621,7 +642,7 @@ async function main() {
     await createReadme(projectDir, projectName);
     
     // Initialize Git repository
-    initGit(projectDir);
+    await initGit(projectDir);
     
     log('\nProject creation complete!', colors.green);
     log(`\nTo get started:`, colors.yellow);

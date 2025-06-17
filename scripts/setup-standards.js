@@ -11,7 +11,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { spawn } = require('child_process');
 
 // Define colors for terminal output
 const colors = {
@@ -51,6 +51,92 @@ const config = {
 // Helper functions
 function log(message, color = colors.reset) {
   console.log(`${color}${message}${colors.reset}`);
+}
+
+/**
+ * Validates dependency names to prevent command injection
+ * @param {string[]} dependencies - Array of dependency names to validate
+ * @throws {Error} If any dependency name is invalid
+ */
+function validateDependencies(dependencies) {
+  const validPackageNameRegex = /^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
+  
+  for (const dep of dependencies) {
+    if (!dep || typeof dep !== 'string') {
+      throw new Error(`Invalid dependency: ${dep}`);
+    }
+    
+    const trimmedDep = dep.trim();
+    
+    // Check for command injection characters
+    const dangerousChars = /[;&|`$(){}\[\]<>"'\\]/;
+    if (dangerousChars.test(trimmedDep)) {
+      throw new Error(`Dependency name contains dangerous characters: ${trimmedDep}`);
+    }
+    
+    // Validate package name format
+    if (!validPackageNameRegex.test(trimmedDep)) {
+      throw new Error(`Invalid package name format: ${trimmedDep}`);
+    }
+    
+    // Additional length check
+    if (trimmedDep.length > 214) {
+      throw new Error(`Package name too long: ${trimmedDep}`);
+    }
+  }
+}
+
+/**
+ * Safely executes npm install command
+ * @param {string[]} dependencies - Array of validated dependency names
+ * @returns {boolean} Success status
+ */
+function safeNpmInstall(dependencies) {
+  try {
+    validateDependencies(dependencies);
+    
+    // Build command with validated dependencies
+    const args = ['install', '--save-dev', ...dependencies];
+    
+    return new Promise((resolve) => {
+      const npmProcess = spawn('npm', args, { 
+        stdio: 'inherit',
+        shell: false // Explicitly disable shell to prevent injection
+      });
+      
+      npmProcess.on('close', (code) => {
+        resolve(code === 0);
+      });
+      
+      npmProcess.on('error', () => {
+        resolve(false);
+      });
+    });
+  } catch (error) {
+    log(`Error: ${error.message}`, colors.red);
+    return Promise.resolve(false);
+  }
+}
+
+/**
+ * Validates target directory path
+ * @param {string} targetPath - Directory path to validate
+ * @returns {string} Normalized safe path
+ * @throws {Error} If path is unsafe
+ */
+function validateTargetPath(targetPath) {
+  if (!targetPath || typeof targetPath !== 'string') {
+    throw new Error('Invalid target path');
+  }
+  
+  const normalized = path.normalize(targetPath);
+  
+  // Check for directory traversal
+  if (normalized.includes('..') || normalized.startsWith('/')) {
+    throw new Error('Path traversal detected in target directory');
+  }
+  
+  return normalized;
 }
 
 function createDirectory(dir) {
@@ -101,12 +187,16 @@ function updatePackageJson(targetDir) {
   }
 }
 
-function installDependencies(dependencies) {
+async function installDependencies(dependencies) {
   try {
-    const command = `npm install --save-dev ${dependencies.join(' ')}`;
     log(`Installing dev dependencies: ${dependencies.join(', ')}`, colors.blue);
-    execSync(command, { stdio: 'inherit' });
-    return true;
+    const success = await safeNpmInstall(dependencies);
+    if (success) {
+      log('Dependencies installed successfully', colors.green);
+    } else {
+      log('Failed to install some dependencies', colors.red);
+    }
+    return success;
   } catch (error) {
     log(`Error installing dependencies: ${error.message}`, colors.red);
     return false;
@@ -114,9 +204,17 @@ function installDependencies(dependencies) {
 }
 
 // Main execution
-function main() {
+async function main() {
   const args = process.argv.slice(2);
-  const targetDir = args[0] || '.';
+  
+  let targetDir;
+  try {
+    targetDir = validateTargetPath(args[0] || '.');
+  } catch (error) {
+    log(`Error: ${error.message}`, colors.red);
+    process.exit(1);
+  }
+  
   const standardsDir = path.join(targetDir, 'docs', 'standards');
   const scriptsDir = path.join(__dirname, '..');
 
@@ -162,11 +260,14 @@ function main() {
   
   // Install dependencies
   if (packageUpdated) {
-    installDependencies(config.dependencies.dev);
+    await installDependencies(config.dependencies.dev);
   }
   
   log('\nSetup complete! Standards have been incorporated into your project.', colors.green);
   log('To get started with the standards, run: npm run lint', colors.yellow);
 }
 
-main();
+main().catch(error => {
+  log(`Fatal error: ${error.message}`, colors.red);
+  process.exit(1);
+});

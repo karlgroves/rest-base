@@ -617,6 +617,77 @@ async function initGit(projectDir) {
   log('Initialized Git repository', colors.green);
 }
 
+/**
+ * Performs comprehensive rollback of project creation
+ * @param {string} projectDir - The project directory to clean up
+ * @param {string} projectName - The project name for logging
+ */
+async function performRollback(projectDir, projectName) {
+  log('Starting rollback process...', colors.yellow);
+  
+  const rollbackSteps = [];
+  
+  try {
+    // Check if project directory exists
+    await fs.access(projectDir);
+    rollbackSteps.push('Project directory exists');
+    
+    // Check for Git repository
+    try {
+      await fs.access(path.join(projectDir, '.git'));
+      rollbackSteps.push('Git repository detected');
+    } catch (gitError) {
+      // No git repository
+    }
+    
+    // Analyze directory contents
+    try {
+      const items = await fs.readdir(projectDir);
+      rollbackSteps.push(`Directory contains ${items.length} items`);
+      
+      // Check for specific files/directories to provide detailed rollback info
+      const keyItems = ['.git', 'package.json', 'src', 'docs', 'README.md'];
+      const foundItems = keyItems.filter(item => items.includes(item));
+      if (foundItems.length > 0) {
+        rollbackSteps.push(`Key project files found: ${foundItems.join(', ')}`);
+      }
+    } catch (readError) {
+      rollbackSteps.push('Could not analyze directory contents');
+    }
+    
+    // Perform the cleanup
+    log(`Cleaning up project directory: ${projectDir}`, colors.yellow);
+    await fs.rm(projectDir, { recursive: true, force: true });
+    
+    // Verify cleanup
+    try {
+      await fs.access(projectDir);
+      log('Warning: Directory still exists after cleanup attempt', colors.yellow);
+    } catch (verifyError) {
+      log('Project directory successfully removed', colors.green);
+    }
+    
+  } catch (initialError) {
+    if (initialError.code === 'ENOENT') {
+      log('No cleanup needed - project directory does not exist', colors.yellow);
+      return;
+    } else {
+      log(`Error during rollback: ${initialError.message}`, colors.red);
+    }
+  }
+  
+  // Log rollback summary
+  if (rollbackSteps.length > 0) {
+    log('\nRollback summary:', colors.cyan);
+    rollbackSteps.forEach(step => {
+      log(`  - ${step}`, colors.gray);
+    });
+  }
+  
+  log('\nTo try again:', colors.yellow);
+  log(`  node create-project.js ${projectName}`, colors.yellow);
+}
+
 async function main() {
   const args = process.argv.slice(2);
   
@@ -684,20 +755,8 @@ async function main() {
   } catch (error) {
     log(`\nError creating project: ${error.message}`, colors.red);
     
-    // Attempt to rollback
-    try {
-      await fs.access(projectDir);
-      log('Attempting to clean up...', colors.yellow);
-      await fs.rm(projectDir, { recursive: true, force: true });
-      log('Cleanup completed', colors.yellow);
-    } catch (rollbackError) {
-      if (rollbackError.code === 'ENOENT') {
-        // Directory doesn't exist, nothing to clean up
-        return;
-      }
-      log(`Warning: Could not clean up ${projectDir}: ${rollbackError.message}`, colors.red);
-      log('You may need to manually remove the directory', colors.yellow);
-    }
+    // Comprehensive rollback mechanism
+    await performRollback(projectDir, projectName);
     
     process.exit(1);
   }

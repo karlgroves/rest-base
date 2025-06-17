@@ -282,6 +282,86 @@ async function installDependencies(dependencies) {
   }
 }
 
+/**
+ * Performs rollback of setup-standards operations
+ * @param {string} targetDir - The target directory where standards were being applied
+ * @param {Object} config - Configuration object with file lists
+ */
+async function performSetupRollback(targetDir, config) {
+  log('Starting setup rollback...', colors.yellow);
+  
+  const rollbackOperations = [];
+  const filesToRemove = [];
+  
+  // List of files that might have been created
+  const potentialFiles = [
+    path.join(targetDir, '.eslintrc.js'),
+    ...config.configFiles.map(file => path.join(targetDir, file)),
+    ...config.standardsFiles.map(file => path.join(targetDir, 'docs', 'standards', file))
+  ];
+  
+  // Check which files exist and can be removed
+  for (const filePath of potentialFiles) {
+    try {
+      await fs.promises.access(filePath);
+      filesToRemove.push(filePath);
+    } catch (error) {
+      // File doesn't exist, nothing to remove
+    }
+  }
+  
+  // Remove files that were created by this script
+  let removedCount = 0;
+  for (const filePath of filesToRemove) {
+    try {
+      await fs.promises.unlink(filePath);
+      rollbackOperations.push(`Removed: ${path.relative(targetDir, filePath)}`);
+      removedCount++;
+    } catch (error) {
+      rollbackOperations.push(`Failed to remove: ${path.relative(targetDir, filePath)} (${error.message})`);
+    }
+  }
+  
+  // Try to remove empty directories created by this script
+  const dirsToRemove = [
+    path.join(targetDir, 'docs', 'standards'),
+    path.join(targetDir, 'docs')
+  ];
+  
+  for (const dirPath of dirsToRemove) {
+    try {
+      await fs.promises.access(dirPath);
+      const items = await fs.promises.readdir(dirPath);
+      if (items.length === 0) {
+        await fs.promises.rmdir(dirPath);
+        rollbackOperations.push(`Removed empty directory: ${path.relative(targetDir, dirPath)}`);
+      } else {
+        rollbackOperations.push(`Directory not empty, keeping: ${path.relative(targetDir, dirPath)}`);
+      }
+    } catch (error) {
+      // Directory doesn't exist or can't be accessed
+    }
+  }
+  
+  // Report rollback results
+  if (rollbackOperations.length > 0) {
+    log('\nRollback summary:', colors.cyan);
+    rollbackOperations.forEach(operation => {
+      log(`  - ${operation}`, colors.gray);
+    });
+    log(`\nRemoved ${removedCount} files during rollback`, colors.yellow);
+  } else {
+    log('No files to roll back', colors.yellow);
+  }
+  
+  // Note about package.json
+  log('\nNote: package.json modifications were not rolled back to prevent data loss.', colors.yellow);
+  log('Please manually review and revert package.json changes if needed.', colors.yellow);
+  
+  log('\nTo try setup again:', colors.yellow);
+  log('  node setup-standards.js', colors.yellow);
+}
+
 // Main execution
 async function main() {
   const args = process.argv.slice(2);
@@ -347,7 +427,10 @@ async function main() {
     log('To get started with the standards, run: npm run lint', colors.yellow);
   } catch (error) {
     log(`\nError during setup: ${error.message}`, colors.red);
-    log('Setup failed. Some files may have been partially created.', colors.yellow);
+    
+    // Perform rollback
+    await performSetupRollback(targetDir, config);
+    
     process.exit(1);
   }
 }

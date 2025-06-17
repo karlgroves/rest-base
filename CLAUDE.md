@@ -4,6 +4,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Core Standards Reference
 
+This project uses Node.js LTS (defined in .nvmrc) and requires Node.js >=22.12.0 (see package.json engines field).
+
 This project contains comprehensive standards documentation that should be followed for all development:
 
 - **Node.js Structure and Naming**: See `node_structure_and_naming_conventions.md` for detailed JavaScript/Node.js standards
@@ -27,7 +29,7 @@ This project contains comprehensive standards documentation that should be follo
 - **Naming**: camelCase for variables/functions, PascalCase for classes/components
 - **Variables**: Use `const` by default, `let` when needed, never `var`
 - **Imports**: Group by type (npm packages first, then local files)
-- **Error Handling**: Always use try/catch with proper logging (Bunyan/Winston)
+- **Error Handling**: Always use try/catch with proper logging (Winston)
 - **Documentation**: JSDoc comments required for all files and functions
 - **Security**: Follow Express security best practices, validate all inputs
 - **Database**: Use parameterized queries, follow SQL naming conventions

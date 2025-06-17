@@ -681,17 +681,25 @@ async function doSomething() {
 
 ### Logging
 
-Use appropriate logging levels for different types of information. Never use `console.log` in production code - use a proper logging library like Winston or Bunyan instead:
+Use appropriate logging levels for different types of information. Never use `console.log` in production code - use Winston for all logging needs:
 
 ```js
-// Example with a logging library
-const logger = require('./logger');
+// Example with Winston
+const logger = require('./utils/logger');
 
 // Different log levels
 logger.debug('Detailed debug information');
 logger.info('Something noteworthy happened');
 logger.warn('Warning: something might be wrong');
-logger.error('Error occurred', err);
+logger.error('Error occurred', { error: err.message, stack: err.stack });
+
+// Structured logging with metadata
+logger.info('User logged in', {
+  userId: user.id,
+  email: user.email,
+  ip: req.ip,
+  timestamp: new Date().toISOString()
+});
 ```
 
 ### Validation

@@ -14,6 +14,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 const { pipeline } = require('stream/promises');
 const { getEslintConfigString } = require('../shared/eslint-config');
+const { loadConfig } = require('../shared/config-loader');
 
 // Define colors for terminal output
 const colors = {
@@ -48,24 +49,19 @@ function getEslintConfig() {
  */
 function getEnvExample() {
   if (!configCache.envExample) {
-    configCache.envExample = `# Server Configuration
-NODE_ENV=development
-PORT=3000
-
-# Database Configuration
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=db_name
-DB_USER=db_user
-DB_PASSWORD=db_password
-
-# JWT Configuration
-JWT_SECRET=your_jwt_secret
-JWT_EXPIRATION=1h
-
-# Logging
-LOG_LEVEL=info
-`;
+    const config = loadConfig();
+    const template = config.templates.envExample;
+    
+    let envContent = '';
+    for (const [section, vars] of Object.entries(template)) {
+      envContent += `# ${section.charAt(0).toUpperCase() + section.slice(1)} Configuration\n`;
+      for (const [key, value] of Object.entries(vars)) {
+        envContent += `${key}=${value}\n`;
+      }
+      envContent += '\n';
+    }
+    
+    configCache.envExample = envContent.trim() + '\n';
   }
   return configCache.envExample;
 }
@@ -177,21 +173,14 @@ function safeSpawn(args, cwd) {
  * @returns {Promise<void>}
  */
 async function createProjectStructure(projectDir) {
+  const config = loadConfig();
+  
+  // Build directory list from configuration
   const directories = [
-    'src/config',
-    'src/controllers',
-    'src/middlewares',
-    'src/models',
-    'src/routes',
-    'src/services',
-    'src/utils',
-    'tests/unit',
-    'tests/integration',
-    'tests/fixtures',
-    'docs/standards',
-    'public/images',
-    'public/styles',
-    'public/scripts'
+    `${config.directories.docs}/standards`,
+    ...config.directories.srcSubdirs.map(dir => `${config.directories.src}/${dir}`),
+    ...config.directories.testSubdirs.map(dir => `${config.directories.tests}/${dir}`),
+    ...config.directories.publicSubdirs.map(dir => `${config.directories.public}/${dir}`)
   ];
   
   try {
@@ -221,51 +210,21 @@ async function createProjectStructure(projectDir) {
  * @returns {Promise<void>}
  */
 async function createPackageJson(projectDir, projectName) {
+  const config = loadConfig();
+  
   const packageJson = {
     name: projectName,
     version: '1.0.0',
     description: 'A RESTful API using REST-Base standards',
-    main: 'src/app.js',
-    scripts: {
-      start: 'node src/app.js',
-      dev: 'nodemon src/app.js',
-      test: 'jest',
-      'lint:md': 'markdownlint "*.md" "docs/*.md"',
-      'lint:js': 'eslint --ext .js,.jsx,.ts,.tsx .',
-      lint: 'npm run lint:md && npm run lint:js',
-      'test:watch': 'jest --watch',
-      'test:coverage': 'jest --coverage'
-    },
-    keywords: [
-      'rest',
-      'api',
-      'node',
-      'express'
-    ],
-    author: '',
-    license: 'MIT',
-    dependencies: {
-      'bcrypt': '^5.1.1',
-      'cors': '^2.8.5',
-      'dotenv': '^16.3.1',
-      'express': '^4.18.2',
-      'express-validator': '^7.0.1',
-      'helmet': '^7.1.0',
-      'joi': '^17.11.0',
-      'jsonwebtoken': '^9.0.2',
-      'morgan': '^1.10.0',
-      'mysql2': '^3.6.5',
-      'sequelize': '^6.35.1',
-      'winston': '^3.11.0'
-    },
-    devDependencies: {
-      'eslint': '^8.55.0',
-      'eslint-config-airbnb-base': '^15.0.0',
-      'eslint-plugin-import': '^2.29.0',
-      'jest': '^29.7.0',
-      'markdownlint-cli': '^0.37.0',
-      'nodemon': '^3.0.2',
-      'supertest': '^6.3.3'
+    main: `${config.directories.src}/app.js`,
+    scripts: config.scripts,
+    keywords: config.project.keywords,
+    author: config.project.author.name || '',
+    license: config.project.license,
+    dependencies: config.dependencies.production,
+    devDependencies: config.dependencies.development,
+    engines: {
+      node: `>=${config.project.nodeVersion}`
     }
   };
   
@@ -289,7 +248,11 @@ async function createPackageJson(projectDir, projectName) {
  * @param {number} threshold - File size threshold in bytes (default: 1MB)
  * @throws {Error} If file copying fails
  */
-async function copyFileIntelligent(source, destination, threshold = 1024 * 1024) {
+async function copyFileIntelligent(source, destination, threshold = null) {
+  if (threshold === null) {
+    const config = loadConfig();
+    threshold = config.thresholds.streamingThreshold;
+  }
   try {
     // Check if source file exists and get its size
     const stats = await fs.stat(source);
@@ -320,22 +283,14 @@ async function copyFileIntelligent(source, destination, threshold = 1024 * 1024)
  * @returns {Promise<void>}
  */
 async function copyStandardsFiles(projectDir, sourceDir) {
-  const standardsFiles = [
-    'node_structure_and_naming_conventions.md',
-    'sql-standards-and-patterns.md',
-    'technologies.md',
-    'operations-and-responses.md',
-    'request.md',
-    'validation.md',
-    'global-rules.md',
-    'CLAUDE.md'
-  ];
+  const config = loadConfig();
+  const standardsFiles = config.standardsFiles;
   
   try {
     // Copy files in parallel for better performance
     await Promise.all(standardsFiles.map(async (file) => {
       const source = path.join(sourceDir, file);
-      const destination = path.join(projectDir, 'docs', 'standards', file);
+      const destination = path.join(projectDir, config.directories.docs, 'standards', file);
       
       try {
         // Use intelligent copying (streaming for large files)
@@ -359,10 +314,8 @@ async function copyStandardsFiles(projectDir, sourceDir) {
  * @returns {Promise<void>}
  */
 async function copyConfigFiles(projectDir, sourceDir) {
-  const configFiles = [
-    ['.markdownlint.json', '.markdownlint.json'],
-    ['.gitignore', '.gitignore']
-  ];
+  const config = loadConfig();
+  const configFiles = config.configFiles.map(file => [file, file]);
   
   try {
     // Copy config files in parallel

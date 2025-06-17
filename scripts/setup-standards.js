@@ -10,8 +10,10 @@
  */
 
 const fs = require('fs').promises;
+const fsSync = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
+const { pipeline } = require('stream/promises');
 
 // Define colors for terminal output
 const colors = {
@@ -217,6 +219,32 @@ async function copyFile(source, destination) {
     await fs.access(source);
     await fs.copyFile(source, destination);
     log(`Copied: ${path.basename(source)} -> ${destination}`, colors.green);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      throw new Error(`Source file not found: ${source}`);
+    }
+    throw new Error(`Failed to copy ${source} to ${destination}: ${error.message}`);
+  }
+}
+
+/**
+ * Safely copies a large file using streams for better memory efficiency
+ * @param {string} source - Source file path
+ * @param {string} destination - Destination file path
+ * @throws {Error} If file copying fails
+ */
+async function copyLargeFile(source, destination) {
+  try {
+    // Check if source file exists
+    await fs.access(source);
+    
+    // Use streams for large file copying
+    await pipeline(
+      fsSync.createReadStream(source),
+      fsSync.createWriteStream(destination)
+    );
+    
+    log(`Copied (streamed): ${path.basename(source)} -> ${destination}`, colors.green);
   } catch (error) {
     if (error.code === 'ENOENT') {
       throw new Error(`Source file not found: ${source}`);

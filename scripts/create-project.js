@@ -9,8 +9,10 @@
  */
 
 const fs = require('fs').promises;
+const fsSync = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
+const { pipeline } = require('stream/promises');
 
 // Define colors for terminal output
 const colors = {
@@ -290,6 +292,36 @@ async function createPackageJson(projectDir, projectName) {
 }
 
 /**
+ * Intelligently copies a file using regular copy for small files and streaming for large files
+ * @param {string} source - Source file path
+ * @param {string} destination - Destination file path
+ * @param {number} threshold - File size threshold in bytes (default: 1MB)
+ * @throws {Error} If file copying fails
+ */
+async function copyFileIntelligent(source, destination, threshold = 1024 * 1024) {
+  try {
+    // Check if source file exists and get its size
+    const stats = await fs.stat(source);
+    
+    if (stats.size > threshold) {
+      // Use streaming for large files
+      await pipeline(
+        fsSync.createReadStream(source),
+        fsSync.createWriteStream(destination)
+      );
+    } else {
+      // Use regular copy for small files
+      await fs.copyFile(source, destination);
+    }
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      throw new Error(`Source file not found: ${source}`);
+    }
+    throw new Error(`Failed to copy ${source} to ${destination}: ${error.message}`);
+  }
+}
+
+/**
  * Copies standards documentation files
  * @param {string} projectDir - The project directory path
  * @param {string} sourceDir - The source directory path
@@ -315,13 +347,9 @@ async function copyStandardsFiles(projectDir, sourceDir) {
       const destination = path.join(projectDir, 'docs', 'standards', file);
       
       try {
-        // Check if source file exists
-        await fs.access(source);
-        await fs.copyFile(source, destination);
+        // Use intelligent copying (streaming for large files)
+        await copyFileIntelligent(source, destination);
       } catch (error) {
-        if (error.code === 'ENOENT') {
-          throw new Error(`Source file not found: ${source}`);
-        }
         throw new Error(`Failed to copy ${file}: ${error.message}`);
       }
     }));
@@ -352,12 +380,9 @@ async function copyConfigFiles(projectDir, sourceDir) {
       const destPath = path.join(projectDir, destination);
       
       try {
-        await fs.access(sourcePath);
-        await fs.copyFile(sourcePath, destPath);
+        // Use intelligent copying (streaming for large files)
+        await copyFileIntelligent(sourcePath, destPath);
       } catch (error) {
-        if (error.code === 'ENOENT') {
-          throw new Error(`Source config file not found: ${sourcePath}`);
-        }
         throw new Error(`Failed to copy ${source}: ${error.message}`);
       }
     }));

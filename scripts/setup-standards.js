@@ -152,17 +152,28 @@ function validateTargetPath(targetPath) {
 async function createDirectory(dir) {
   try {
     await fs.promises.access(dir);
-    // Directory already exists
+    // Directory already exists and is accessible
   } catch (error) {
     if (error.code === 'ENOENT') {
+      // Directory doesn't exist, create it
       try {
         await fs.promises.mkdir(dir, { recursive: true });
         log(`Created directory: ${dir}`, colors.green);
       } catch (mkdirError) {
-        throw new Error(`Failed to create directory ${dir}: ${mkdirError.message}`);
+        if (mkdirError.code === 'EACCES') {
+          throw new Error(`Permission denied creating directory ${dir}. Please check permissions.`);
+        } else if (mkdirError.code === 'ENOTDIR') {
+          throw new Error(`Cannot create directory ${dir}: parent path is not a directory`);
+        } else {
+          throw new Error(`Failed to create directory ${dir}: ${mkdirError.message} (${mkdirError.code})`);
+        }
       }
+    } else if (error.code === 'EACCES') {
+      throw new Error(`Permission denied accessing directory ${dir}`);
+    } else if (error.code === 'ENOTDIR') {
+      throw new Error(`Path ${dir} exists but is not a directory`);
     } else {
-      throw new Error(`Error checking directory ${dir}: ${error.message}`);
+      throw new Error(`Error checking directory ${dir}: ${error.message} (${error.code})`);
     }
   }
 }
@@ -192,16 +203,33 @@ async function copyFile(source, destination) {
  * @param {string} targetDir - Target directory containing package.json
  * @returns {boolean} Success status
  */
-function updatePackageJson(targetDir) {
+async function updatePackageJson(targetDir) {
   const packageJsonPath = path.join(targetDir, 'package.json');
   
-  if (!fs.existsSync(packageJsonPath)) {
-    log('No package.json found. Please run npm init first.', colors.red);
+  // Check if package.json exists
+  try {
+    await fs.promises.access(packageJsonPath);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      log('No package.json found. Please run npm init first.', colors.red);
+    } else {
+      log(`Cannot access package.json: ${error.message}`, colors.red);
+    }
     return false;
   }
   
   try {
-    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+    // Read package.json with proper error handling
+    const data = await fs.promises.readFile(packageJsonPath, 'utf8');
+    
+    let packageJson;
+    try {
+      packageJson = JSON.parse(data);
+    } catch (parseError) {
+      log(`Error: package.json contains invalid JSON: ${parseError.message}`, colors.red);
+      log('Please check your package.json file for syntax errors.', colors.yellow);
+      return false;
+    }
     
     // Add scripts
     packageJson.scripts = packageJson.scripts || {};
@@ -209,17 +237,26 @@ function updatePackageJson(targetDir) {
     packageJson.scripts['lint:js'] = 'eslint --ext .js,.jsx,.ts,.tsx .';
     packageJson.scripts.lint = 'npm run lint:md && npm run lint:js';
     
-    // Write updated package.json
-    fs.writeFileSync(
-      packageJsonPath,
-      JSON.stringify(packageJson, null, 2),
-      'utf8'
-    );
+    // Write updated package.json with proper error handling
+    try {
+      await fs.promises.writeFile(
+        packageJsonPath,
+        JSON.stringify(packageJson, null, 2),
+        'utf8'
+      );
+    } catch (writeError) {
+      if (writeError.code === 'EACCES') {
+        log(`Permission denied writing to package.json. Please check file permissions.`, colors.red);
+      } else {
+        log(`Error writing package.json: ${writeError.message}`, colors.red);
+      }
+      return false;
+    }
     
     log('Updated package.json with linting scripts', colors.green);
     return true;
   } catch (error) {
-    log(`Error updating package.json: ${error.message}`, colors.red);
+    log(`Unexpected error updating package.json: ${error.message}`, colors.red);
     return false;
   }
 }
@@ -299,7 +336,7 @@ async function main() {
     log('Created .eslintrc.js', colors.green);
     
     // Update package.json
-    const packageUpdated = updatePackageJson(targetDir);
+    const packageUpdated = await updatePackageJson(targetDir);
     
     // Install dependencies
     if (packageUpdated) {

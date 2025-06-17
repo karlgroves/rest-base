@@ -578,9 +578,20 @@ async function initGit(projectDir) {
   // Ensure the path is safe and within expected bounds
   if (!normalizedPath || 
       normalizedPath.includes('..') || 
-      !path.isAbsolute(normalizedPath) ||
-      !fsSync.existsSync(normalizedPath)) {
+      !path.isAbsolute(normalizedPath)) {
     log('Warning: Invalid or unsafe project directory path, skipping Git initialization', colors.yellow);
+    return;
+  }
+  
+  // Check if directory exists and is accessible
+  try {
+    await fs.access(normalizedPath);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      log('Warning: Project directory does not exist, skipping Git initialization', colors.yellow);
+    } else {
+      log('Warning: Cannot access project directory, skipping Git initialization', colors.yellow);
+    }
     return;
   }
   
@@ -628,9 +639,16 @@ async function main() {
   const sourceDir = path.join(__dirname, '..');
   
   // Check if directory already exists
-  if (fsSync.existsSync(projectDir)) {
+  try {
+    await fs.access(projectDir);
     log(`Directory ${projectDir} already exists. Please choose another name.`, colors.red);
     process.exit(1);
+  } catch (error) {
+    // Directory doesn't exist (ENOENT) or isn't accessible - this is what we want for a new project
+    if (error.code !== 'ENOENT') {
+      log(`Cannot access ${projectDir}: ${error.message}`, colors.red);
+      process.exit(1);
+    }
   }
   
   log(`Creating new project: ${projectName}`, colors.blue);
@@ -668,12 +686,15 @@ async function main() {
     
     // Attempt to rollback
     try {
-      if (fsSync.existsSync(projectDir)) {
-        log('Attempting to clean up...', colors.yellow);
-        await fs.rmdir(projectDir, { recursive: true });
-        log('Cleanup completed', colors.yellow);
-      }
+      await fs.access(projectDir);
+      log('Attempting to clean up...', colors.yellow);
+      await fs.rm(projectDir, { recursive: true, force: true });
+      log('Cleanup completed', colors.yellow);
     } catch (rollbackError) {
+      if (rollbackError.code === 'ENOENT') {
+        // Directory doesn't exist, nothing to clean up
+        return;
+      }
       log(`Warning: Could not clean up ${projectDir}: ${rollbackError.message}`, colors.red);
       log('You may need to manually remove the directory', colors.yellow);
     }

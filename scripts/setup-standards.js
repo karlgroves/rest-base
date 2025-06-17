@@ -385,24 +385,31 @@ async function main() {
   log('=========================', colors.blue);
   
   try {
+    log('Step 1/5: Setting up directories...', colors.cyan);
     // Create directories
     await createDirectory(path.join(targetDir, 'docs'));
     await createDirectory(standardsDir);
+    log('✓ Directories created', colors.green);
     
+    log('Step 2/5: Copying standards documentation...', colors.cyan);
     // Copy standards files
     await Promise.all(config.standardsFiles.map(async (file) => {
       const source = path.join(scriptsDir, file);
       const destination = path.join(standardsDir, file);
       await copyFile(source, destination);
     }));
+    log('✓ Standards documentation copied', colors.green);
     
+    log('Step 3/5: Copying configuration files...', colors.cyan);
     // Copy config files
     await Promise.all(config.configFiles.map(async (file) => {
       const source = path.join(scriptsDir, file);
       const destination = path.join(targetDir, file);
       await copyFile(source, destination);
     }));
+    log('✓ Configuration files copied', colors.green);
   
+    log('Step 4/5: Creating ESLint configuration...', colors.cyan);
     // Create ESLint config
     const eslintConfig = `module.exports = {
   extends: 'airbnb-base',
@@ -418,7 +425,9 @@ async function main() {
 
     await fs.writeFile(path.join(targetDir, '.eslintrc.js'), eslintConfig);
     log('Created .eslintrc.js', colors.green);
+    log('✓ ESLint configuration created', colors.green);
     
+    log('Step 5/5: Installing development dependencies...', colors.cyan);
     // Update package.json
     const packageUpdated = await updatePackageJson(targetDir);
     
@@ -426,8 +435,9 @@ async function main() {
     if (packageUpdated) {
       await installDependencies(config.dependencies.dev);
     }
+    log('✓ Dependencies installed', colors.green);
     
-    log('\nSetup complete! Standards have been incorporated into your project.', colors.green);
+    log('\n🎉 Setup complete! Standards have been incorporated into your project.', colors.green);
     log('To get started with the standards, run: npm run lint', colors.yellow);
   } catch (error) {
     log(`\nError during setup: ${error.message}`, colors.red);

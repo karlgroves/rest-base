@@ -732,7 +732,7 @@ async function main() {
   log('===============================', colors.blue);
   
   try {
-    log('Creating project structure...', colors.cyan);
+    log('Phase 1/3: Creating project structure...', colors.cyan);
     
     // Phase 1: Create initial structure and independent files (parallel execution)
     await Promise.all([
@@ -741,7 +741,8 @@ async function main() {
       createReadme(projectDir, projectName)
     ]);
     
-    log('Creating project files...', colors.cyan);
+    log('✓ Phase 1 complete', colors.green);
+    log('Phase 2/3: Creating project files...', colors.cyan);
     
     // Phase 2: Copy and create files that depend on directory structure (parallel execution)
     await Promise.all([
@@ -750,12 +751,14 @@ async function main() {
       createAppFiles(projectDir)
     ]);
     
-    log('Initializing Git repository...', colors.cyan);
+    log('✓ Phase 2 complete', colors.green);
+    log('Phase 3/3: Initializing Git repository...', colors.cyan);
     
     // Phase 3: Git initialization (must run after all files are created)
     await initGit(projectDir);
     
-    log('\nProject creation complete!', colors.green);
+    log('✓ Phase 3 complete', colors.green);
+    log('\n🎉 Project creation complete!', colors.green);
     log(`\nTo get started:`, colors.yellow);
     log(`  cd ${projectName}`, colors.yellow);
     log(`  npm install`, colors.yellow);

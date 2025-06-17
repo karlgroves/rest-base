@@ -9,7 +9,7 @@
  * @author REST-Base Team
  */
 
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const { spawn } = require('child_process');
 
@@ -151,13 +151,13 @@ function validateTargetPath(targetPath) {
  */
 async function createDirectory(dir) {
   try {
-    await fs.promises.access(dir);
+    await fs.access(dir);
     // Directory already exists and is accessible
   } catch (error) {
     if (error.code === 'ENOENT') {
       // Directory doesn't exist, create it
       try {
-        await fs.promises.mkdir(dir, { recursive: true });
+        await fs.mkdir(dir, { recursive: true });
         log(`Created directory: ${dir}`, colors.green);
       } catch (mkdirError) {
         if (mkdirError.code === 'EACCES') {
@@ -187,8 +187,8 @@ async function createDirectory(dir) {
 async function copyFile(source, destination) {
   try {
     // Check if source file exists
-    await fs.promises.access(source);
-    await fs.promises.copyFile(source, destination);
+    await fs.access(source);
+    await fs.copyFile(source, destination);
     log(`Copied: ${path.basename(source)} -> ${destination}`, colors.green);
   } catch (error) {
     if (error.code === 'ENOENT') {
@@ -208,7 +208,7 @@ async function updatePackageJson(targetDir) {
   
   // Check if package.json exists
   try {
-    await fs.promises.access(packageJsonPath);
+    await fs.access(packageJsonPath);
   } catch (error) {
     if (error.code === 'ENOENT') {
       log('No package.json found. Please run npm init first.', colors.red);
@@ -220,7 +220,7 @@ async function updatePackageJson(targetDir) {
   
   try {
     // Read package.json with proper error handling
-    const data = await fs.promises.readFile(packageJsonPath, 'utf8');
+    const data = await fs.readFile(packageJsonPath, 'utf8');
     
     let packageJson;
     try {
@@ -239,7 +239,7 @@ async function updatePackageJson(targetDir) {
     
     // Write updated package.json with proper error handling
     try {
-      await fs.promises.writeFile(
+      await fs.writeFile(
         packageJsonPath,
         JSON.stringify(packageJson, null, 2),
         'utf8'
@@ -303,7 +303,7 @@ async function performSetupRollback(targetDir, config) {
   // Check which files exist and can be removed
   for (const filePath of potentialFiles) {
     try {
-      await fs.promises.access(filePath);
+      await fs.access(filePath);
       filesToRemove.push(filePath);
     } catch (error) {
       // File doesn't exist, nothing to remove
@@ -314,7 +314,7 @@ async function performSetupRollback(targetDir, config) {
   let removedCount = 0;
   for (const filePath of filesToRemove) {
     try {
-      await fs.promises.unlink(filePath);
+      await fs.unlink(filePath);
       rollbackOperations.push(`Removed: ${path.relative(targetDir, filePath)}`);
       removedCount++;
     } catch (error) {
@@ -330,10 +330,10 @@ async function performSetupRollback(targetDir, config) {
   
   for (const dirPath of dirsToRemove) {
     try {
-      await fs.promises.access(dirPath);
-      const items = await fs.promises.readdir(dirPath);
+      await fs.access(dirPath);
+      const items = await fs.readdir(dirPath);
       if (items.length === 0) {
-        await fs.promises.rmdir(dirPath);
+        await fs.rmdir(dirPath);
         rollbackOperations.push(`Removed empty directory: ${path.relative(targetDir, dirPath)}`);
       } else {
         rollbackOperations.push(`Directory not empty, keeping: ${path.relative(targetDir, dirPath)}`);
@@ -416,7 +416,7 @@ async function main() {
   },
 };`;
 
-    await fs.promises.writeFile(path.join(targetDir, '.eslintrc.js'), eslintConfig);
+    await fs.writeFile(path.join(targetDir, '.eslintrc.js'), eslintConfig);
     log('Created .eslintrc.js', colors.green);
     
     // Update package.json

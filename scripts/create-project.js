@@ -242,21 +242,38 @@ async function copyStandardsFiles(projectDir, sourceDir) {
   }
 }
 
-function copyConfigFiles(projectDir, sourceDir) {
+/**
+ * Copies configuration files to the project
+ * @param {string} projectDir - The project directory path
+ * @param {string} sourceDir - The source directory path
+ * @throws {Error} If file copying fails
+ * @returns {Promise<void>}
+ */
+async function copyConfigFiles(projectDir, sourceDir) {
   const configFiles = [
     ['.markdownlint.json', '.markdownlint.json'],
     ['.gitignore', '.gitignore']
   ];
   
-  configFiles.forEach(([source, destination]) => {
-    fs.copyFileSync(
-      path.join(sourceDir, source),
-      path.join(projectDir, destination)
-    );
-  });
-  
-  // Create ESLint config
-  const eslintConfig = `module.exports = {
+  try {
+    // Copy config files in parallel
+    await Promise.all(configFiles.map(async ([source, destination]) => {
+      const sourcePath = path.join(sourceDir, source);
+      const destPath = path.join(projectDir, destination);
+      
+      try {
+        await fs.access(sourcePath);
+        await fs.copyFile(sourcePath, destPath);
+      } catch (error) {
+        if (error.code === 'ENOENT') {
+          throw new Error(`Source config file not found: ${sourcePath}`);
+        }
+        throw new Error(`Failed to copy ${source}: ${error.message}`);
+      }
+    }));
+    
+    // Create ESLint config
+    const eslintConfig = `module.exports = {
   extends: 'airbnb-base',
   env: {
     node: true,
@@ -268,10 +285,10 @@ function copyConfigFiles(projectDir, sourceDir) {
   },
 };`;
 
-  fs.writeFileSync(path.join(projectDir, '.eslintrc.js'), eslintConfig);
-  
-  // Create .env.example
-  const envExample = `# Server Configuration
+    await fs.writeFile(path.join(projectDir, '.eslintrc.js'), eslintConfig);
+    
+    // Create .env.example
+    const envExample = `# Server Configuration
 NODE_ENV=development
 PORT=3000
 
@@ -290,12 +307,21 @@ JWT_EXPIRATION=1h
 LOG_LEVEL=info
 `;
 
-  fs.writeFileSync(path.join(projectDir, '.env.example'), envExample);
-  
-  log('Created configuration files', colors.green);
+    await fs.writeFile(path.join(projectDir, '.env.example'), envExample);
+    
+    log('Created configuration files', colors.green);
+  } catch (error) {
+    throw new Error(`Failed to create config files: ${error.message}`);
+  }
 }
 
-function createAppFiles(projectDir) {
+/**
+ * Creates application files for the project
+ * @param {string} projectDir - The project directory path
+ * @throws {Error} If file creation fails
+ * @returns {Promise<void>}
+ */
+async function createAppFiles(projectDir) {
   // app.js
   const appJs = `/**
  * Main application entry point
@@ -414,15 +440,36 @@ module.exports = router;
 `;
 
   // Write files
-  fs.writeFileSync(path.join(projectDir, 'src', 'app.js'), appJs);
-  fs.writeFileSync(path.join(projectDir, 'src', 'utils', 'logger.js'), loggerJs);
-  fs.writeFileSync(path.join(projectDir, 'src', 'middlewares', 'errorHandler.js'), errorHandlerJs);
-  fs.writeFileSync(path.join(projectDir, 'src', 'routes', 'index.js'), routesJs);
-  
-  log('Created application files', colors.green);
+  try {
+    const files = [
+      { path: path.join(projectDir, 'src', 'app.js'), content: appJs },
+      { path: path.join(projectDir, 'src', 'utils', 'logger.js'), content: loggerJs },
+      { path: path.join(projectDir, 'src', 'middlewares', 'errorHandler.js'), content: errorHandlerJs },
+      { path: path.join(projectDir, 'src', 'routes', 'index.js'), content: routesJs }
+    ];
+    
+    await Promise.all(files.map(async (file) => {
+      try {
+        await fs.writeFile(file.path, file.content);
+      } catch (error) {
+        throw new Error(`Failed to create ${file.path}: ${error.message}`);
+      }
+    }));
+    
+    log('Created application files', colors.green);
+  } catch (error) {
+    throw new Error(`Failed to create application files: ${error.message}`);
+  }
 }
 
-function createReadme(projectDir, projectName) {
+/**
+ * Creates README.md for the project
+ * @param {string} projectDir - The project directory path
+ * @param {string} projectName - The project name
+ * @throws {Error} If README creation fails
+ * @returns {Promise<void>}
+ */
+async function createReadme(projectDir, projectName) {
   const readme = `# ${projectName}
 
 A RESTful API built following REST-Base standards.
@@ -477,8 +524,12 @@ This project follows the REST-Base standards. See the \`docs/standards/\` direct
 This project is licensed under the MIT License.
 `;
 
-  fs.writeFileSync(path.join(projectDir, 'README.md'), readme);
-  log('Created README.md', colors.green);
+  try {
+    await fs.writeFile(path.join(projectDir, 'README.md'), readme);
+    log('Created README.md', colors.green);
+  } catch (error) {
+    throw new Error(`Failed to create README.md: ${error.message}`);
+  }
 }
 
 function initGit(projectDir) {
@@ -551,14 +602,14 @@ async function main() {
     // Copy standards files
     await copyStandardsFiles(projectDir, sourceDir);
     
-    // Copy config files (convert to async when possible)
-    copyConfigFiles(projectDir, sourceDir);
+    // Copy config files
+    await copyConfigFiles(projectDir, sourceDir);
     
-    // Create app files (convert to async when possible)
-    createAppFiles(projectDir);
+    // Create app files
+    await createAppFiles(projectDir);
     
-    // Create README (convert to async when possible)
-    createReadme(projectDir, projectName);
+    // Create README
+    await createReadme(projectDir, projectName);
     
     // Initialize Git repository
     initGit(projectDir);

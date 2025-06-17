@@ -22,6 +22,11 @@ const colors = {
   red: '\x1b[31m'
 };
 
+/**
+ * Logs a colored message to the console
+ * @param {string} message - Message to log
+ * @param {string} color - ANSI color code (optional)
+ */
 function log(message, color = colors.reset) {
   console.log(`${color}${message}${colors.reset}`);
 }
@@ -532,6 +537,10 @@ This project is licensed under the MIT License.
   }
 }
 
+/**
+ * Initializes a Git repository in the project directory
+ * @param {string} projectDir - The project directory path
+ */
 function initGit(projectDir) {
   // Validate that projectDir is safe to use
   const normalizedPath = path.normalize(projectDir);

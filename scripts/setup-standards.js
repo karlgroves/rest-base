@@ -49,6 +49,11 @@ const config = {
 };
 
 // Helper functions
+/**
+ * Logs a colored message to the console
+ * @param {string} message - Message to log
+ * @param {string} color - ANSI color code (optional)
+ */
 function log(message, color = colors.reset) {
   console.log(`${color}${message}${colors.reset}`);
 }
@@ -182,6 +187,11 @@ async function copyFile(source, destination) {
   }
 }
 
+/**
+ * Updates package.json with linting scripts
+ * @param {string} targetDir - Target directory containing package.json
+ * @returns {boolean} Success status
+ */
 function updatePackageJson(targetDir) {
   const packageJsonPath = path.join(targetDir, 'package.json');
   
@@ -214,6 +224,11 @@ function updatePackageJson(targetDir) {
   }
 }
 
+/**
+ * Installs development dependencies safely
+ * @param {string[]} dependencies - Array of dependency names to install
+ * @returns {Promise<boolean>} Success status
+ */
 async function installDependencies(dependencies) {
   try {
     log(`Installing dev dependencies: ${dependencies.join(', ')}`, colors.blue);

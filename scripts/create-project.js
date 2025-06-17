@@ -689,6 +689,11 @@ async function performRollback(projectDir, projectName) {
   log(`  node create-project.js ${projectName}`, colors.yellow);
 }
 
+/**
+ * Main entry point for the project creation script
+ * Validates command line arguments and orchestrates project creation
+ * @returns {Promise<void>}
+ */
 async function main() {
   const args = process.argv.slice(2);
   

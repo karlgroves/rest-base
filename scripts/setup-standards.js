@@ -362,7 +362,11 @@ async function performSetupRollback(targetDir, config) {
   log('  node setup-standards.js', colors.yellow);
 }
 
-// Main execution
+/**
+ * Main entry point for the setup-standards script
+ * Validates target directory and applies REST-Base standards to an existing project
+ * @returns {Promise<void>}
+ */
 async function main() {
   const args = process.argv.slice(2);
   

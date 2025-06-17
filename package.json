@@ -8,9 +8,14 @@
   },
   "scripts": {
     "lint:md": "markdownlint *.md",
-    "lint": "npm run lint:md",
+    "lint:js": "eslint scripts/**/*.js",
+    "lint": "npm run lint:md && npm run lint:js",
+    "test": "jest",
+    "test:coverage": "nyc jest",
+    "format": "prettier --write *.md scripts/**/*.js",
     "create-project": "node ./scripts/create-project.js",
-    "setup-standards": "node ./scripts/setup-standards.js"
+    "setup-standards": "node ./scripts/setup-standards.js",
+    "typecheck": "echo 'No TypeScript files to check'"
   },
   "repository": {
     "type": "git",
@@ -33,9 +38,16 @@
   },
   "homepage": "https://github.com/karlgroves/rest-base#readme",
   "devDependencies": {
-    "markdownlint-cli": "^0.37.0",
     "eslint": "^8.55.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.0"
+    "eslint-plugin-import": "^2.29.0",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "markdownlint-cli": "^0.37.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.0",
+    "cross-env": "^7.0.3",
+    "nyc": "^15.1.0"
   }
 }

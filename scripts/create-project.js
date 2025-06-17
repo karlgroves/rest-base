@@ -55,18 +55,32 @@ function validateProjectName(name) {
     throw new Error('Project name cannot start with a dot');
   }
   
-  // Check for reserved names
+  // Check for reserved names (Windows, UNIX, and common problematic names)
   const reservedNames = [
+    // Windows reserved names
     'con', 'prn', 'aux', 'nul', 'com1', 'com2', 'com3', 'com4', 'com5', 'com6', 'com7', 'com8', 'com9',
-    'lpt1', 'lpt2', 'lpt3', 'lpt4', 'lpt5', 'lpt6', 'lpt7', 'lpt8', 'lpt9', 'node_modules', 'package.json'
+    'lpt1', 'lpt2', 'lpt3', 'lpt4', 'lpt5', 'lpt6', 'lpt7', 'lpt8', 'lpt9',
+    // Common system directories and files
+    'node_modules', 'package.json', 'package-lock.json', '.git', '.gitignore', '.env', '.npmrc',
+    'bin', 'boot', 'dev', 'etc', 'home', 'lib', 'media', 'mnt', 'opt', 'proc', 'root', 'run', 'sbin', 'srv', 'sys', 'tmp', 'usr', 'var',
+    'system32', 'windows', 'program files', 'documents and settings',
+    // Potentially dangerous names
+    'admin', 'administrator', 'root', 'sudo', 'www', 'ftp', 'mail', 'test', 'temp', 'cache', 'logs'
   ];
   if (reservedNames.includes(trimmedName.toLowerCase())) {
     throw new Error(`'${trimmedName}' is a reserved name and cannot be used as a project name`);
   }
   
-  // Check for directory traversal attempts
-  if (trimmedName.includes('..') || trimmedName.includes('/') || trimmedName.includes('\\')) {
-    throw new Error('Project name cannot contain path separators or parent directory references');
+  // Enhanced directory traversal prevention
+  if (trimmedName.includes('..') || 
+      trimmedName.includes('/') || 
+      trimmedName.includes('\\') ||
+      trimmedName.includes('%2e') ||  // URL encoded dots
+      trimmedName.includes('%2f') ||  // URL encoded forward slash
+      trimmedName.includes('%5c') ||  // URL encoded backslash
+      path.normalize(trimmedName) !== trimmedName ||  // Path normalization changes it
+      path.resolve(trimmedName) !== path.resolve('.', trimmedName)) {  // Absolute path resolution differs
+    throw new Error('Project name cannot contain path separators, parent directory references, or encoded path characters');
   }
   
   // Check length constraints

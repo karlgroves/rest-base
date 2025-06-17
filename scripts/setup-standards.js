@@ -467,9 +467,11 @@ async function main() {
     // Update package.json
     const packageUpdated = await updatePackageJson(targetDir);
     
-    // Install dependencies
-    if (packageUpdated) {
+    // Install dependencies (skip in test environment)
+    if (packageUpdated && process.env.NODE_ENV !== 'test') {
       await installDependencies(config.dependencies.dev);
+    } else if (process.env.NODE_ENV === 'test') {
+      log('Skipping dependency installation in test mode', colors.yellow);
     }
     log('✓ Dependencies installed', colors.green);
     

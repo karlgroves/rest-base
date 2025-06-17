@@ -730,6 +730,9 @@ async function main() {
   try {
     log('Phase 1/3: Creating project structure...', colors.cyan);
     
+    // First, create the main project directory
+    await fs.mkdir(projectDir, { recursive: true });
+    
     // Phase 1: Create initial structure and independent files (parallel execution)
     await Promise.all([
       createProjectStructure(projectDir),

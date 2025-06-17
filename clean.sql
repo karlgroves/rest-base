@@ -28,11 +28,11 @@ END IF;
 
 -- Safety Check 3: Require explicit confirmation
 -- Uncomment the following lines and set @CONFIRM_DESTRUCTION = 'YES' to proceed
--- SET @CONFIRM_DESTRUCTION = 'NO';
--- IF @CONFIRM_DESTRUCTION != 'YES' THEN
---     SELECT 'ERROR: You must explicitly confirm destruction by setting @CONFIRM_DESTRUCTION = ''YES''' AS ERROR_MESSAGE;
---     SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Safety check failed: Destruction not confirmed';
--- END IF;
+SET @CONFIRM_DESTRUCTION = 'NO';
+IF @CONFIRM_DESTRUCTION != 'YES' THEN
+    SELECT 'ERROR: You must explicitly confirm destruction by setting @CONFIRM_DESTRUCTION = ''YES''' AS ERROR_MESSAGE;
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Safety check failed: Destruction not confirmed';
+END IF;
 
 -- Safety Check 4: Log what we're about to do
 SELECT 
@@ -163,8 +163,14 @@ DELIMITER ;
 -- =====================================================================
 -- EXECUTION SECTION
 -- =====================================================================
--- Uncomment the following lines to actually execute the cleanup
 -- WARNING: This will permanently delete all data!
+-- To execute, you must:
+-- 1. Set @CONFIRM_DESTRUCTION = 'YES' above
+-- 2. Uncomment the transaction block below
+-- 3. Review the operations one more time
+
+-- Execute within a transaction for additional safety
+-- START TRANSACTION;
 
 -- Step 1: Drop all foreign key constraints
 -- CALL SafeDropAllForeignKeys();
@@ -175,6 +181,9 @@ DELIMITER ;
 -- Step 3: Clean up procedures
 -- DROP PROCEDURE IF EXISTS SafeDropAllForeignKeys;
 -- DROP PROCEDURE IF EXISTS SafeDropAllTables;
+
+-- Commit the changes (or ROLLBACK if you change your mind)
+-- COMMIT;
 
 -- =====================================================================
 -- FINAL SAFETY MESSAGE

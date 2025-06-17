@@ -9,7 +9,6 @@
  */
 
 const fs = require('fs').promises;
-const fsSync = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 
@@ -320,8 +319,6 @@ async function copyConfigFiles(projectDir, sourceDir) {
   },
 };`;
 
-    await fs.writeFile(path.join(projectDir, '.eslintrc.js'), eslintConfig);
-    
     // Create .env.example
     const envExample = `# Server Configuration
 NODE_ENV=development
@@ -342,7 +339,11 @@ JWT_EXPIRATION=1h
 LOG_LEVEL=info
 `;
 
-    await fs.writeFile(path.join(projectDir, '.env.example'), envExample);
+    // Write configuration files in parallel
+    await Promise.all([
+      fs.writeFile(path.join(projectDir, '.eslintrc.js'), eslintConfig),
+      fs.writeFile(path.join(projectDir, '.env.example'), envExample)
+    ]);
     
     log('Created configuration files', colors.green);
   } catch (error) {
@@ -726,25 +727,27 @@ async function main() {
   log('===============================', colors.blue);
   
   try {
-    // Create project structure
-    await createProjectStructure(projectDir);
+    log('Creating project structure...', colors.cyan);
     
-    // Create package.json
-    await createPackageJson(projectDir, projectName);
+    // Phase 1: Create initial structure and independent files (parallel execution)
+    await Promise.all([
+      createProjectStructure(projectDir),
+      createPackageJson(projectDir, projectName),
+      createReadme(projectDir, projectName)
+    ]);
     
-    // Copy standards files
-    await copyStandardsFiles(projectDir, sourceDir);
+    log('Creating project files...', colors.cyan);
     
-    // Copy config files
-    await copyConfigFiles(projectDir, sourceDir);
+    // Phase 2: Copy and create files that depend on directory structure (parallel execution)
+    await Promise.all([
+      copyStandardsFiles(projectDir, sourceDir),
+      copyConfigFiles(projectDir, sourceDir),
+      createAppFiles(projectDir)
+    ]);
     
-    // Create app files
-    await createAppFiles(projectDir);
+    log('Initializing Git repository...', colors.cyan);
     
-    // Create README
-    await createReadme(projectDir, projectName);
-    
-    // Initialize Git repository
+    // Phase 3: Git initialization (must run after all files are created)
     await initGit(projectDir);
     
     log('\nProject creation complete!', colors.green);

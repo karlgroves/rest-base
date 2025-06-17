@@ -1,11 +1,47 @@
 # REST Base
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.12.0-brightgreen.svg)](https://nodejs.org)
+[![npm version](https://img.shields.io/npm/v/rest-spec.svg)](https://www.npmjs.com/package/rest-spec)
+
 An opinionated standard for RESTful API projects built with Node.js.
 
 ## Purpose
 
 This repository contains comprehensive standards, guidelines, and conventions for building Node.js-based RESTful APIs.
 It serves as a starting point and reference for teams wanting to establish consistent practices across projects.
+
+## Prerequisites
+
+Before using REST Base, ensure you have the following installed:
+
+- **Node.js**: Version 22.12.0 or higher ([Download here](https://nodejs.org))
+- **npm**: Comes bundled with Node.js
+- **Git**: For version control ([Download here](https://git-scm.com))
+- **MySQL/MariaDB**: If using database features (optional)
+
+## Quick Start
+
+Get up and running with a new REST API project in under 2 minutes:
+
+```bash
+# Install REST Base globally
+npm install -g git+https://github.com/karlgroves/rest-base.git
+
+# Create a new project
+rest-base-create my-awesome-api
+
+# Navigate to your project
+cd my-awesome-api
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+Your API will be running at `http://localhost:3000` with a health check endpoint at `/api/health`.
 
 ## Contents
 
@@ -76,14 +112,65 @@ npm run setup-standards ../path/to/existing-project
 
 The key standards files in this repository are:
 
-- `node_structure_and_naming_conventions.md` - Node.js coding standards
-- `sql-standards-and-patterns.md` - Database design and SQL standards
-- `technologies.md` - Approved technologies and dependencies
-- `operations-and-responses.md` - API response formats
-- `request.md` - API request patterns
-- `validation.md` - Input validation requirements
-- `global-rules.md` - Project-wide standards
-- `CLAUDE.md` - Guide for AI assistants working with the codebase
+- [`node_structure_and_naming_conventions.md`](./node_structure_and_naming_conventions.md) - Node.js coding standards
+- [`sql-standards-and-patterns.md`](./sql-standards-and-patterns.md) - Database design and SQL standards
+- [`technologies.md`](./technologies.md) - Approved technologies and dependencies
+- [`operations-and-responses.md`](./operations-and-responses.md) - API response formats
+- [`request.md`](./request.md) - API request patterns
+- [`validation.md`](./validation.md) - Input validation requirements
+- [`global-rules.md`](./global-rules.md) - Project-wide standards
+- [`CLAUDE.md`](./CLAUDE.md) - Guide for AI assistants working with the codebase
+
+## Troubleshooting
+
+### Common Issues
+
+#### Node.js version error
+
+```bash
+Error: This package requires Node.js >= 22.12.0
+```
+
+Solution: Update Node.js to version 22.12.0 or higher using [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm).
+
+#### Permission denied when installing globally
+
+```bash
+EACCES: permission denied
+```
+
+Solution: Use `sudo npm install -g` or configure npm to use a different directory for global packages.
+
+#### Git not initialized
+
+```bash
+Warning: Could not initialize Git repository
+```
+
+Solution: Ensure Git is installed and configured with your name and email:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+```
+
+#### ESLint errors after project creation
+
+```bash
+npm run lint
+```
+
+If you encounter linting errors, most can be auto-fixed with:
+
+```bash
+npm run lint:js -- --fix
+```
+
+### Getting Help
+
+- Check the [documentation files](#standards-files) for detailed guidelines
+- Review the generated project structure and example code
+- Submit issues on [GitHub](https://github.com/karlgroves/rest-base/issues)
 
 ## Contributing
 

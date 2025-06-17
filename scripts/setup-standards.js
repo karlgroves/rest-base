@@ -14,6 +14,7 @@ const fsSync = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 const { pipeline } = require('stream/promises');
+const { getEslintConfigString } = require('../shared/eslint-config');
 
 // Define colors for terminal output
 const colors = {
@@ -62,17 +63,7 @@ const configCache = {
  */
 function getEslintConfig() {
   if (!configCache.eslintConfig) {
-    configCache.eslintConfig = `module.exports = {
-  extends: 'airbnb-base',
-  env: {
-    node: true,
-    jest: true,
-  },
-  rules: {
-    'comma-dangle': ['error', 'never'],
-    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }]
-  },
-};`;
+    configCache.eslintConfig = getEslintConfigString();
   }
   return configCache.eslintConfig;
 }

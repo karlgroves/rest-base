@@ -26,7 +26,7 @@
   "author": "Karl Groves <karlgroves@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.11.0"
   },
   "bugs": {
     "url": "https://github.com/karlgroves/rest-base/issues"

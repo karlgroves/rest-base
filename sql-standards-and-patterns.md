@@ -199,6 +199,74 @@ Use standard SQL operators for better cross-database compatibility:
 3. Indexes on frequently searched string columns (e.g., `event` in `logs` table).
 4. Indexes on foreign key columns.
 
+### Index and View Naming Conventions
+
+**Index Naming Standards:**
+- **Primary Key Indexes**: Use table name + `_pk` (automatically created, but for reference: `users_pk`)
+- **Unique Indexes**: Use `uq_` prefix + table name + column name(s): `uq_users_email`, `uq_teams_name`
+- **Foreign Key Indexes**: Use `fk_` prefix + table name + referenced table: `fk_userTeams_users`, `fk_userTeams_teams`
+- **Composite Indexes**: Use `idx_` prefix + table name + column names: `idx_users_email_status`, `idx_logs_userId_created`
+- **Performance Indexes**: Use `perf_` prefix + table name + purpose: `perf_users_login_lookup`, `perf_logs_recent_activity`
+
+**Index Examples:**
+```sql
+-- Unique constraint index
+CREATE UNIQUE INDEX uq_users_email ON users (email);
+
+-- Foreign key index
+CREATE INDEX fk_userPermissions_users ON userPermissions (userId);
+
+-- Composite index for common queries
+CREATE INDEX idx_logs_userId_created ON logs (userId, created);
+
+-- Performance index for frequent searches
+CREATE INDEX perf_users_active_lookup ON users (isActive, lastLogin) WHERE deletedAt IS NULL;
+```
+
+**View Naming Standards:**
+- **Simple Views**: Use `v_` prefix + descriptive name: `v_activeUsers`, `v_teamSummary`
+- **Aggregate Views**: Use `v_agg_` prefix + purpose: `v_agg_userStatistics`, `v_agg_monthlyMetrics`
+- **Reporting Views**: Use `v_rpt_` prefix + report name: `v_rpt_userActivity`, `v_rpt_teamPerformance`
+- **Security Views**: Use `v_sec_` prefix + purpose: `v_sec_userPermissions`, `v_sec_auditTrail`
+
+**View Examples:**
+```sql
+-- Simple view for active users
+CREATE VIEW v_activeUsers AS
+SELECT userId, email, name, lastLogin
+FROM users 
+WHERE isActive = '1' AND deletedAt IS NULL;
+
+-- Aggregate view for user statistics
+CREATE VIEW v_agg_userStatistics AS
+SELECT 
+    COUNT(*) as totalUsers,
+    COUNT(CASE WHEN isActive = '1' THEN 1 END) as activeUsers,
+    COUNT(CASE WHEN created >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 1 END) as newUsers
+FROM users 
+WHERE deletedAt IS NULL;
+
+-- Reporting view for team performance
+CREATE VIEW v_rpt_teamPerformance AS
+SELECT 
+    t.teamId,
+    t.name as teamName,
+    COUNT(tm.userId) as memberCount,
+    AVG(u.loginFrequency) as avgLoginFrequency
+FROM teams t
+LEFT JOIN teamMembers tm ON t.teamId = tm.teamId
+LEFT JOIN users u ON tm.userId = u.userId
+WHERE t.deletedAt IS NULL
+GROUP BY t.teamId, t.name;
+```
+
+**Index Maintenance Guidelines:**
+- **Monitor Performance**: Regularly analyze slow query logs to identify missing indexes
+- **Avoid Over-Indexing**: Each index adds overhead to INSERT/UPDATE operations
+- **Composite Index Order**: Place most selective columns first in composite indexes
+- **Partial Indexes**: Use WHERE clauses in indexes for filtered queries (MySQL 8.0+)
+- **Index Documentation**: Document the purpose and queries each index serves
+
 ### Data Types
 
 1. `VARCHAR(36)` for UUID identifiers.

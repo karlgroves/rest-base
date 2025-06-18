@@ -115,3 +115,37 @@
   - Implement token rotation for long-lived sessions
   - Store tokens securely on client side (httpOnly cookies preferred over localStorage)
   - Log authentication events for security monitoring
+
+## File Size and Code Limits
+
+* **Maximum File Sizes**:
+  - **Source code files**: 1,000 lines maximum per file
+  - **Documentation files**: 2,000 lines maximum per file
+  - **Configuration files**: 500 lines maximum per file
+  - **Test files**: 1,500 lines maximum per file
+* **API Request Limits**:
+  - **JSON payload**: 10 MB maximum size
+  - **File uploads**: 50 MB maximum per file
+  - **Bulk operations**: 1,000 records maximum per request
+  - **Query parameters**: 100 parameters maximum per request
+* **Database Limits**:
+  - **Table records**: Implement pagination for queries returning >100 records
+  - **VARCHAR fields**: 255 characters default, 1,000 characters maximum for descriptions
+  - **TEXT fields**: 65,535 characters maximum (MySQL TEXT type)
+  - **LONGTEXT fields**: Use only for content requiring >65K characters
+* **Code Complexity Limits**:
+  - **Function length**: 50 lines maximum (excluding comments and whitespace)
+  - **Function parameters**: 5 parameters maximum (use object parameters for more)
+  - **Nested conditionals**: 3 levels maximum depth
+  - **Cyclomatic complexity**: 10 maximum per function
+* **API Response Limits**:
+  - **JSON response**: 5 MB maximum size
+  - **Array results**: 100 items default, 1,000 items maximum with pagination
+  - **Nested object depth**: 5 levels maximum to prevent circular references
+  - **Response timeout**: 30 seconds maximum for API responses
+* **Performance Thresholds**:
+  - **Database queries**: 2 seconds maximum execution time
+  - **API endpoints**: 5 seconds maximum response time
+  - **File processing**: 30 seconds maximum for upload/processing operations
+  - **Memory usage**: 512 MB maximum per request in production
+* **Monitoring and Alerts**: Implement alerts when approaching 80% of any defined limit

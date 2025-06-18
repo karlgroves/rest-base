@@ -1,5 +1,7 @@
 # SQL Standards and Design Patterns
 
+> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md)
+
 ## Introduction
 
 All database development for this system is built for MySQL/MariaDB, but should strive for cross-database compatibility when practical. SQL used in the application should adhere to standard SQL syntax where possible, balancing MySQL's specific features with broader compatibility. Where MySQL doesn't support the standard, the MySQL-specific approach should be used. When writing SQL, aim for compatibility with:
@@ -10,6 +12,115 @@ All database development for this system is built for MySQL/MariaDB, but should 
 4. SQLite
 
 This document outlines our SQL design patterns, naming conventions, and best practices for use with Node.js applications.
+
+## ORM vs Raw SQL Decision Matrix
+
+### When to Use Sequelize ORM
+
+**Recommended for:**
+- **CRUD Operations**: Standard create, read, update, delete operations
+- **Model Relationships**: Managing associations between tables (hasMany, belongsTo, etc.)
+- **Schema Migrations**: Database schema changes and version control
+- **Data Validation**: Built-in validation rules and type checking
+- **Connection Management**: Automatic connection pooling and transaction handling
+- **Development Speed**: Rapid prototyping and standard business logic
+- **Type Safety**: When using TypeScript with Sequelize models
+
+**Sequelize Example:**
+```javascript
+// User model with associations
+const User = sequelize.define('User', {
+  id: { type: DataTypes.UUID, primaryKey: true },
+  email: { type: DataTypes.STRING, unique: true, allowNull: false },
+  name: { type: DataTypes.STRING, allowNull: false }
+});
+
+// Simple CRUD operations
+const user = await User.findByPk(userId, {
+  include: [{ model: Team, through: 'UserTeams' }]
+});
+
+const newUser = await User.create({
+  id: uuidv4(),
+  email: 'user@example.com',
+  name: 'John Doe'
+});
+```
+
+### When to Use Raw SQL
+
+**Recommended for:**
+- **Complex Queries**: Multi-table joins with complex conditions
+- **Performance-Critical Operations**: Optimized queries for high-traffic endpoints
+- **Database-Specific Features**: MySQL-specific functions and optimizations
+- **Reporting and Analytics**: Aggregations, window functions, and complex calculations
+- **Bulk Operations**: Large data imports, exports, or batch processing
+- **Custom Optimization**: Hand-tuned queries for specific performance requirements
+- **Legacy Database Integration**: Working with existing database schemas
+
+**Raw SQL Example:**
+```javascript
+// Complex analytics query
+const monthlyStats = await sequelize.query(`
+  SELECT 
+    DATE_FORMAT(u.created, '%Y-%m') AS month,
+    COUNT(DISTINCT u.userId) AS new_users,
+    COUNT(DISTINCT l.userId) AS active_users,
+    AVG(DATEDIFF(l.lastLogin, u.created)) AS avg_days_to_activation
+  FROM users u
+  LEFT JOIN userLogins l ON u.userId = l.userId 
+    AND l.created >= u.created 
+    AND l.created <= DATE_ADD(u.created, INTERVAL 30 DAY)
+  WHERE u.created >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+  GROUP BY DATE_FORMAT(u.created, '%Y-%m')
+  ORDER BY month DESC
+`, { type: QueryTypes.SELECT });
+```
+
+### Hybrid Approach Guidelines
+
+**Best Practice Pattern:**
+```javascript
+// Use Sequelize for model definition and simple operations
+const User = sequelize.define('User', { /* ... */ });
+
+// Use raw SQL for complex queries within the same service
+class UserAnalyticsService {
+  async getUserStats(userId) {
+    // Simple operation with Sequelize
+    const user = await User.findByPk(userId);
+    
+    // Complex query with raw SQL
+    const stats = await sequelize.query(`
+      SELECT 
+        COUNT(*) as total_logins,
+        MAX(created) as last_login,
+        AVG(TIMESTAMPDIFF(SECOND, login_time, logout_time)) as avg_session_duration
+      FROM userSessions 
+      WHERE userId = :userId
+    `, {
+      replacements: { userId },
+      type: QueryTypes.SELECT
+    });
+    
+    return { user, stats: stats[0] };
+  }
+}
+```
+
+### Performance Considerations
+
+**Sequelize Optimization:**
+- Use `attributes` to select only needed columns
+- Include associations efficiently with `include`
+- Use `raw: true` for read-only operations
+- Implement proper indexing on frequently queried fields
+
+**Raw SQL Optimization:**
+- Always use parameterized queries to prevent SQL injection
+- Implement proper error handling and connection management
+- Use database-specific optimizations when appropriate
+- Monitor query performance and execution plans
 
 ## Table Structures
 

@@ -66,3 +66,124 @@ As described above, all successful responses come with an HTTP `2xx` response.
   * `method_not_allowed` is returned with all `405` responses
   * `too_many_requests` is returned with all `429` responses
   * `internal_server_error` is returned with all `500` responses
+
+## Request/Response Correlation ID Patterns
+
+### Correlation ID Implementation
+All API requests and responses should include correlation IDs for request tracking, debugging, and distributed system tracing.
+
+#### Header Format
+* **Request Header**: `X-Correlation-ID` or `X-Request-ID`
+* **Response Header**: Same correlation ID echoed back in response
+* **Generated ID Format**: UUID v4 format (`550e8400-e29b-41d4-a716-446655440000`)
+
+#### Client-Generated Correlation IDs
+```http
+GET /api/users/123
+X-Correlation-ID: 550e8400-e29b-41d4-a716-446655440000
+Accept: application/json
+Authorization: Bearer jwt-token-here
+```
+
+#### Server-Generated Correlation IDs
+When client doesn't provide correlation ID, server generates one:
+```javascript
+// Middleware to ensure correlation ID exists
+const correlationMiddleware = (req, res, next) => {
+  const correlationId = req.headers['x-correlation-id'] || 
+                       req.headers['x-request-id'] || 
+                       uuidv4();
+  
+  req.correlationId = correlationId;
+  res.set('X-Correlation-ID', correlationId);
+  next();
+};
+```
+
+#### Response Header Example
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Correlation-ID: 550e8400-e29b-41d4-a716-446655440000
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 999
+
+{
+  "data": {
+    "id": "123",
+    "email": "user@example.com"
+  }
+}
+```
+
+### Error Response Correlation
+Error responses must include correlation ID for troubleshooting:
+```json
+{
+  "error": {
+    "code": "not_found",
+    "message": "User not found",
+    "correlationId": "550e8400-e29b-41d4-a716-446655440000",
+    "timestamp": "2024-01-15T10:30:00Z"
+  }
+}
+```
+
+### Logging Integration
+Include correlation ID in all log messages for request tracing:
+```javascript
+// Logger with correlation ID
+const logger = winston.createLogger({
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.printf(({ timestamp, level, message, correlationId, ...meta }) => {
+      return `${timestamp} [${correlationId}] ${level}: ${message} ${JSON.stringify(meta)}`;
+    })
+  )
+});
+
+// Usage in request handler
+app.get('/api/users/:id', (req, res) => {
+  logger.info('Fetching user', { 
+    correlationId: req.correlationId,
+    userId: req.params.id,
+    userAgent: req.get('User-Agent')
+  });
+});
+```
+
+### Microservices Propagation
+Pass correlation ID through service calls:
+```javascript
+// Service-to-service call
+const fetchUserProfile = async (userId, correlationId) => {
+  const response = await axios.get(`${profileServiceUrl}/users/${userId}`, {
+    headers: {
+      'X-Correlation-ID': correlationId,
+      'Authorization': `Bearer ${serviceToken}`
+    }
+  });
+  return response.data;
+};
+```
+
+### Database Query Correlation
+Include correlation ID in database query logging:
+```javascript
+// Sequelize with correlation ID
+const user = await User.findByPk(userId, {
+  logging: (sql) => logger.debug('Database query', {
+    correlationId: req.correlationId,
+    sql: sql,
+    operation: 'findByPk'
+  })
+});
+```
+
+### Correlation ID Best Practices
+* **Uniqueness**: Use UUID v4 to ensure global uniqueness
+* **Propagation**: Pass correlation ID through all service layers
+* **Persistence**: Store correlation ID with async operations and background jobs
+* **Client Libraries**: Provide SDKs that automatically generate correlation IDs
+* **Monitoring**: Use correlation IDs for distributed tracing and error tracking
+* **Documentation**: Include correlation ID examples in API documentation

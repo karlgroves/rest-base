@@ -1,5 +1,7 @@
 # Node.js structure and naming conventions
 
+> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md) | [📊 SQL Standards](./sql-standards-and-patterns.md)
+
 ## On the Applicability of these Standards
 
 All work performed on the project shall conform to these standards, without exception. Failure to conform to these standards will result in denial of the work delivered until the delivered code conforms to these standards.

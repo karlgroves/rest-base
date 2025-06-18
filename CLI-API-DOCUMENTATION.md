@@ -1,5 +1,7 @@
 # CLI API Documentation
 
+> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [🤖 CLAUDE.md](./CLAUDE.md)
+
 This document provides comprehensive API documentation for the REST-SPEC CLI tools.
 
 ## Overview

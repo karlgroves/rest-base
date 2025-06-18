@@ -108,18 +108,26 @@ npm run create-project my-new-project
 npm run setup-standards ../path/to/existing-project
 ```
 
-## Standards Files
+## Documentation Navigation
 
-The key standards files in this repository are:
+### Standards and Guidelines
+- [📋 **Global Rules**](./global-rules.md) - Project-wide standards and conventions
+- [🏗️ **Node.js Structure & Naming**](./node_structure_and_naming_conventions.md) - Code organization and naming conventions
+- [🛡️ **Technologies**](./technologies.md) - Approved technologies, frameworks, and dependencies
+- [📊 **SQL Standards**](./sql-standards-and-patterns.md) - Database design patterns and SQL conventions
 
-- [`node_structure_and_naming_conventions.md`](./node_structure_and_naming_conventions.md) - Node.js coding standards
-- [`sql-standards-and-patterns.md`](./sql-standards-and-patterns.md) - Database design and SQL standards
-- [`technologies.md`](./technologies.md) - Approved technologies and dependencies
-- [`operations-and-responses.md`](./operations-and-responses.md) - API response formats
-- [`request.md`](./request.md) - API request patterns
-- [`validation.md`](./validation.md) - Input validation requirements
-- [`global-rules.md`](./global-rules.md) - Project-wide standards
-- [`CLAUDE.md`](./CLAUDE.md) - Guide for AI assistants working with the codebase
+### API Design
+- [🔄 **Operations & Responses**](./operations-and-responses.md) - REST API response formats and patterns
+- [📨 **Request Patterns**](./request.md) - API request structure and conventions
+- [✅ **Validation**](./validation.md) - Input validation requirements and patterns
+
+### Development Tools
+- [⚙️ **CLI API Documentation**](./CLI-API-DOCUMENTATION.md) - Complete guide to REST-SPEC CLI tools
+- [🤖 **CLAUDE.md**](./CLAUDE.md) - Guidelines for AI assistants working with this codebase
+- [🎨 **Visual Design Requirements**](./visual-design-requirements.md) - UI/UX standards and guidelines
+
+### Project Management
+- [📝 **TODO List**](./todo.md) - Current development tasks and improvements
 
 ## Troubleshooting
 

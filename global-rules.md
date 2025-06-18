@@ -1,5 +1,9 @@
 # Global Rules
 
+> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [🔄 API Operations](./operations-and-responses.md) | [📨 Request Patterns](./request.md)
+
+## Authentication and Security
+
 * All requests to the API (other than the authentication and register routes) must have a JWT bearer token.
 * All requests **should** have `Accept-Language` header set to a supported ISO 2-character language code.
 * All responses **must** have `Content-Language` header set to an ISO 2-character language code which matches the `Accept-Language` header OR which defaults to `en`.

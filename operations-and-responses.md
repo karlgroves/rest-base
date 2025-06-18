@@ -1,5 +1,7 @@
 # Operations and Responses
 
+> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) | [📨 Request Patterns](./request.md) | [✅ Validation](./validation.md)
+
 ## HTTP Status Codes
 
 This API uses the following HTTP status codes in the HTTP Response Headers:

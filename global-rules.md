@@ -21,3 +21,27 @@
 * All routes **should** use `Content-Encoding: gzip`
 * All dates & times **should** be stored in the database as UTC timestamps
 * All dates & times, when returned by the API, **should** be RFC 3339 formatted.
+
+## Rate Limiting
+
+* **Rate Limit Policy**: API endpoints are protected by rate limiting to ensure fair usage and prevent abuse.
+* **Default Limits**:
+  - **Authenticated users**: 1,000 requests per hour per user
+  - **Unauthenticated users**: 100 requests per hour per IP address
+  - **Administrative endpoints**: 100 requests per hour per user
+* **Rate Limit Headers**: All responses include rate limiting information:
+  - `X-RateLimit-Limit`: Maximum number of requests allowed in the time window
+  - `X-RateLimit-Remaining`: Number of requests remaining in the current window
+  - `X-RateLimit-Reset`: Unix timestamp when the rate limit window resets
+  - `Retry-After`: Number of seconds to wait before making another request (included when rate limited)
+* **Rate Limit Responses**: When rate limits are exceeded:
+  - Status Code: `429 Too Many Requests`
+  - Response Body: Standard error format with `too_many_requests` code
+  - Retry-After header with recommended wait time
+* **Rate Limit Bypass**: Premium tier users and internal services may have higher limits or bypass rate limiting entirely
+* **Endpoint-Specific Limits**: Critical endpoints may have stricter limits:
+  - Authentication endpoints: 10 attempts per 15 minutes per IP
+  - Password reset: 5 attempts per hour per email address
+  - File upload endpoints: 20 requests per hour per user
+* **Burst Handling**: Short bursts above the limit are allowed using a token bucket algorithm
+* **Monitoring**: Rate limit violations are logged and monitored for security analysis

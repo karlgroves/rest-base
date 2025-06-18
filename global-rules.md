@@ -77,3 +77,41 @@
   ```javascript
   const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'];
   ```
+
+## JWT Bearer Token Format
+
+* **Token Structure**: All JWT bearer tokens must follow the standard JWT format with three base64url-encoded parts separated by dots
+* **Header Format**: Standard JWT header specifying algorithm and token type:
+  ```json
+  {
+    "alg": "HS256",
+    "typ": "JWT"
+  }
+  ```
+* **Payload Claims**: Required and optional claims for API access:
+  ```json
+  {
+    "sub": "user-uuid-here",
+    "email": "user@example.com",
+    "role": "user|admin|premium",
+    "iat": 1609459200,
+    "exp": 1609545600,
+    "iss": "api.example.com",
+    "aud": "api.example.com"
+  }
+  ```
+* **Authorization Header**: Bearer token format in request headers:
+  ```
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLXV1aWQtaGVyZSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjA5NDU5MjAwLCJleHAiOjE2MDk1NDU2MDAsImlzcyI6ImFwaS5leGFtcGxlLmNvbSIsImF1ZCI6ImFwaS5leGFtcGxlLmNvbSJ9.signature-hash-here
+  ```
+* **Token Validation Requirements**:
+  - Verify signature using secret key
+  - Check expiration time (`exp` claim)
+  - Validate issuer (`iss`) and audience (`aud`) claims
+  - Ensure token is not in blacklist/revocation list
+* **Token Refresh**: Refresh tokens should be separate, longer-lived tokens stored securely
+* **Security Considerations**:
+  - Use strong, randomly generated secret keys (minimum 256 bits)
+  - Implement token rotation for long-lived sessions
+  - Store tokens securely on client side (httpOnly cookies preferred over localStorage)
+  - Log authentication events for security monitoring

@@ -45,3 +45,35 @@
   - File upload endpoints: 20 requests per hour per user
 * **Burst Handling**: Short bursts above the limit are allowed using a token bucket algorithm
 * **Monitoring**: Rate limit violations are logged and monitored for security analysis
+
+## CORS (Cross-Origin Resource Sharing) Policy
+
+* **CORS Configuration**: All API endpoints must implement proper CORS headers to control cross-origin access.
+* **Allowed Origins**: Configure specific allowed origins rather than using wildcard (`*`) in production:
+  - Development: `http://localhost:3000`, `http://localhost:3001` (for local development)
+  - Staging: `https://staging.example.com`, `https://staging-admin.example.com`
+  - Production: `https://app.example.com`, `https://admin.example.com`
+* **Allowed Methods**: Explicitly specify allowed HTTP methods:
+  - Standard endpoints: `GET`, `POST`, `PUT`, `DELETE`, `HEAD`, `OPTIONS`
+  - Administrative endpoints: `GET`, `POST`, `PUT`, `DELETE` (no HEAD/OPTIONS for security)
+* **Allowed Headers**: Define permitted request headers:
+  - Required: `Content-Type`, `Authorization`, `Accept`, `Accept-Language`
+  - Optional: `X-Requested-With`, `Cache-Control`, `X-Client-Version`
+* **Exposed Headers**: Specify which response headers clients can access:
+  - `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`
+  - `Content-Language`, `Content-Length`, `Date`
+  - `Location` (for 201/202 responses), `Retry-After` (for 429 responses)
+* **Credentials Handling**: 
+  - `Access-Control-Allow-Credentials: true` for authenticated endpoints
+  - Cookie-based authentication requires explicit origin allowlist (no wildcards)
+* **Preflight Caching**: Set appropriate `Access-Control-Max-Age` header:
+  - Development: 300 seconds (5 minutes) for faster iteration
+  - Production: 86400 seconds (24 hours) for performance
+* **Security Considerations**:
+  - Never use `Access-Control-Allow-Origin: *` with credentials
+  - Validate Origin header against allowlist before setting CORS headers
+  - Log and monitor unauthorized CORS requests for security analysis
+* **Environment-Specific Configuration**: Use environment variables for CORS origins:
+  ```javascript
+  const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'];
+  ```

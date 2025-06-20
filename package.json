@@ -4,7 +4,9 @@
   "description": "An opinionated standard for RESTful projects",
   "bin": {
     "rest-base-setup": "./scripts/setup-standards.js",
-    "rest-base-create": "./scripts/create-project.js"
+    "rest-base-create": "./scripts/create-project.js",
+    "rest-base-create-enhanced": "./scripts/create-project-enhanced.js",
+    "rest-base-setup-enhanced": "./scripts/setup-standards-enhanced.js"
   },
   "scripts": {
     "lint:md": "markdownlint *.md",
@@ -18,7 +20,8 @@
     "setup-standards": "node ./scripts/setup-standards.js",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "build:watch": "tsc --watch"
+    "build:watch": "tsc --watch",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -40,6 +43,11 @@
     "url": "https://github.com/karlgroves/rest-base/issues"
   },
   "homepage": "https://github.com/karlgroves/rest-base#readme",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.12",
+    "ora": "^7.0.1"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.32",
@@ -55,5 +63,22 @@
     "prettier": "^3.1.0",
     "supertest": "^6.3.3",
     "typescript": "^5.8.3"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.md": [
+      "markdownlint --fix",
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --write"
+    ]
   }
 }

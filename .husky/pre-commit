@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run lint-staged for code formatting and linting
+npx lint-staged
+
+# Run npm audit to check for security vulnerabilities
+echo "Running security audit..."
+npm audit --audit-level=high
+
+# If npm audit fails, show the issues but allow commit with warning
+if [ $? -ne 0 ]; then
+  echo "⚠️  Security vulnerabilities found! Please review and fix them soon."
+  echo "   Run 'npm audit fix' to attempt automatic fixes."
+  # Allow commit to proceed but warn the developer
+fi

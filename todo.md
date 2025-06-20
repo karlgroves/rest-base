@@ -1,9 +1,9 @@
 # TODO: REST-SPEC Improvements
 
 This document contains suggested improvements after a
- comprehensive code review of the REST-SPEC project,
- evaluating performance, security, maintainability,
- accessibility, and adherence to project standards.
+comprehensive code review of the REST-SPEC project,
+evaluating performance, security, maintainability,
+accessibility, and adherence to project standards.
 
 ## Critical Security Issues
 
@@ -154,7 +154,7 @@ This document contains suggested improvements after a
 
 ### 1. Dependency Management
 
-- [ ] Add npm audit to pre-commit hooks
+- [x] Add npm audit to pre-commit hooks
 - [ ] Implement dependency version locking
 - [ ] Add security policy documentation
 - [ ] Create automated dependency updates

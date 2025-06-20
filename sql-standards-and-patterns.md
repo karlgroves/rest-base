@@ -6,12 +6,26 @@
 
 All database development for this system is built for MySQL/MariaDB, but should strive for cross-database compatibility when practical. SQL used in the application should adhere to standard SQL syntax where possible, balancing MySQL's specific features with broader compatibility. Where MySQL doesn't support the standard, the MySQL-specific approach should be used. When writing SQL, aim for compatibility with:
 
-1. MySQL/MariaDB (primary)
+1. MySQL 8.0.40+ / MariaDB 10.11+ (primary)
 2. PostgreSQL
 3. Oracle
 4. SQLite
 
 This document outlines our SQL design patterns, naming conventions, and best practices for use with Node.js applications.
+
+### MySQL 8.0.40 Compatibility
+
+This project requires MySQL 8.0.40 or higher to take advantage of:
+
+- **Common Table Expressions (CTEs)**: For improved query readability and recursive queries
+- **Window Functions**: For advanced analytics and reporting
+- **JSON Functions**: Enhanced JSON data type support and manipulation
+- **Improved Performance**: Better query optimizer and execution engine
+- **Enhanced Security**: Improved authentication plugins and encryption
+- **CHECK Constraints**: Native support for CHECK constraints
+- **Instant DDL**: Faster ALTER TABLE operations for certain changes
+
+When using MySQL-specific features, ensure they are available in MySQL 8.0.40+.
 
 ## ORM vs Raw SQL Decision Matrix
 

@@ -3,7 +3,7 @@
 ## Core Technologies
 
 * **Backend Framework**: Node.js with Express.js
-* **Database**: MySQL/MariaDB with Sequelize ORM
+* **Database**: MySQL 8.0.40+ / MariaDB 10.11+ with Sequelize ORM
 * **Deployment**: Node, Nginx, and PM2
 * **CI/CD**: Travis CI for automated build, test, and deploy tasks
 * **Package Management**: NPM with Semantic Versioning

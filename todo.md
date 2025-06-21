@@ -188,7 +188,7 @@ accessibility, and adherence to project standards.
 
 ### 2. Community Building
 
-- [ ] Add contribution guidelines
+- [x] Add contribution guidelines
 - [ ] Create code of conduct
 
 ### 3. Tooling Expansion

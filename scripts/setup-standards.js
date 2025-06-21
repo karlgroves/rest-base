@@ -13,6 +13,7 @@ const fs = require("fs").promises;
 const path = require("path");
 const { spawn } = require("child_process");
 const { getEslintConfigString } = require("../shared/eslint-config");
+const UpdateChecker = require("../shared/update-checker");
 
 // Define colors for terminal output
 const colors = {
@@ -420,6 +421,14 @@ async function performSetupRollback(targetDir, config) {
  */
 async function main() {
   const args = process.argv.slice(2);
+
+  // Check for updates (non-blocking)
+  const updateChecker = new UpdateChecker();
+  if (!(await updateChecker.isUpdateCheckingDisabled())) {
+    updateChecker.checkForUpdates().catch(() => {
+      // Ignore update check failures
+    });
+  }
 
   let targetDir;
   try {

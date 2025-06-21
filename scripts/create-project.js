@@ -13,6 +13,7 @@ const fsSync = require("fs");
 const path = require("path");
 const { spawn } = require("child_process");
 const { pipeline } = require("stream/promises");
+const UpdateChecker = require("../shared/update-checker");
 
 // Mock functions for missing dependencies
 const getEslintConfigString = () => "module.exports = {};";
@@ -852,6 +853,14 @@ async function performRollback(projectDir, projectName) {
  */
 async function main() {
   const args = process.argv.slice(2);
+
+  // Check for updates (non-blocking)
+  const updateChecker = new UpdateChecker();
+  if (!(await updateChecker.isUpdateCheckingDisabled())) {
+    updateChecker.checkForUpdates().catch(() => {
+      // Ignore update check failures
+    });
+  }
 
   if (args.length === 0) {
     log("Please provide a project name", colors.red);

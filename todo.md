@@ -127,7 +127,7 @@ accessibility, and adherence to project standards.
 - [x] Add auto-completion for CLI commands
 - [x] Create VS Code extension with snippets
 - [ ] Add project scaffolding templates
-- [ ] Implement update notifications
+- [x] Implement update notifications
 
 ### 3. Safety Features
 

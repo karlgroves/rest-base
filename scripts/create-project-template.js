@@ -11,6 +11,7 @@
 const fs = require("fs").promises;
 const path = require("path");
 const readline = require("readline");
+const UpdateChecker = require("../shared/update-checker");
 
 class ProjectGenerator {
   constructor() {
@@ -120,6 +121,14 @@ class ProjectGenerator {
   async createProject() {
     console.log("🚀 REST-SPEC Project Generator");
     console.log("===============================\\n");
+
+    // Check for updates (non-blocking)
+    const updateChecker = new UpdateChecker();
+    if (!(await updateChecker.isUpdateCheckingDisabled())) {
+      updateChecker.checkForUpdates().catch(() => {
+        // Ignore update check failures
+      });
+    }
 
     try {
       // Get project details

@@ -7,7 +7,8 @@
     "rest-base-create": "./scripts/create-project.js",
     "rest-base-create-enhanced": "./scripts/create-project-enhanced.js",
     "rest-base-setup-enhanced": "./scripts/setup-standards-enhanced.js",
-    "rest-spec-create": "./scripts/create-project-template.js"
+    "rest-spec-create": "./scripts/create-project-template.js",
+    "rest-spec-update": "./scripts/update-manager.js"
   },
   "scripts": {
     "lint:md": "markdownlint *.md",
@@ -20,6 +21,7 @@
     "create-project": "node ./scripts/create-project.js",
     "create-project-template": "node ./scripts/create-project-template.js",
     "setup-standards": "node ./scripts/setup-standards.js",
+    "update": "node ./scripts/update-manager.js",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
     "build:watch": "tsc --watch",

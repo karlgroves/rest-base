@@ -1,0 +1,146 @@
+{
+  "name": "rest-spec-snippets",
+  "displayName": "REST-SPEC Code Snippets",
+  "description": "Code snippets and utilities for REST-SPEC development",
+  "version": "1.0.0",
+  "publisher": "rest-spec",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Snippets",
+    "Other"
+  ],
+  "keywords": [
+    "rest",
+    "api",
+    "express",
+    "nodejs",
+    "snippets",
+    "templates"
+  ],
+  "contributes": {
+    "snippets": [
+      {
+        "language": "javascript",
+        "path": "./snippets/javascript.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./snippets/typescript.json"
+      },
+      {
+        "language": "json",
+        "path": "./snippets/json.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "rest-spec.createController",
+        "title": "Create REST Controller",
+        "category": "REST-SPEC"
+      },
+      {
+        "command": "rest-spec.createMiddleware",
+        "title": "Create Middleware",
+        "category": "REST-SPEC"
+      },
+      {
+        "command": "rest-spec.createModel",
+        "title": "Create Sequelize Model",
+        "category": "REST-SPEC"
+      },
+      {
+        "command": "rest-spec.createRoute",
+        "title": "Create Express Route",
+        "category": "REST-SPEC"
+      },
+      {
+        "command": "rest-spec.createTest",
+        "title": "Create Test File",
+        "category": "REST-SPEC"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "submenu": "rest-spec.submenu",
+          "group": "2_workspace"
+        }
+      ],
+      "rest-spec.submenu": [
+        {
+          "command": "rest-spec.createController"
+        },
+        {
+          "command": "rest-spec.createMiddleware"
+        },
+        {
+          "command": "rest-spec.createModel"
+        },
+        {
+          "command": "rest-spec.createRoute"
+        },
+        {
+          "command": "rest-spec.createTest"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "rest-spec.submenu",
+        "label": "REST-SPEC"
+      }
+    ],
+    "configuration": {
+      "title": "REST-SPEC",
+      "properties": {
+        "rest-spec.defaultAuthor": {
+          "type": "string",
+          "default": "",
+          "description": "Default author name for generated files"
+        },
+        "rest-spec.useTypeScript": {
+          "type": "boolean",
+          "default": false,
+          "description": "Generate TypeScript files by default"
+        },
+        "rest-spec.includeJSDoc": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include JSDoc comments in generated code"
+        }
+      }
+    }
+  },
+  "activationEvents": [
+    "onCommand:rest-spec.createController",
+    "onCommand:rest-spec.createMiddleware",
+    "onCommand:rest-spec.createModel",
+    "onCommand:rest-spec.createRoute",
+    "onCommand:rest-spec.createTest"
+  ],
+  "main": "./extension.js",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@vscode/test-electron": "^2.2.0",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rest-spec/rest-spec.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rest-spec/rest-spec/issues"
+  },
+  "homepage": "https://github.com/rest-spec/rest-spec#readme",
+  "license": "MIT"
+}

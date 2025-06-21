@@ -125,7 +125,7 @@ accessibility, and adherence to project standards.
 ### 2. Development Experience
 
 - [x] Add auto-completion for CLI commands
-- [ ] Create VS Code extension with snippets
+- [x] Create VS Code extension with snippets
 - [ ] Add project scaffolding templates
 - [ ] Implement update notifications
 

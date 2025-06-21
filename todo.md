@@ -116,11 +116,11 @@ accessibility, and adherence to project standards.
 
 ### 1. CLI Improvements
 
-- [ ] Add dry-run mode to preview changes
-- [ ] Implement interactive mode for confirmations
-- [ ] Add configuration file support
-- [ ] Create rollback functionality
-- [ ] Add support for custom templates
+- [x] Add dry-run mode to preview changes
+- [x] Implement interactive mode for confirmations
+- [x] Add configuration file support
+- [x] Create rollback functionality
+- [x] Add support for custom templates
 
 ### 2. Development Experience
 

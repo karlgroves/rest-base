@@ -6,7 +6,8 @@
     "rest-base-setup": "./scripts/setup-standards.js",
     "rest-base-create": "./scripts/create-project.js",
     "rest-base-create-enhanced": "./scripts/create-project-enhanced.js",
-    "rest-base-setup-enhanced": "./scripts/setup-standards-enhanced.js"
+    "rest-base-setup-enhanced": "./scripts/setup-standards-enhanced.js",
+    "rest-spec-create": "./scripts/create-project-template.js"
   },
   "scripts": {
     "lint:md": "markdownlint *.md",
@@ -17,6 +18,7 @@
     "test:coverage": "jest --coverage",
     "format": "prettier --write *.md scripts/**/*.js",
     "create-project": "node ./scripts/create-project.js",
+    "create-project-template": "node ./scripts/create-project-template.js",
     "setup-standards": "node ./scripts/setup-standards.js",
     "typecheck": "tsc --noEmit",
     "build": "tsc",

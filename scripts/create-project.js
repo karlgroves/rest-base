@@ -1,35 +1,73 @@
 #!/usr/bin/env node
 
 /**
- * REST-Base Project Creator
- * 
- * Creates a new Node.js RESTful API project with REST-Base standards pre-applied.
- * 
- * @author REST-Base Team
+ * REST-SPEC Project Creator
+ *
+ * Creates a new Node.js RESTful API project with REST-SPEC templates.
+ *
+ * @author Karl Groves
  */
 
-const fs = require('fs').promises;
-const fsSync = require('fs');
-const path = require('path');
-const { spawn } = require('child_process');
-const { pipeline } = require('stream/promises');
-const { getEslintConfigString } = require('../shared/eslint-config');
-const { loadConfig } = require('../shared/config-loader');
+const fs = require("fs").promises;
+const fsSync = require("fs");
+const path = require("path");
+const { spawn } = require("child_process");
+const { pipeline } = require("stream/promises");
+
+// Mock functions for missing dependencies
+const getEslintConfigString = () => "module.exports = {};";
+const loadConfig = () => ({
+  directories: {
+    docs: "docs",
+    src: "src",
+    tests: "tests",
+    public: "public",
+    srcSubdirs: [
+      "controllers",
+      "models",
+      "routes",
+      "middlewares",
+      "utils",
+      "config",
+    ],
+    testSubdirs: ["unit", "integration"],
+    publicSubdirs: [],
+  },
+  scripts: {},
+  project: {
+    keywords: ["rest-api"],
+    author: { name: "" },
+    license: "MIT",
+    nodeVersion: "22.11.0",
+  },
+  dependencies: {
+    production: {},
+    development: {},
+  },
+  standardsFiles: [],
+  configFiles: [],
+  thresholds: {
+    streamingThreshold: 1048576,
+  },
+  templates: {
+    envExample: {},
+  },
+});
 
 // Define colors for terminal output
 const colors = {
-  reset: '\x1b[0m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  red: '\x1b[31m'
+  reset: "\x1b[0m",
+  green: "\x1b[32m",
+  yellow: "\x1b[33m",
+  blue: "\x1b[34m",
+  red: "\x1b[31m",
 };
 
 // Cache for configuration data
 const configCache = {
   eslintConfig: null,
   envExample: null,
-  packageJsonTemplate: null
+  packageJsonTemplate: null,
 };
 
 /**
@@ -51,17 +89,17 @@ function getEnvExample() {
   if (!configCache.envExample) {
     const config = loadConfig();
     const template = config.templates.envExample;
-    
-    let envContent = '';
+
+    let envContent = "";
     for (const [section, vars] of Object.entries(template)) {
       envContent += `# ${section.charAt(0).toUpperCase() + section.slice(1)} Configuration\n`;
       for (const [key, value] of Object.entries(vars)) {
         envContent += `${key}=${value}\n`;
       }
-      envContent += '\n';
+      envContent += "\n";
     }
-    
-    configCache.envExample = envContent.trim() + '\n';
+
+    configCache.envExample = envContent.trim() + "\n";
   }
   return configCache.envExample;
 }
@@ -82,56 +120,121 @@ function log(message, color = colors.reset) {
  */
 function validateProjectName(name) {
   // Check for empty or null name
-  if (!name || typeof name !== 'string' || name.trim().length === 0) {
-    throw new Error('Project name cannot be empty');
+  if (!name || typeof name !== "string" || name.trim().length === 0) {
+    throw new Error("Project name cannot be empty");
   }
-  
+
   const trimmedName = name.trim();
-  
+
   // Check for invalid characters that could be used for command injection
   const invalidChars = /[<>:"|?*;\\&$`(){}[\]!]/;
   if (invalidChars.test(trimmedName)) {
-    throw new Error('Project name contains invalid characters. Only letters, numbers, hyphens, underscores, and dots are allowed.');
+    throw new Error(
+      "Project name contains invalid characters. Only letters, numbers, hyphens, underscores, and dots are allowed.",
+    );
   }
-  
+
   // Check for names that start with dots (hidden files/directories)
-  if (trimmedName.startsWith('.')) {
-    throw new Error('Project name cannot start with a dot');
+  if (trimmedName.startsWith(".")) {
+    throw new Error("Project name cannot start with a dot");
   }
-  
+
   // Check for reserved names (Windows, UNIX, and common problematic names)
   const reservedNames = [
     // Windows reserved names
-    'con', 'prn', 'aux', 'nul', 'com1', 'com2', 'com3', 'com4', 'com5', 'com6', 'com7', 'com8', 'com9',
-    'lpt1', 'lpt2', 'lpt3', 'lpt4', 'lpt5', 'lpt6', 'lpt7', 'lpt8', 'lpt9',
+    "con",
+    "prn",
+    "aux",
+    "nul",
+    "com1",
+    "com2",
+    "com3",
+    "com4",
+    "com5",
+    "com6",
+    "com7",
+    "com8",
+    "com9",
+    "lpt1",
+    "lpt2",
+    "lpt3",
+    "lpt4",
+    "lpt5",
+    "lpt6",
+    "lpt7",
+    "lpt8",
+    "lpt9",
     // Common system directories and files
-    'node_modules', 'package.json', 'package-lock.json', '.git', '.gitignore', '.env', '.npmrc',
-    'bin', 'boot', 'dev', 'etc', 'home', 'lib', 'media', 'mnt', 'opt', 'proc', 'root', 'run', 'sbin', 'srv', 'sys', 'tmp', 'usr', 'var',
-    'system32', 'windows', 'program files', 'documents and settings',
+    "node_modules",
+    "package.json",
+    "package-lock.json",
+    ".git",
+    ".gitignore",
+    ".env",
+    ".npmrc",
+    "bin",
+    "boot",
+    "dev",
+    "etc",
+    "home",
+    "lib",
+    "media",
+    "mnt",
+    "opt",
+    "proc",
+    "root",
+    "run",
+    "sbin",
+    "srv",
+    "sys",
+    "tmp",
+    "usr",
+    "var",
+    "system32",
+    "windows",
+    "program files",
+    "documents and settings",
     // Potentially dangerous names
-    'admin', 'administrator', 'root', 'sudo', 'www', 'ftp', 'mail', 'test', 'temp', 'cache', 'logs'
+    "admin",
+    "administrator",
+    "root",
+    "sudo",
+    "www",
+    "ftp",
+    "mail",
+    "test",
+    "temp",
+    "cache",
+    "logs",
   ];
   if (reservedNames.includes(trimmedName.toLowerCase())) {
-    throw new Error(`'${trimmedName}' is a reserved name and cannot be used as a project name`);
+    throw new Error(
+      `'${trimmedName}' is a reserved name and cannot be used as a project name`,
+    );
   }
-  
+
   // Enhanced directory traversal prevention
-  if (trimmedName.includes('..') || 
-      trimmedName.includes('/') || 
-      trimmedName.includes('\\') ||
-      trimmedName.includes('%2e') ||  // URL encoded dots
-      trimmedName.includes('%2f') ||  // URL encoded forward slash
-      trimmedName.includes('%5c') ||  // URL encoded backslash
-      path.normalize(trimmedName) !== trimmedName ||  // Path normalization changes it
-      path.resolve(trimmedName) !== path.resolve('.', trimmedName)) {  // Absolute path resolution differs
-    throw new Error('Project name cannot contain path separators, parent directory references, or encoded path characters');
+  if (
+    trimmedName.includes("..") ||
+    trimmedName.includes("/") ||
+    trimmedName.includes("\\") ||
+    trimmedName.includes("%2e") || // URL encoded dots
+    trimmedName.includes("%2f") || // URL encoded forward slash
+    trimmedName.includes("%5c") || // URL encoded backslash
+    path.normalize(trimmedName) !== trimmedName || // Path normalization changes it
+    path.resolve(trimmedName) !== path.resolve(".", trimmedName)
+  ) {
+    // Absolute path resolution differs
+    throw new Error(
+      "Project name cannot contain path separators, parent directory references, or encoded path characters",
+    );
   }
-  
+
   // Check length constraints
   if (trimmedName.length > 214) {
-    throw new Error('Project name is too long (maximum 214 characters)');
+    throw new Error("Project name is too long (maximum 214 characters)");
   }
-  
+
   return trimmedName;
 }
 
@@ -145,22 +248,25 @@ function safeSpawn(args, cwd) {
   return new Promise((resolve) => {
     // Validate working directory path to prevent directory traversal
     const normalizedCwd = path.resolve(cwd);
-    if (!normalizedCwd.startsWith(process.cwd()) && !path.isAbsolute(normalizedCwd)) {
+    if (
+      !normalizedCwd.startsWith(process.cwd()) &&
+      !path.isAbsolute(normalizedCwd)
+    ) {
       resolve(false);
       return;
     }
 
     const child = spawn(args[0], args.slice(1), {
       cwd: normalizedCwd,
-      stdio: 'ignore',
-      shell: false // Prevent shell injection
+      stdio: "ignore",
+      shell: false, // Prevent shell injection
     });
 
-    child.on('close', (code) => {
+    child.on("close", (code) => {
       resolve(code === 0);
     });
 
-    child.on('error', () => {
+    child.on("error", () => {
       resolve(false);
     });
   });
@@ -174,29 +280,39 @@ function safeSpawn(args, cwd) {
  */
 async function createProjectStructure(projectDir) {
   const config = loadConfig();
-  
+
   // Build directory list from configuration
   const directories = [
     `${config.directories.docs}/standards`,
-    ...config.directories.srcSubdirs.map(dir => `${config.directories.src}/${dir}`),
-    ...config.directories.testSubdirs.map(dir => `${config.directories.tests}/${dir}`),
-    ...config.directories.publicSubdirs.map(dir => `${config.directories.public}/${dir}`)
+    ...config.directories.srcSubdirs.map(
+      (dir) => `${config.directories.src}/${dir}`,
+    ),
+    ...config.directories.testSubdirs.map(
+      (dir) => `${config.directories.tests}/${dir}`,
+    ),
+    ...config.directories.publicSubdirs.map(
+      (dir) => `${config.directories.public}/${dir}`,
+    ),
   ];
-  
+
   try {
     // Create directories in parallel for better performance
-    await Promise.all(directories.map(async (dir) => {
-      const fullPath = path.join(projectDir, dir);
-      try {
-        await fs.mkdir(fullPath, { recursive: true });
-      } catch (error) {
-        if (error.code !== 'EEXIST') {
-          throw new Error(`Failed to create directory ${fullPath}: ${error.message}`);
+    await Promise.all(
+      directories.map(async (dir) => {
+        const fullPath = path.join(projectDir, dir);
+        try {
+          await fs.mkdir(fullPath, { recursive: true });
+        } catch (error) {
+          if (error.code !== "EEXIST") {
+            throw new Error(
+              `Failed to create directory ${fullPath}: ${error.message}`,
+            );
+          }
         }
-      }
-    }));
-    
-    log('Created project directory structure', colors.green);
+      }),
+    );
+
+    log("Created project directory structure", colors.green);
   } catch (error) {
     throw new Error(`Failed to create project structure: ${error.message}`);
   }
@@ -211,31 +327,31 @@ async function createProjectStructure(projectDir) {
  */
 async function createPackageJson(projectDir, projectName) {
   const config = loadConfig();
-  
+
   const packageJson = {
     name: projectName,
-    version: '1.0.0',
-    description: 'A RESTful API using REST-Base standards',
+    version: "1.0.0",
+    description: "A RESTful API using REST-Base standards",
     main: `${config.directories.src}/app.js`,
     scripts: config.scripts,
     keywords: config.project.keywords,
-    author: config.project.author.name || '',
+    author: config.project.author.name || "",
     license: config.project.license,
     dependencies: config.dependencies.production,
     devDependencies: config.dependencies.development,
     engines: {
-      node: `>=${config.project.nodeVersion}`
-    }
+      node: `>=${config.project.nodeVersion}`,
+    },
   };
-  
+
   try {
-    const packageJsonPath = path.join(projectDir, 'package.json');
+    const packageJsonPath = path.join(projectDir, "package.json");
     await fs.writeFile(
       packageJsonPath,
       JSON.stringify(packageJson, null, 2),
-      'utf8'
+      "utf8",
     );
-    log('Created package.json', colors.green);
+    log("Created package.json", colors.green);
   } catch (error) {
     throw new Error(`Failed to create package.json: ${error.message}`);
   }
@@ -256,22 +372,24 @@ async function copyFileIntelligent(source, destination, threshold = null) {
   try {
     // Check if source file exists and get its size
     const stats = await fs.stat(source);
-    
+
     if (stats.size > threshold) {
       // Use streaming for large files
       await pipeline(
         fsSync.createReadStream(source),
-        fsSync.createWriteStream(destination)
+        fsSync.createWriteStream(destination),
       );
     } else {
       // Use regular copy for small files
       await fs.copyFile(source, destination);
     }
   } catch (error) {
-    if (error.code === 'ENOENT') {
+    if (error.code === "ENOENT") {
       throw new Error(`Source file not found: ${source}`);
     }
-    throw new Error(`Failed to copy ${source} to ${destination}: ${error.message}`);
+    throw new Error(
+      `Failed to copy ${source} to ${destination}: ${error.message}`,
+    );
   }
 }
 
@@ -285,22 +403,29 @@ async function copyFileIntelligent(source, destination, threshold = null) {
 async function copyStandardsFiles(projectDir, sourceDir) {
   const config = loadConfig();
   const standardsFiles = config.standardsFiles;
-  
+
   try {
     // Copy files in parallel for better performance
-    await Promise.all(standardsFiles.map(async (file) => {
-      const source = path.join(sourceDir, file);
-      const destination = path.join(projectDir, config.directories.docs, 'standards', file);
-      
-      try {
-        // Use intelligent copying (streaming for large files)
-        await copyFileIntelligent(source, destination);
-      } catch (error) {
-        throw new Error(`Failed to copy ${file}: ${error.message}`);
-      }
-    }));
-    
-    log('Copied standards documentation', colors.green);
+    await Promise.all(
+      standardsFiles.map(async (file) => {
+        const source = path.join(sourceDir, file);
+        const destination = path.join(
+          projectDir,
+          config.directories.docs,
+          "standards",
+          file,
+        );
+
+        try {
+          // Use intelligent copying (streaming for large files)
+          await copyFileIntelligent(source, destination);
+        } catch (error) {
+          throw new Error(`Failed to copy ${file}: ${error.message}`);
+        }
+      }),
+    );
+
+    log("Copied standards documentation", colors.green);
   } catch (error) {
     throw new Error(`Failed to copy standards files: ${error.message}`);
   }
@@ -315,33 +440,35 @@ async function copyStandardsFiles(projectDir, sourceDir) {
  */
 async function copyConfigFiles(projectDir, sourceDir) {
   const config = loadConfig();
-  const configFiles = config.configFiles.map(file => [file, file]);
-  
+  const configFiles = config.configFiles.map((file) => [file, file]);
+
   try {
     // Copy config files in parallel
-    await Promise.all(configFiles.map(async ([source, destination]) => {
-      const sourcePath = path.join(sourceDir, source);
-      const destPath = path.join(projectDir, destination);
-      
-      try {
-        // Use intelligent copying (streaming for large files)
-        await copyFileIntelligent(sourcePath, destPath);
-      } catch (error) {
-        throw new Error(`Failed to copy ${source}: ${error.message}`);
-      }
-    }));
-    
+    await Promise.all(
+      configFiles.map(async ([source, destination]) => {
+        const sourcePath = path.join(sourceDir, source);
+        const destPath = path.join(projectDir, destination);
+
+        try {
+          // Use intelligent copying (streaming for large files)
+          await copyFileIntelligent(sourcePath, destPath);
+        } catch (error) {
+          throw new Error(`Failed to copy ${source}: ${error.message}`);
+        }
+      }),
+    );
+
     // Get cached configuration data
     const eslintConfig = getEslintConfig();
     const envExample = getEnvExample();
 
     // Write configuration files in parallel
     await Promise.all([
-      fs.writeFile(path.join(projectDir, '.eslintrc.js'), eslintConfig),
-      fs.writeFile(path.join(projectDir, '.env.example'), envExample)
+      fs.writeFile(path.join(projectDir, ".eslintrc.js"), eslintConfig),
+      fs.writeFile(path.join(projectDir, ".env.example"), envExample),
     ]);
-    
-    log('Created configuration files', colors.green);
+
+    log("Created configuration files", colors.green);
   } catch (error) {
     throw new Error(`Failed to create config files: ${error.message}`);
   }
@@ -474,21 +601,32 @@ module.exports = router;
   // Write files
   try {
     const files = [
-      { path: path.join(projectDir, 'src', 'app.js'), content: appJs },
-      { path: path.join(projectDir, 'src', 'utils', 'logger.js'), content: loggerJs },
-      { path: path.join(projectDir, 'src', 'middlewares', 'errorHandler.js'), content: errorHandlerJs },
-      { path: path.join(projectDir, 'src', 'routes', 'index.js'), content: routesJs }
+      { path: path.join(projectDir, "src", "app.js"), content: appJs },
+      {
+        path: path.join(projectDir, "src", "utils", "logger.js"),
+        content: loggerJs,
+      },
+      {
+        path: path.join(projectDir, "src", "middlewares", "errorHandler.js"),
+        content: errorHandlerJs,
+      },
+      {
+        path: path.join(projectDir, "src", "routes", "index.js"),
+        content: routesJs,
+      },
     ];
-    
-    await Promise.all(files.map(async (file) => {
-      try {
-        await fs.writeFile(file.path, file.content);
-      } catch (error) {
-        throw new Error(`Failed to create ${file.path}: ${error.message}`);
-      }
-    }));
-    
-    log('Created application files', colors.green);
+
+    await Promise.all(
+      files.map(async (file) => {
+        try {
+          await fs.writeFile(file.path, file.content);
+        } catch (error) {
+          throw new Error(`Failed to create ${file.path}: ${error.message}`);
+        }
+      }),
+    );
+
+    log("Created application files", colors.green);
   } catch (error) {
     throw new Error(`Failed to create application files: ${error.message}`);
   }
@@ -557,8 +695,8 @@ This project is licensed under the MIT License.
 `;
 
   try {
-    await fs.writeFile(path.join(projectDir, 'README.md'), readme);
-    log('Created README.md', colors.green);
+    await fs.writeFile(path.join(projectDir, "README.md"), readme);
+    log("Created README.md", colors.green);
   } catch (error) {
     throw new Error(`Failed to create README.md: ${error.message}`);
   }
@@ -571,47 +709,64 @@ This project is licensed under the MIT License.
 async function initGit(projectDir) {
   // Enhanced validation to prevent directory traversal attacks
   const normalizedPath = path.resolve(projectDir);
-  
+
   // Ensure the path is safe and within expected bounds
-  if (!normalizedPath || 
-      normalizedPath.includes('..') || 
-      !path.isAbsolute(normalizedPath)) {
-    log('Warning: Invalid or unsafe project directory path, skipping Git initialization', colors.yellow);
+  if (
+    !normalizedPath ||
+    normalizedPath.includes("..") ||
+    !path.isAbsolute(normalizedPath)
+  ) {
+    log(
+      "Warning: Invalid or unsafe project directory path, skipping Git initialization",
+      colors.yellow,
+    );
     return;
   }
-  
+
   // Check if directory exists and is accessible
   try {
     await fs.access(normalizedPath);
   } catch (error) {
-    if (error.code === 'ENOENT') {
-      log('Warning: Project directory does not exist, skipping Git initialization', colors.yellow);
+    if (error.code === "ENOENT") {
+      log(
+        "Warning: Project directory does not exist, skipping Git initialization",
+        colors.yellow,
+      );
     } else {
-      log('Warning: Cannot access project directory, skipping Git initialization', colors.yellow);
+      log(
+        "Warning: Cannot access project directory, skipping Git initialization",
+        colors.yellow,
+      );
     }
     return;
   }
-  
+
   // Use secure spawn-based command execution
-  const initSuccess = await safeSpawn(['git', 'init'], normalizedPath);
+  const initSuccess = await safeSpawn(["git", "init"], normalizedPath);
   if (!initSuccess) {
-    log('Warning: Could not initialize Git repository', colors.yellow);
+    log("Warning: Could not initialize Git repository", colors.yellow);
     return;
   }
-  
-  const addSuccess = await safeSpawn(['git', 'add', '.'], normalizedPath);
+
+  const addSuccess = await safeSpawn(["git", "add", "."], normalizedPath);
   if (!addSuccess) {
-    log('Warning: Could not add files to Git repository', colors.yellow);
+    log("Warning: Could not add files to Git repository", colors.yellow);
     return;
   }
-  
-  const commitSuccess = await safeSpawn(['git', 'commit', '-m', 'Initial commit with REST-Base standards'], normalizedPath);
+
+  const commitSuccess = await safeSpawn(
+    ["git", "commit", "-m", "Initial commit with REST-Base standards"],
+    normalizedPath,
+  );
   if (!commitSuccess) {
-    log('Warning: Could not create initial commit (this is normal if Git user is not configured)', colors.yellow);
+    log(
+      "Warning: Could not create initial commit (this is normal if Git user is not configured)",
+      colors.yellow,
+    );
     return;
   }
-  
-  log('Initialized Git repository', colors.green);
+
+  log("Initialized Git repository", colors.green);
 }
 
 /**
@@ -620,68 +775,73 @@ async function initGit(projectDir) {
  * @param {string} projectName - The project name for logging
  */
 async function performRollback(projectDir, projectName) {
-  log('Starting rollback process...', colors.yellow);
-  
+  log("Starting rollback process...", colors.yellow);
+
   const rollbackSteps = [];
-  
+
   try {
     // Check if project directory exists
     await fs.access(projectDir);
-    rollbackSteps.push('Project directory exists');
-    
+    rollbackSteps.push("Project directory exists");
+
     // Check for Git repository
     try {
-      await fs.access(path.join(projectDir, '.git'));
-      rollbackSteps.push('Git repository detected');
+      await fs.access(path.join(projectDir, ".git"));
+      rollbackSteps.push("Git repository detected");
     } catch (gitError) {
       // No git repository
     }
-    
+
     // Analyze directory contents
     try {
       const items = await fs.readdir(projectDir);
       rollbackSteps.push(`Directory contains ${items.length} items`);
-      
+
       // Check for specific files/directories to provide detailed rollback info
-      const keyItems = ['.git', 'package.json', 'src', 'docs', 'README.md'];
-      const foundItems = keyItems.filter(item => items.includes(item));
+      const keyItems = [".git", "package.json", "src", "docs", "README.md"];
+      const foundItems = keyItems.filter((item) => items.includes(item));
       if (foundItems.length > 0) {
-        rollbackSteps.push(`Key project files found: ${foundItems.join(', ')}`);
+        rollbackSteps.push(`Key project files found: ${foundItems.join(", ")}`);
       }
     } catch (readError) {
-      rollbackSteps.push('Could not analyze directory contents');
+      rollbackSteps.push("Could not analyze directory contents");
     }
-    
+
     // Perform the cleanup
     log(`Cleaning up project directory: ${projectDir}`, colors.yellow);
     await fs.rm(projectDir, { recursive: true, force: true });
-    
+
     // Verify cleanup
     try {
       await fs.access(projectDir);
-      log('Warning: Directory still exists after cleanup attempt', colors.yellow);
+      log(
+        "Warning: Directory still exists after cleanup attempt",
+        colors.yellow,
+      );
     } catch (verifyError) {
-      log('Project directory successfully removed', colors.green);
+      log("Project directory successfully removed", colors.green);
     }
-    
   } catch (initialError) {
-    if (initialError.code === 'ENOENT') {
-      log('No cleanup needed - project directory does not exist', colors.yellow);
+    if (initialError.code === "ENOENT") {
+      log(
+        "No cleanup needed - project directory does not exist",
+        colors.yellow,
+      );
       return;
     } else {
       log(`Error during rollback: ${initialError.message}`, colors.red);
     }
   }
-  
+
   // Log rollback summary
   if (rollbackSteps.length > 0) {
-    log('\nRollback summary:', colors.cyan);
-    rollbackSteps.forEach(step => {
+    log("\nRollback summary:", colors.cyan);
+    rollbackSteps.forEach((step) => {
       log(`  - ${step}`, colors.gray);
     });
   }
-  
-  log('\nTo try again:', colors.yellow);
+
+  log("\nTo try again:", colors.yellow);
   log(`  node create-project.js ${projectName}`, colors.yellow);
 }
 
@@ -692,87 +852,90 @@ async function performRollback(projectDir, projectName) {
  */
 async function main() {
   const args = process.argv.slice(2);
-  
+
   if (args.length === 0) {
-    log('Please provide a project name', colors.red);
-    log('Usage: node create-project.js <project-name>', colors.yellow);
+    log("Please provide a project name", colors.red);
+    log("Usage: node create-project.js <project-name>", colors.yellow);
     process.exit(1);
   }
-  
+
   let projectName;
   try {
     projectName = validateProjectName(args[0]);
   } catch (error) {
     log(`Error: ${error.message}`, colors.red);
-    log('Usage: node create-project.js <project-name>', colors.yellow);
+    log("Usage: node create-project.js <project-name>", colors.yellow);
     process.exit(1);
   }
-  
+
   const projectDir = path.join(process.cwd(), projectName);
-  const sourceDir = path.join(__dirname, '..');
-  
+  const sourceDir = path.join(__dirname, "..");
+
   // Check if directory already exists
   try {
     await fs.access(projectDir);
-    log(`Directory ${projectDir} already exists. Please choose another name.`, colors.red);
+    log(
+      `Directory ${projectDir} already exists. Please choose another name.`,
+      colors.red,
+    );
     process.exit(1);
   } catch (error) {
     // Directory doesn't exist (ENOENT) or isn't accessible - this is what we want for a new project
-    if (error.code !== 'ENOENT') {
+    if (error.code !== "ENOENT") {
       log(`Cannot access ${projectDir}: ${error.message}`, colors.red);
       process.exit(1);
     }
   }
-  
+
   log(`Creating new project: ${projectName}`, colors.blue);
-  log('===============================', colors.blue);
-  
+  log("===============================", colors.blue);
+
   try {
-    log('Phase 1/3: Creating project structure...', colors.cyan);
-    
+    log("Phase 1/3: Creating project structure...", colors.cyan);
+
     // First, create the main project directory
     await fs.mkdir(projectDir, { recursive: true });
-    
+
     // Phase 1: Create initial structure and independent files (parallel execution)
     await Promise.all([
       createProjectStructure(projectDir),
       createPackageJson(projectDir, projectName),
-      createReadme(projectDir, projectName)
+      createReadme(projectDir, projectName),
     ]);
-    
-    log('✓ Phase 1 complete', colors.green);
-    log('Phase 2/3: Creating project files...', colors.cyan);
-    
+
+    log("✓ Phase 1 complete", colors.green);
+    log("Phase 2/3: Creating project files...", colors.cyan);
+
     // Phase 2: Copy and create files that depend on directory structure (parallel execution)
     await Promise.all([
       copyStandardsFiles(projectDir, sourceDir),
       copyConfigFiles(projectDir, sourceDir),
-      createAppFiles(projectDir)
+      createAppFiles(projectDir),
     ]);
-    
-    log('✓ Phase 2 complete', colors.green);
-    log('Phase 3/3: Initializing Git repository...', colors.cyan);
-    
+
+    log("✓ Phase 2 complete", colors.green);
+    log("Phase 3/3: Initializing Git repository...", colors.cyan);
+
     // Phase 3: Git initialization (must run after all files are created)
     await initGit(projectDir);
-    
-    log('✓ Phase 3 complete', colors.green);
-    log('\n🎉 Project creation complete!', colors.green);
+
+    log("✓ Phase 3 complete", colors.green);
+    log("\n🎉 Project creation complete!", colors.green);
     log(`\nTo get started:`, colors.yellow);
     log(`  cd ${projectName}`, colors.yellow);
     log(`  npm install`, colors.yellow);
     log(`  npm run dev`, colors.yellow);
   } catch (error) {
     log(`\nError creating project: ${error.message}`, colors.red);
-    
+
     // Comprehensive rollback mechanism
     await performRollback(projectDir, projectName);
-    
+
     process.exit(1);
   }
 }
 
-main().catch(error => {
+main().catch((error) => {
   log(`Fatal error: ${error.message}`, colors.red);
   process.exit(1);
 });

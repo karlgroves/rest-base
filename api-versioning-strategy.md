@@ -2,6 +2,45 @@
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🔄 Operations & Responses](./operations-and-responses.md) | [📨 Request Patterns](./request.md) | [📋 Global Rules](./global-rules.md)
 
+
+## Table of Contents
+
+- [Purpose](#purpose)
+- [Versioning Philosophy](#versioning-philosophy)
+  - [Core Principles](#core-principles)
+  - [Version Significance](#version-significance)
+- [Versioning Methods](#versioning-methods)
+  - [1. URL Path Versioning (Recommended)](#1-url-path-versioning-recommended)
+  - [2. Header Versioning (Alternative)](#2-header-versioning-alternative)
+  - [3. Content Negotiation (Specialized Use Cases)](#3-content-negotiation-specialized-use-cases)
+- [Version Lifecycle Management](#version-lifecycle-management)
+  - [Version States](#version-states)
+  - [Lifecycle Timeline](#lifecycle-timeline)
+  - [Version Support Policy](#version-support-policy)
+- [Breaking Changes Management](#breaking-changes-management)
+  - [What Constitutes a Breaking Change](#what-constitutes-a-breaking-change)
+  - [Non-Breaking Changes](#non-breaking-changes)
+  - [Breaking Change Process](#breaking-change-process)
+- [Versioning Implementation Patterns](#versioning-implementation-patterns)
+  - [Route Organization](#route-organization)
+  - [Shared Logic Management](#shared-logic-management)
+  - [Database Schema Evolution](#database-schema-evolution)
+- [Deprecation Strategy](#deprecation-strategy)
+  - [Deprecation Headers](#deprecation-headers)
+  - [Deprecation Response Format](#deprecation-response-format)
+  - [Communication Timeline](#communication-timeline)
+- [Client Communication Strategy](#client-communication-strategy)
+  - [Version Discovery](#version-discovery)
+  - [Migration Guides](#migration-guides)
+  - [Testing Version Compatibility](#testing-version-compatibility)
+- [Monitoring and Analytics](#monitoring-and-analytics)
+  - [Version Usage Tracking](#version-usage-tracking)
+  - [Deprecation Metrics](#deprecation-metrics)
+- [Best Practices Summary](#best-practices-summary)
+  - [DO](#do)
+  - [DON'T](#dont)
+- [Resources](#resources)
+
 ## Purpose
 
 This document defines the comprehensive API versioning strategy for REST-SPEC projects. It establishes standards for version management, backward compatibility, deprecation processes, and migration strategies to ensure stable, maintainable APIs.

@@ -2,6 +2,45 @@
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🔄 Operations & Responses](./operations-and-responses.md) | [📋 Global Rules](./global-rules.md) | [✅ Validation](./validation-consolidated.md)
 
+
+## Table of Contents
+
+- [Purpose](#purpose)
+- [File Upload Patterns](#file-upload-patterns)
+  - [Upload Endpoint Design](#upload-endpoint-design)
+    - [Single File Upload](#single-file-upload)
+    - [Multiple File Upload](#multiple-file-upload)
+    - [Upload with Metadata](#upload-with-metadata)
+  - [Upload Response Format](#upload-response-format)
+    - [Successful Upload Response](#successful-upload-response)
+    - [Upload Error Response](#upload-error-response)
+  - [File Validation Patterns](#file-validation-patterns)
+    - [Server-Side Validation](#server-side-validation)
+    - [Content-Based Validation](#content-based-validation)
+  - [Storage Strategies](#storage-strategies)
+    - [Local File Storage](#local-file-storage)
+    - [Cloud Storage (AWS S3)](#cloud-storage-aws-s3)
+  - [Upload Implementation](#upload-implementation)
+    - [Single File Upload Handler](#single-file-upload-handler)
+    - [Chunked Upload for Large Files](#chunked-upload-for-large-files)
+- [File Download Patterns](#file-download-patterns)
+  - [Download Endpoint Design](#download-endpoint-design)
+    - [Direct File Download](#direct-file-download)
+    - [Download with Access Control](#download-with-access-control)
+    - [Streaming Download for Large Files](#streaming-download-for-large-files)
+  - [Download Implementation](#download-implementation)
+    - [Secure File Download](#secure-file-download)
+    - [Range-Based Download (Resumable)](#range-based-download-resumable)
+    - [Temporary Download URLs](#temporary-download-urls)
+- [Security Considerations](#security-considerations)
+  - [Upload Security](#upload-security)
+  - [Download Security](#download-security)
+- [Best Practices](#best-practices)
+  - [Performance Optimization](#performance-optimization)
+  - [Storage Management](#storage-management)
+  - [Error Handling](#error-handling)
+- [Resources](#resources)
+
 ## Purpose
 
 This document defines comprehensive patterns for handling file uploads and downloads in REST-SPEC APIs. It covers security considerations, validation rules, storage strategies, and implementation patterns for reliable file handling.

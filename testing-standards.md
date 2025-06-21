@@ -2,6 +2,44 @@
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md)
 
+## Table of Contents
+
+- [Purpose](#purpose)
+- [Testing Philosophy](#testing-philosophy)
+  - [Core Principles](#core-principles)
+  - [Testing Pyramid](#testing-pyramid)
+- [Test Framework Configuration](#test-framework-configuration)
+  - [Jest Configuration](#jest-configuration)
+  - [Test Setup File](#test-setup-file)
+- [Unit Testing Standards](#unit-testing-standards)
+  - [Test Structure and Naming](#test-structure-and-naming)
+  - [Testing Async Operations](#testing-async-operations)
+  - [Mocking Best Practices](#mocking-best-practices)
+- [Integration Testing Standards](#integration-testing-standards)
+  - [Database Integration Tests](#database-integration-tests)
+  - [API Testing with Authentication](#api-testing-with-authentication)
+- [End-to-End Testing Standards](#end-to-end-testing-standards)
+  - [E2E Test Setup](#e2e-test-setup)
+- [Testing Database Operations](#testing-database-operations)
+  - [Repository Testing](#repository-testing)
+  - [Transaction Testing](#transaction-testing)
+- [Testing Middleware](#testing-middleware)
+  - [Authentication Middleware Testing](#authentication-middleware-testing)
+  - [Error Handling Middleware Testing](#error-handling-middleware-testing)
+- [Performance Testing](#performance-testing)
+  - [Load Testing with Jest](#load-testing-with-jest)
+- [Test Data Management](#test-data-management)
+  - [Fixtures and Factories](#fixtures-and-factories)
+  - [Database Seeding for Tests](#database-seeding-for-tests)
+- [Continuous Integration Testing](#continuous-integration-testing)
+  - [GitHub Actions Configuration](#github-actions-configuration)
+- [Test Scripts Configuration](#test-scripts-configuration)
+  - [Package.json Test Scripts](#packagejson-test-scripts)
+- [Testing Best Practices Summary](#testing-best-practices-summary)
+  - [DO](#do)
+  - [DON'T](#dont)
+- [Resources](#resources)
+
 ## Purpose
 
 This document outlines comprehensive testing standards, patterns, and best practices for REST-SPEC projects. These standards ensure reliable, maintainable, and comprehensive test coverage across all aspects of Node.js RESTful API applications.

@@ -2,6 +2,45 @@
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md)
 
+
+## Table of Contents
+
+- [Purpose](#purpose)
+- [TypeScript Configuration](#typescript-configuration)
+  - [Compiler Options](#compiler-options)
+    - [Target and Module Settings](#target-and-module-settings)
+    - [Strict Type Checking](#strict-type-checking)
+    - [Path Mapping](#path-mapping)
+- [Type Definition Standards](#type-definition-standards)
+  - [Interface Naming](#interface-naming)
+  - [Type Aliases](#type-aliases)
+  - [Generic Type Parameters](#generic-type-parameters)
+- [Function and Method Standards](#function-and-method-standards)
+  - [Function Signatures](#function-signatures)
+  - [Optional vs Required Parameters](#optional-vs-required-parameters)
+- [Error Handling Standards](#error-handling-standards)
+  - [Custom Error Types](#custom-error-types)
+- [Utility Types and Patterns](#utility-types-and-patterns)
+  - [Common Utility Types](#common-utility-types)
+  - [Configuration and Constants](#configuration-and-constants)
+- [Module and Import Standards](#module-and-import-standards)
+  - [Import Organization](#import-organization)
+  - [Export Patterns](#export-patterns)
+- [Testing with TypeScript](#testing-with-typescript)
+  - [Test Type Safety](#test-type-safety)
+- [Integration with Node.js Standards](#integration-with-nodejs-standards)
+  - [Express.js Integration](#expressjs-integration)
+- [Performance Considerations](#performance-considerations)
+  - [Type-Only Imports](#type-only-imports)
+  - [Lazy Loading Types](#lazy-loading-types)
+- [Migration Strategy](#migration-strategy)
+  - [From JavaScript to TypeScript](#from-javascript-to-typescript)
+- [Tools Integration](#tools-integration)
+  - [ESLint Configuration](#eslint-configuration)
+  - [Jest Configuration](#jest-configuration)
+- [Best Practices Summary](#best-practices-summary)
+- [Resources](#resources)
+
 ## Purpose
 
 This document outlines TypeScript coding standards, configuration guidelines, and best practices for REST-SPEC projects. These standards ensure type safety, maintainability, and consistency across TypeScript codebases.

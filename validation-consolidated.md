@@ -2,6 +2,52 @@
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) | [📨 Request Patterns](./request.md) | [🔄 Operations & Responses](./operations-and-responses.md)
 
+
+## Table of Contents
+
+- [Purpose](#purpose)
+- [Core Validation Principles](#core-validation-principles)
+  - [Security-First Approach](#security-first-approach)
+  - [Data Integrity](#data-integrity)
+- [Universal Validation Rules](#universal-validation-rules)
+  - [Authentication and Authorization](#authentication-and-authorization)
+  - [Data Type Handling](#data-type-handling)
+- [Method-Specific Validation](#method-specific-validation)
+  - [GET Requests](#get-requests)
+    - [List Operations (`GET /api/resource`)](#list-operations-get-apiresource)
+    - [Single Resource Operations (`GET /api/resource/:id`)](#single-resource-operations-get-apiresourceid)
+  - [POST Requests](#post-requests)
+    - [Create Operations (`POST /api/resource`)](#create-operations-post-apiresource)
+  - [PUT Requests](#put-requests)
+    - [Update Operations (`PUT /api/resource/:id`)](#update-operations-put-apiresourceid)
+  - [DELETE Requests](#delete-requests)
+    - [Delete Operations (`DELETE /api/resource/:id`)](#delete-operations-delete-apiresourceid)
+  - [HEAD Requests](#head-requests)
+    - [Existence Check (`HEAD /api/resource/:id`)](#existence-check-head-apiresourceid)
+- [Advanced Validation Patterns](#advanced-validation-patterns)
+  - [Input Sanitization](#input-sanitization)
+  - [Complex Field Validation](#complex-field-validation)
+  - [Conditional Validation](#conditional-validation)
+- [Validation Error Handling](#validation-error-handling)
+  - [Error Response Format](#error-response-format)
+  - [Custom Error Classes](#custom-error-classes)
+- [Schema Definition Patterns](#schema-definition-patterns)
+  - [JSON Schema Validation](#json-schema-validation)
+  - [Joi Schema Validation](#joi-schema-validation)
+- [Performance Considerations](#performance-considerations)
+  - [Validation Optimization](#validation-optimization)
+  - [Rate Limiting for Validation](#rate-limiting-for-validation)
+- [Security Best Practices](#security-best-practices)
+  - [Input Validation Security](#input-validation-security)
+  - [Common Attack Prevention](#common-attack-prevention)
+- [Testing Validation Logic](#testing-validation-logic)
+  - [Unit Testing Validation](#unit-testing-validation)
+  - [Integration Testing](#integration-testing)
+- [Migration from Legacy Validation](#migration-from-legacy-validation)
+  - [Consolidation Strategy](#consolidation-strategy)
+  - [Deprecated Files](#deprecated-files)
+- [Resources](#resources)
+
 ## Purpose
 
 This document consolidates all validation requirements for REST-SPEC APIs, combining general validation rules with request-specific patterns. It serves as the comprehensive guide for input validation, security checks, and data integrity enforcement.

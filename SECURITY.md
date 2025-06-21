@@ -1,5 +1,41 @@
 # Security Policy
 
+
+## Table of Contents
+
+- [Supported Versions](#supported-versions)
+- [Reporting a Vulnerability](#reporting-a-vulnerability)
+  - [Where to Report](#where-to-report)
+  - [What to Expect](#what-to-expect)
+  - [Coordinated Disclosure](#coordinated-disclosure)
+- [Security Best Practices](#security-best-practices)
+  - [For Contributors](#for-contributors)
+  - [For Users](#for-users)
+- [Security Architecture](#security-architecture)
+  - [Defense in Depth](#defense-in-depth)
+  - [Secure Dependencies](#secure-dependencies)
+- [Security Features](#security-features)
+  - [Built-in Security Controls](#built-in-security-controls)
+  - [Security Headers](#security-headers)
+- [Vulnerability Categories](#vulnerability-categories)
+  - [High Severity](#high-severity)
+  - [Medium Severity](#medium-severity)
+  - [Low Severity](#low-severity)
+- [Security Testing](#security-testing)
+  - [Automated Testing](#automated-testing)
+  - [Manual Testing](#manual-testing)
+- [Incident Response](#incident-response)
+  - [Process](#process)
+  - [Communication](#communication)
+- [Compliance](#compliance)
+  - [Standards](#standards)
+  - [Certifications](#certifications)
+- [Security Training](#security-training)
+  - [For Developers](#for-developers)
+  - [Resources](#resources)
+- [Contact Information](#contact-information)
+- [Acknowledgments](#acknowledgments)
+
 ## Supported Versions
 
 We release patches for security vulnerabilities. Which versions are eligible for receiving such patches

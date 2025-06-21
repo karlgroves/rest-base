@@ -133,8 +133,8 @@ accessibility, and adherence to project standards.
 
 - [x] Add backup creation before applying standards
 - [x] Implement confirmation prompts for destructive operations
-- [ ] Add verbose logging mode
-- [ ] Create undo functionality for setup-standards
+- [x] Add verbose logging mode
+- [x] Create undo functionality for setup-standards
 
 ## Accessibility Improvements
 

@@ -1,0 +1,54 @@
+{
+  "name": "api-gateway",
+  "description": "API Gateway with rate limiting and authentication",
+  "version": "1.0.0",
+  "files": [
+    {
+      "src": "package.json",
+      "dest": "package.json",
+      "template": true
+    },
+    {
+      "src": "src/app.js",
+      "dest": "src/app.js",
+      "template": true
+    },
+    {
+      "src": "src/gateway.js",
+      "dest": "src/gateway.js",
+      "template": true
+    },
+    {
+      "src": "src/middleware/rateLimiter.js",
+      "dest": "src/middleware/rateLimiter.js",
+      "template": true
+    },
+    {
+      "src": "config/gateway.json",
+      "dest": "config/gateway.json",
+      "template": true
+    }
+  ],
+  "variables": {
+    "projectName": "my-api-gateway",
+    "description": "An API Gateway service",
+    "author": "",
+    "license": "MIT",
+    "port": "8080",
+    "redisUrl": "redis://localhost:6379"
+  },
+  "hooks": {
+    "postInstall": [
+      "npm install",
+      "git init",
+      "git add .",
+      "git commit -m 'Initial commit from API Gateway template'"
+    ]
+  },
+  "dependencies": {
+    "express-rate-limit": "^7.1.5",
+    "redis": "^4.6.10",
+    "http-proxy-middleware": "^2.0.6",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

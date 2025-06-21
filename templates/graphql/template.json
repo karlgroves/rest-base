@@ -1,0 +1,53 @@
+{
+  "name": "graphql",
+  "description": "GraphQL API with Apollo Server",
+  "version": "1.0.0",
+  "files": [
+    {
+      "src": "package.json",
+      "dest": "package.json",
+      "template": true
+    },
+    {
+      "src": "src/server.js",
+      "dest": "src/server.js",
+      "template": true
+    },
+    {
+      "src": "src/schema.js",
+      "dest": "src/schema.js",
+      "template": true
+    },
+    {
+      "src": "src/resolvers.js",
+      "dest": "src/resolvers.js",
+      "template": true
+    },
+    {
+      "src": "src/typeDefs.js",
+      "dest": "src/typeDefs.js",
+      "template": true
+    }
+  ],
+  "variables": {
+    "projectName": "my-graphql-api",
+    "description": "A GraphQL API service",
+    "author": "",
+    "license": "MIT",
+    "port": "4000"
+  },
+  "hooks": {
+    "postInstall": [
+      "npm install",
+      "git init",
+      "git add .",
+      "git commit -m 'Initial commit from GraphQL template'"
+    ]
+  },
+  "dependencies": {
+    "apollo-server-express": "^3.12.1",
+    "graphql": "^16.8.1",
+    "graphql-tools": "^9.0.0",
+    "@graphql-tools/schema": "^10.0.0"
+  }
+}

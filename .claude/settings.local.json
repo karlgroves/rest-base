@@ -3,7 +3,21 @@
     "allow": [
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(npm run lint)",
+      "Bash(eslint:*)",
+      "Bash(node:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm install)",
+      "Bash(npm test)",
+      "Bash(rm:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run test:coverage:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(chmod:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npx husky:*)"
     ]
   },
   "enableAllProjectMcpServers": false

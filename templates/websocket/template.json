@@ -1,0 +1,52 @@
+{
+  "name": "websocket",
+  "description": "WebSocket server with Socket.IO",
+  "version": "1.0.0",
+  "files": [
+    {
+      "src": "package.json",
+      "dest": "package.json",
+      "template": true
+    },
+    {
+      "src": "src/server.js",
+      "dest": "src/server.js",
+      "template": true
+    },
+    {
+      "src": "src/socketHandler.js",
+      "dest": "src/socketHandler.js",
+      "template": true
+    },
+    {
+      "src": "src/rooms.js",
+      "dest": "src/rooms.js",
+      "template": true
+    },
+    {
+      "src": "public/client.html",
+      "dest": "public/client.html",
+      "template": true
+    }
+  ],
+  "variables": {
+    "projectName": "my-websocket-server",
+    "description": "A WebSocket server application",
+    "author": "",
+    "license": "MIT",
+    "port": "3001"
+  },
+  "hooks": {
+    "postInstall": [
+      "npm install",
+      "git init",
+      "git add .",
+      "git commit -m 'Initial commit from WebSocket template'"
+    ]
+  },
+  "dependencies": {
+    "socket.io": "^4.7.4",
+    "socket.io-client": "^4.7.4",
+    "uuid": "^9.0.1"
+  }
+}

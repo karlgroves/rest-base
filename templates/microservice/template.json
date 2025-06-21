@@ -1,0 +1,52 @@
+{
+  "name": "microservice",
+  "description": "Microservice architecture with message queuing",
+  "version": "1.0.0",
+  "files": [
+    {
+      "src": "package.json",
+      "dest": "package.json",
+      "template": true
+    },
+    {
+      "src": "src/app.js",
+      "dest": "src/app.js",
+      "template": true
+    },
+    {
+      "src": "src/messageQueue.js",
+      "dest": "src/messageQueue.js",
+      "template": true
+    },
+    {
+      "src": "docker-compose.yml",
+      "dest": "docker-compose.yml",
+      "template": true
+    },
+    {
+      "src": "Dockerfile",
+      "dest": "Dockerfile",
+      "template": false
+    }
+  ],
+  "variables": {
+    "projectName": "my-microservice",
+    "description": "A microservice application",
+    "author": "",
+    "license": "MIT",
+    "port": "3000"
+  },
+  "hooks": {
+    "postInstall": [
+      "npm install",
+      "git init",
+      "git add .",
+      "git commit -m 'Initial commit from microservice template'"
+    ]
+  },
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "bull": "^4.11.5",
+    "redis": "^4.6.10"
+  }
+}

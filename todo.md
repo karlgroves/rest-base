@@ -124,7 +124,7 @@ accessibility, and adherence to project standards.
 
 ### 2. Development Experience
 
-- [ ] Add auto-completion for CLI commands
+- [x] Add auto-completion for CLI commands
 - [ ] Create VS Code extension with snippets
 - [ ] Add project scaffolding templates
 - [ ] Implement update notifications
@@ -189,7 +189,6 @@ accessibility, and adherence to project standards.
 ### 2. Community Building
 
 - [x] Add contribution guidelines
-- [ ] Create code of conduct
 
 ### 3. Tooling Expansion
 

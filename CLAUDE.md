@@ -33,3 +33,11 @@ This project contains comprehensive standards documentation that should be follo
 - **Documentation**: JSDoc comments required for all files and functions
 - **Security**: Follow Express security best practices, validate all inputs
 - **Database**: Use parameterized queries, follow SQL naming conventions
+
+## Task Management
+
+This project uses `todo.md` as the primary task tracking system. When working on tasks:
+- Always check `todo.md` for the current list of uncompleted tasks
+- Remove completed tasks from the file rather than just marking them as done
+- Commit and push changes to `todo.md` after updating task status
+- Work through tasks systematically, completing each one before moving to the next

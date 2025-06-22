@@ -1,5 +1,21 @@
 # Requests
 
+
+## Table of Contents
+
+- [URL Structure](#url-structure)
+- [`GET`](#get)
+  - [Optional parameters](#optional-parameters)
+    - [Special Params: `expand` and `q`](#special-params-expand-and-q)
+- ["`GET` by ID"](#get-by-id)
+- [`POST`](#post)
+- [`PUT`](#put)
+- [`DELETE`](#delete)
+  - [Cascading Deletes](#cascading-deletes)
+- [`HEAD`](#head)
+- [`expand` Parameter](#expand-parameter)
+- [Pagination](#pagination)
+
 Note: Below, we use `integer` to refer to data types, but those values might arrive
 as strings of numeric characters, because browsers treat the parameters in a `GET` URL as strings. Validation should understand and allow this, explicitly casting
 those values to the proper type before validating and using them.

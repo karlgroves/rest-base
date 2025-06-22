@@ -1,5 +1,40 @@
 # Accessible Visual Design Requirements for Software Application
 
+
+## Table of Contents
+
+- [1. Color Contrast](#1-color-contrast)
+  - [1.1 Contrast Ratio](#11-contrast-ratio)
+  - [1.2 Color Usage](#12-color-usage)
+- [2. Typography](#2-typography)
+  - [2.1 Text Readability](#21-text-readability)
+  - [2.2 Text Styles](#22-text-styles)
+- [3. Layout and Structure](#3-layout-and-structure)
+  - [3.1 Consistent Layout](#31-consistent-layout)
+    - [3.2 Responsiveness](#32-responsiveness)
+  - [4. Interactive Elements](#4-interactive-elements)
+    - [4.1 Focus Indicators](#41-focus-indicators)
+    - [4.2 Touch Targets](#42-touch-targets)
+  - [5. Images and Media](#5-images-and-media)
+    - [5.1 Images](#51-images)
+  - [6. Forms and Inputs](#6-forms-and-inputs)
+    - [6.1 Form Labels](#61-form-labels)
+    - [6.2 Form Instructions](#62-form-instructions)
+    - [6.3 Error Messages](#63-error-messages)
+  - [7. Testing and Evaluation](#7-testing-and-evaluation)
+    - [7.1 Automated Testing](#71-automated-testing)
+    - [7.2 Manual Testing](#72-manual-testing)
+  - [Additional Considerations](#additional-considerations)
+    - [8. Icons and Symbols](#8-icons-and-symbols)
+    - [9. Visual Hierarchy](#9-visual-hierarchy)
+    - [10. Interactive Elements](#10-interactive-elements)
+  - [11. Information Architecture and UX Design (From USWDS and GOV.UK Guidelines)](#11-information-architecture-and-ux-design-from-uswds-and-govuk-guidelines)
+  - [12. Additional Best Practices from Greenwich, W3C, and Princeton](#12-additional-best-practices-from-greenwich-w3c-and-princeton)
+    - [12.1 Clarity and Simplicity](#121-clarity-and-simplicity)
+    - [12.2 Content Flexibility](#122-content-flexibility)
+    - [12.3 Alternatives and Control](#123-alternatives-and-control)
+- [More information](#more-information)
+
 To ensure the visual design of our software application meets the highest accessibility standards, the following detailed requirements must be adhered to. These requirements incorporate guidelines from Section 508, WCAG 2.2, EN 301 549, RGAA4, BITV, and best practices from IBM, USWDS, WAI, University of Greenwich, and UK government accessibility guidelines.
 
 ## 1. Color Contrast

@@ -1,5 +1,32 @@
 # REST Base
 
+
+## Table of Contents
+
+- [Purpose](#purpose)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Contents](#contents)
+- [Using These Standards in Your Projects](#using-these-standards-in-your-projects)
+  - [Option 1: Use the NPM Package (Recommended)](#option-1-use-the-npm-package-recommended)
+  - [Option 2: Clone and Copy](#option-2-clone-and-copy)
+  - [Option 3: Use as a Template Repository](#option-3-use-as-a-template-repository)
+- [Running the Scripts Locally](#running-the-scripts-locally)
+- [Documentation Navigation](#documentation-navigation)
+  - [Standards and Guidelines](#standards-and-guidelines)
+  - [API Design](#api-design)
+  - [Development Tools](#development-tools)
+  - [Project Management](#project-management)
+- [Troubleshooting](#troubleshooting)
+  - [Common Issues](#common-issues)
+    - [Node.js version error](#nodejs-version-error)
+    - [Permission denied when installing globally](#permission-denied-when-installing-globally)
+    - [Git not initialized](#git-not-initialized)
+    - [ESLint errors after project creation](#eslint-errors-after-project-creation)
+  - [Getting Help](#getting-help)
+- [Contributing](#contributing)
+- [License](#license)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.11.0%20(LTS)-brightgreen.svg)](https://nodejs.org)
 [![npm version](https://img.shields.io/npm/v/rest-spec.svg)](https://www.npmjs.com/package/rest-spec)

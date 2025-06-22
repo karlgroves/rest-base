@@ -139,7 +139,7 @@ class TOCGenerator {
   /**
    * Process multiple files
    */
-  async processFiles(files, minLines = 200) {
+  async processFiles(files, minLines = 100) {
     const processedFiles = [];
     
     for (const filePath of files) {
@@ -173,14 +173,12 @@ async function main() {
   
   // Files that need table of contents (from our earlier analysis)
   const filesToProcess = [
-    '/Users/karlgroves/Projects/REST-SPEC/file-upload-download-patterns.md',
-    '/Users/karlgroves/Projects/REST-SPEC/typescript-standards.md', 
-    '/Users/karlgroves/Projects/REST-SPEC/sql-standards-and-patterns.md',
-    '/Users/karlgroves/Projects/REST-SPEC/api-versioning-strategy.md',
-    '/Users/karlgroves/Projects/REST-SPEC/validation-consolidated.md',
-    '/Users/karlgroves/Projects/REST-SPEC/CONTRIBUTING.md',
-    '/Users/karlgroves/Projects/REST-SPEC/SECURITY.md',
-    '/Users/karlgroves/Projects/REST-SPEC/CLI-API-DOCUMENTATION.md'
+    '/Users/karlgroves/Projects/REST-SPEC/global-rules.md',
+    '/Users/karlgroves/Projects/REST-SPEC/operations-and-responses.md',
+    '/Users/karlgroves/Projects/REST-SPEC/README.md',
+    '/Users/karlgroves/Projects/REST-SPEC/request.md',
+    '/Users/karlgroves/Projects/REST-SPEC/technologies.md',
+    '/Users/karlgroves/Projects/REST-SPEC/visual-design-requirements.md'
   ];
   
   console.log('🔗 Adding Table of Contents to Documentation Files');

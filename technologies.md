@@ -1,5 +1,30 @@
 # Technology Requirements
 
+
+## Table of Contents
+
+- [Core Technologies](#core-technologies)
+- [Main Dependencies](#main-dependencies)
+  - [API & Server](#api-server)
+  - [Authentication & Security](#authentication-security)
+  - [Database & ORM](#database-orm)
+  - [Logging & Debugging](#logging-debugging)
+  - [File Operations](#file-operations)
+  - [Utilities](#utilities)
+  - [Email](#email)
+  - [Payments](#payments)
+  - [Process Management](#process-management)
+  - [Code Formatting & Quality](#code-formatting-quality)
+- [Development Dependencies](#development-dependencies)
+  - [Testing](#testing)
+  - [TypeScript](#typescript)
+  - [Linting & Formatting](#linting-formatting)
+  - [Build & Deployment](#build-deployment)
+- [Coding Standards](#coding-standards)
+- [Database Conventions](#database-conventions)
+- [Security Requirements](#security-requirements)
+- [Non-Functional Requirements](#non-functional-requirements)
+
 ## Core Technologies
 
 * **Backend Framework**: Node.js with Express.js

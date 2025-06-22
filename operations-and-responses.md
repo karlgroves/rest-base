@@ -2,6 +2,25 @@
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) | [📨 Request Patterns](./request.md) | [✅ Validation](./validation.md)
 
+
+## Table of Contents
+
+- [HTTP Status Codes](#http-status-codes)
+- [Responses](#responses)
+  - [Success](#success)
+  - [Errors](#errors)
+- [Request/Response Correlation ID Patterns](#requestresponse-correlation-id-patterns)
+  - [Correlation ID Implementation](#correlation-id-implementation)
+    - [Header Format](#header-format)
+    - [Client-Generated Correlation IDs](#client-generated-correlation-ids)
+    - [Server-Generated Correlation IDs](#server-generated-correlation-ids)
+    - [Response Header Example](#response-header-example)
+  - [Error Response Correlation](#error-response-correlation)
+  - [Logging Integration](#logging-integration)
+  - [Microservices Propagation](#microservices-propagation)
+  - [Database Query Correlation](#database-query-correlation)
+  - [Correlation ID Best Practices](#correlation-id-best-practices)
+
 ## HTTP Status Codes
 
 This API uses the following HTTP status codes in the HTTP Response Headers:

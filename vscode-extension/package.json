@@ -113,13 +113,6 @@
       }
     }
   },
-  "activationEvents": [
-    "onCommand:rest-spec.createController",
-    "onCommand:rest-spec.createMiddleware",
-    "onCommand:rest-spec.createModel",
-    "onCommand:rest-spec.createRoute",
-    "onCommand:rest-spec.createTest"
-  ],
   "main": "./extension.js",
   "scripts": {
     "lint": "eslint .",

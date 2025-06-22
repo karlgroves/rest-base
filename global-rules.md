@@ -2,6 +2,15 @@
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [🔄 API Operations](./operations-and-responses.md) | [📨 Request Patterns](./request.md)
 
+
+## Table of Contents
+
+- [Authentication and Security](#authentication-and-security)
+- [Rate Limiting](#rate-limiting)
+- [CORS (Cross-Origin Resource Sharing) Policy](#cors-cross-origin-resource-sharing-policy)
+- [JWT Bearer Token Format](#jwt-bearer-token-format)
+- [File Size and Code Limits](#file-size-and-code-limits)
+
 ## Authentication and Security
 
 * All requests to the API (other than the authentication and register routes) must have a JWT bearer token.

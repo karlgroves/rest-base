@@ -10,7 +10,6 @@ This document contains the remaining tasks for the REST-SPEC project.
 
 ### Documentation Accessibility
 
-- [ ] Add table of contents to longer documentation files
 - [ ] Ensure proper heading hierarchy
 
 ### CLI Accessibility

@@ -1,0 +1,110 @@
+# {{projectName}} API Gateway Docker Compose Configuration
+version: '3.8'
+
+services:
+  # API Gateway Service
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: ${COMPOSE_PROJECT_NAME}_gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+      - PORT=8080
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_ISSUER=${JWT_ISSUER}
+      - JWT_AUDIENCE=${JWT_AUDIENCE}
+      - CORS_ORIGINS=${CORS_ORIGINS}
+      - TRUST_PROXY=true
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - RATE_LIMIT_WINDOW_MS=${RATE_LIMIT_WINDOW_MS:-900000}
+      - RATE_LIMIT_MAX_REQUESTS=${RATE_LIMIT_MAX_REQUESTS:-100}
+      - AUTH_SERVICE_URL=${AUTH_SERVICE_URL:-http://auth-service:3001}
+      - USERS_SERVICE_URL=${USERS_SERVICE_URL:-http://users-service:3002}
+      - PRODUCTS_SERVICE_URL=${PRODUCTS_SERVICE_URL:-http://products-service:3003}
+      - ORDERS_SERVICE_URL=${ORDERS_SERVICE_URL:-http://orders-service:3004}
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - gateway-network
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health", "||", "exit", "1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Redis Service for Rate Limiting and Caching
+  redis:
+    image: redis:7.2-alpine
+    container_name: ${COMPOSE_PROJECT_NAME}_redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis-data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
+    networks:
+      - gateway-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # Example microservices (uncomment and configure as needed)
+  
+  # auth-service:
+  #   image: your-org/auth-service:latest
+  #   container_name: ${COMPOSE_PROJECT_NAME}_auth
+  #   ports:
+  #     - "3001:3001"
+  #   environment:
+  #     - NODE_ENV=production
+  #     - DATABASE_URL=${AUTH_DATABASE_URL}
+  #   networks:
+  #     - gateway-network
+  #   restart: unless-stopped
+
+  # users-service:
+  #   image: your-org/users-service:latest
+  #   container_name: ${COMPOSE_PROJECT_NAME}_users
+  #   ports:
+  #     - "3002:3002"
+  #   environment:
+  #     - NODE_ENV=production
+  #     - DATABASE_URL=${USERS_DATABASE_URL}
+  #   networks:
+  #     - gateway-network
+  #   restart: unless-stopped
+
+  # products-service:
+  #   image: your-org/products-service:latest
+  #   container_name: ${COMPOSE_PROJECT_NAME}_products
+  #   ports:
+  #     - "3003:3003"
+  #   environment:
+  #     - NODE_ENV=production
+  #     - DATABASE_URL=${PRODUCTS_DATABASE_URL}
+  #   networks:
+  #     - gateway-network
+  #   restart: unless-stopped
+
+networks:
+  gateway-network:
+    driver: bridge
+    name: ${COMPOSE_PROJECT_NAME}_network
+
+volumes:
+  redis-data:
+    name: ${COMPOSE_PROJECT_NAME}_redis_data

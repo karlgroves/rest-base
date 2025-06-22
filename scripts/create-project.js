@@ -14,6 +14,8 @@ const path = require("path");
 const { spawn } = require("child_process");
 const { pipeline } = require("stream/promises");
 const UpdateChecker = require("../shared/update-checker");
+const logger = require("../shared/logger");
+const { formatSection, formatStatus, createSpinner } = require("../shared/cli-utils");
 
 // Mock functions for missing dependencies
 const getEslintConfigString = () => "module.exports = {};";
@@ -55,14 +57,6 @@ const loadConfig = () => ({
   },
 });
 
-// Define colors for terminal output
-const colors = {
-  reset: "\x1b[0m",
-  green: "\x1b[32m",
-  yellow: "\x1b[33m",
-  blue: "\x1b[34m",
-  red: "\x1b[31m",
-};
 
 // Cache for configuration data
 const configCache = {
@@ -105,14 +99,6 @@ function getEnvExample() {
   return configCache.envExample;
 }
 
-/**
- * Logs a colored message to the console
- * @param {string} message - Message to log
- * @param {string} color - ANSI color code (optional)
- */
-function log(message, color = colors.reset) {
-  console.log(`${color}${message}${colors.reset}`);
-}
 
 /**
  * Validates project name to prevent security issues
@@ -313,7 +299,7 @@ async function createProjectStructure(projectDir) {
       }),
     );
 
-    log("SUCCESS: Created project directory structure", colors.green);
+    logger.success("Created project directory structure");
   } catch (error) {
     throw new Error(`Failed to create project structure: ${error.message}`);
   }
@@ -352,7 +338,7 @@ async function createPackageJson(projectDir, projectName) {
       JSON.stringify(packageJson, null, 2),
       "utf8",
     );
-    log("SUCCESS: Created package.json", colors.green);
+    logger.success("Created package.json");
   } catch (error) {
     throw new Error(`Failed to create package.json: ${error.message}`);
   }
@@ -426,7 +412,7 @@ async function copyStandardsFiles(projectDir, sourceDir) {
       }),
     );
 
-    log("SUCCESS: Copied standards documentation", colors.green);
+    logger.success("Copied standards documentation");
   } catch (error) {
     throw new Error(`Failed to copy standards files: ${error.message}`);
   }
@@ -469,7 +455,7 @@ async function copyConfigFiles(projectDir, sourceDir) {
       fs.writeFile(path.join(projectDir, ".env.example"), envExample),
     ]);
 
-    log("SUCCESS: Created configuration files", colors.green);
+    logger.success("Created configuration files");
   } catch (error) {
     throw new Error(`Failed to create config files: ${error.message}`);
   }
@@ -627,7 +613,7 @@ module.exports = router;
       }),
     );
 
-    log("SUCCESS: Created application files", colors.green);
+    logger.success("Created application files");
   } catch (error) {
     throw new Error(`Failed to create application files: ${error.message}`);
   }
@@ -697,7 +683,7 @@ This project is licensed under the MIT License.
 
   try {
     await fs.writeFile(path.join(projectDir, "README.md"), readme);
-    log("SUCCESS: Created README.md", colors.green);
+    logger.success("Created README.md");
   } catch (error) {
     throw new Error(`Failed to create README.md: ${error.message}`);
   }
@@ -745,13 +731,13 @@ async function initGit(projectDir) {
   // Use secure spawn-based command execution
   const initSuccess = await safeSpawn(["git", "init"], normalizedPath);
   if (!initSuccess) {
-    log("WARNING: Could not initialize Git repository", colors.yellow);
+    logger.warn("Could not initialize Git repository");
     return;
   }
 
   const addSuccess = await safeSpawn(["git", "add", "."], normalizedPath);
   if (!addSuccess) {
-    log("WARNING: Could not add files to Git repository", colors.yellow);
+    logger.warn("Could not add files to Git repository");
     return;
   }
 
@@ -767,7 +753,7 @@ async function initGit(projectDir) {
     return;
   }
 
-  log("SUCCESS: Initialized Git repository", colors.green);
+  logger.success("Initialized Git repository");
 }
 
 /**
@@ -776,7 +762,7 @@ async function initGit(projectDir) {
  * @param {string} projectName - The project name for logging
  */
 async function performRollback(projectDir, projectName) {
-  log("Starting rollback process...", colors.yellow);
+  logger.warn("Starting rollback process...");
 
   const rollbackSteps = [];
 
@@ -809,34 +795,28 @@ async function performRollback(projectDir, projectName) {
     }
 
     // Perform the cleanup
-    log(`Cleaning up project directory: ${projectDir}`, colors.yellow);
+    logger.warn(`Cleaning up project directory: ${projectDir}`);
     await fs.rm(projectDir, { recursive: true, force: true });
 
     // Verify cleanup
     try {
       await fs.access(projectDir);
-      log(
-        "WARNING: Directory still exists after cleanup attempt",
-        colors.yellow,
-      );
+      logger.warn("Directory still exists after cleanup attempt");
     } catch (verifyError) {
-      log("SUCCESS: Project directory successfully removed", colors.green);
+      logger.success("Project directory successfully removed");
     }
   } catch (initialError) {
     if (initialError.code === "ENOENT") {
-      log(
-        "INFO: No cleanup needed - project directory does not exist",
-        colors.yellow,
-      );
+      logger.info("No cleanup needed - project directory does not exist");
       return;
     } else {
-      log(`ERROR during rollback: ${initialError.message}`, colors.red);
+      logger.error(`During rollback: ${initialError.message}`);
     }
   }
 
   // Log rollback summary
   if (rollbackSteps.length > 0) {
-    log("\nRollback summary:", colors.cyan);
+    logger.info("\nRollback summary:");
     rollbackSteps.forEach((step) => {
       log(`  Step: ${step}`, colors.gray);
     });
@@ -864,7 +844,7 @@ async function main() {
 
   if (args.length === 0) {
     log("ERROR: Please provide a project name", colors.red);
-    log("USAGE: node create-project.js <project-name>", colors.yellow);
+    logger.warn("USAGE: node create-project.js <project-name>");
     process.exit(1);
   }
 
@@ -872,8 +852,8 @@ async function main() {
   try {
     projectName = validateProjectName(args[0]);
   } catch (error) {
-    log(`ERROR: ${error.message}`, colors.red);
-    log("USAGE: node create-project.js <project-name>", colors.yellow);
+    logger.error(error.message);
+    logger.warn("USAGE: node create-project.js <project-name>");
     process.exit(1);
   }
 
@@ -891,16 +871,16 @@ async function main() {
   } catch (error) {
     // Directory doesn't exist (ENOENT) or isn't accessible - this is what we want for a new project
     if (error.code !== "ENOENT") {
-      log(`ERROR: Cannot access ${projectDir}: ${error.message}`, colors.red);
+      logger.error(`Cannot access ${projectDir}: ${error.message}`);
       process.exit(1);
     }
   }
 
-  log(`Creating new project: ${projectName}`, colors.blue);
-  log("Starting project creation process", colors.blue);
+  logger.heading(`Creating new project: ${projectName}`);
+  logger.info("Starting project creation process");
 
   try {
-    log("Phase 1/3: Creating project structure...", colors.cyan);
+    logger.highlight("Phase 1/3: Creating project structure...");
 
     // First, create the main project directory
     await fs.mkdir(projectDir, { recursive: true });
@@ -912,8 +892,8 @@ async function main() {
       createReadme(projectDir, projectName),
     ]);
 
-    log("SUCCESS: Phase 1 complete - Project structure created", colors.green);
-    log("PHASE 2/3: Creating project files...", colors.cyan);
+    logger.success("Phase 1 complete - Project structure created");
+    logger.highlight("Phase 2/3: Creating project files...");
 
     // Phase 2: Copy and create files that depend on directory structure (parallel execution)
     await Promise.all([
@@ -922,20 +902,23 @@ async function main() {
       createAppFiles(projectDir),
     ]);
 
-    log("SUCCESS: Phase 2 complete - Project files created", colors.green);
-    log("PHASE 3/3: Initializing Git repository...", colors.cyan);
+    logger.success("Phase 2 complete - Project files created");
+    logger.highlight("Phase 3/3: Initializing Git repository...");
 
     // Phase 3: Git initialization (must run after all files are created)
     await initGit(projectDir);
 
-    log("SUCCESS: Phase 3 complete - Git repository initialized", colors.green);
-    log("\nSUCCESS: Project creation complete!", colors.green);
-    log(`\nNEXT STEPS to get started:`, colors.yellow);
-    log(`  1. Change to project directory: cd ${projectName}`, colors.yellow);
-    log(`  2. Install dependencies: npm install`, colors.yellow);
-    log(`  3. Start development server: npm run dev`, colors.yellow);
+    logger.success("Phase 3 complete - Git repository initialized");
+    console.log();
+    logger.success("Project creation complete!");
+    console.log();
+    logger.heading("Next steps to get started:");
+    console.log(`  1. Change to project directory: cd ${projectName}`);
+    console.log(`  2. Install dependencies: npm install`);
+    console.log(`  3. Start development server: npm run dev`);
   } catch (error) {
-    log(`\nERROR creating project: ${error.message}`, colors.red);
+    console.log();
+    logger.error(`Creating project: ${error.message}`);
 
     // Comprehensive rollback mechanism
     await performRollback(projectDir, projectName);
@@ -945,6 +928,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  log(`FATAL ERROR: ${error.message}`, colors.red);
+  logger.error(`FATAL ERROR: ${error.message}`);
   process.exit(1);
 });

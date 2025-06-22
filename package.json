@@ -22,6 +22,8 @@
     "create-project-template": "node ./scripts/create-project-template.js",
     "setup-standards": "node ./scripts/setup-standards.js",
     "update": "node ./scripts/update-manager.js",
+    "test:high-contrast": "node ./scripts/test-high-contrast.js",
+    "test:high-contrast:compare": "node ./scripts/test-high-contrast.js compare",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
     "build:watch": "tsc --watch",

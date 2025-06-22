@@ -13,7 +13,6 @@ This document contains the remaining tasks for the REST-SPEC project.
 
 ### CLI Accessibility
 
-- [ ] Add clear error messages without relying on color alone
 - [ ] Support high contrast terminal themes
 - [ ] Add keyboard shortcuts documentation
 

@@ -17,6 +17,7 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const logger = require('./utils/logger');
 const { errorHandler, notFoundHandler } = require('./middlewares/errorHandler');
 const routes = require('./routes');
+const healthRoutes = require('./routes/health');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -69,14 +70,8 @@ const swaggerOptions = {
 const specs = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.json({
-    status: 'OK',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime()
-  });
-});
+// Top-level health endpoints (for load balancers)
+app.use('/health', healthRoutes);
 
 // API routes
 app.use('/api', routes);

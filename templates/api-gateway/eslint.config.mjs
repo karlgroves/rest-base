@@ -3,7 +3,7 @@
  * @module .eslintrc
  */
 
-module.exports = {
+export default {
   env: {
     node: true,
     es2022: true,

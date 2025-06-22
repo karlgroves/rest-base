@@ -10,6 +10,7 @@ const router = express.Router();
 
 // Import route modules
 const authRoutes = require('./auth');
+const healthRoutes = require('./health');
 // const userRoutes = require('./users');
 
 // API information endpoint
@@ -28,6 +29,7 @@ router.get('/', (req, res) => {
 
 // Register route modules
 router.use('/auth', authRoutes);
+router.use('/health', healthRoutes);
 // router.use('/users', userRoutes);
 
 module.exports = router;

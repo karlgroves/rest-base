@@ -17,6 +17,7 @@
   - [API Design](#api-design)
   - [Development Tools](#development-tools)
   - [Project Management](#project-management)
+- [API Documentation Generator](#api-documentation-generator)
 - [Keyboard Shortcuts and Accessibility](#keyboard-shortcuts-and-accessibility)
 - [Troubleshooting](#troubleshooting)
   - [Common Issues](#common-issues)
@@ -157,6 +158,52 @@ npm run setup-standards ../path/to/existing-project
 
 ### Project Management
 - [📝 **TODO List**](./todo.md) - Current development tasks and improvements
+
+## API Documentation Generator
+
+REST-SPEC includes a powerful API documentation generator that automatically creates comprehensive documentation from your Express.js routes.
+
+### Features
+
+- **🔍 Automatic Route Discovery**: Scans your project for Express route definitions
+- **📄 Multiple Output Formats**: OpenAPI 3.0 (JSON/YAML), Markdown, and HTML
+- **💬 JSDoc Support**: Extracts documentation from JSDoc comments
+- **🎯 Smart Parameter Detection**: Automatically identifies path and query parameters
+- **🏷️ Tag-based Organization**: Group endpoints by tags for better organization
+
+### Quick Start
+
+```bash
+# Generate documentation for your project
+npx rest-spec-api-doc
+
+# Specify custom options
+npx rest-spec-api-doc --output ./docs/api --format openapi
+
+# Use configuration file
+npx rest-spec-api-doc --config api-doc.config.json
+```
+
+### Example JSDoc Annotation
+
+```javascript
+/**
+ * @route GET /api/users
+ * @summary Get all users
+ * @description Retrieves a paginated list of all users
+ * @tag Users
+ * @param {number} [page=1] - Page number
+ * @param {number} [limit=10] - Items per page
+ * @response 200 - Successful response
+ * @response 401 - Unauthorized
+ * @security bearerAuth
+ */
+router.get('/users', authenticate, async (req, res) => {
+  // Route implementation
+});
+```
+
+For complete documentation, see the [API Documentation Generator Guide](./docs/api-documentation-generator.md).
 
 ## Keyboard Shortcuts and Accessibility
 

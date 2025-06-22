@@ -1,0 +1,322 @@
+openapi: 3.0.0
+info:
+  title: API Documentation
+  version: 1.0.0
+  description: Auto-generated API documentation
+servers: []
+paths:
+  /api/users:
+    get:
+      summary: Get all users
+      description: >-
+        Retrieves a paginated list of all users in the system with optional
+        filtering
+      operationId: get_api_users
+      tags:
+        - Users
+        - Admin
+      parameters:
+        - name: page=1
+          in: query
+          required: false
+          description: '- Page number for pagination'
+          schema:
+            type: number
+        - name: limit=10
+          in: query
+          required: false
+          description: '- Number of items per page (max 100)'
+          schema:
+            type: number
+        - name: sort=createdAt
+          in: query
+          required: false
+          description: '- Sort field (createdAt, updatedAt, email, name)'
+          schema:
+            type: string
+        - name: order=desc
+          in: query
+          required: false
+          description: '- Sort order (asc or desc)'
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          description: '- Search term for email or name'
+          schema:
+            type: string
+        - name: role
+          in: query
+          required: false
+          description: '- Filter by user role (user, admin, moderator)'
+          schema:
+            type: string
+        - name: active
+          in: query
+          required: false
+          description: '- Filter by active status'
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: '- Successful response with user list and pagination info'
+        '400':
+          description: '- Invalid query parameters'
+        '401':
+          description: '- Missing or invalid authentication token'
+        '403':
+          description: '- Insufficient permissions'
+      security:
+        - bearerAuth: []
+    post:
+      summary: Create a new user
+      description: >-
+        Creates a new user account with the provided information. Requires admin
+        privileges.
+      operationId: post_api_users
+      tags:
+        - Users
+        - Admin
+      parameters:
+        - name: email - User email address (must be unique)
+          in: query
+          required: true
+          description: ''
+          schema:
+            type: string
+        - name: >-
+            password - User password (min 8 chars, must include number and
+            special char)
+          in: query
+          required: true
+          description: ''
+          schema:
+            type: string
+        - name: name - User full name
+          in: query
+          required: true
+          description: ''
+          schema:
+            type: string
+        - name: role=user
+          in: query
+          required: false
+          description: '- User role (user, admin, moderator)'
+          schema:
+            type: string
+        - name: active=true
+          in: query
+          required: false
+          description: '- Whether the user account is active'
+          schema:
+            type: boolean
+        - name: profile
+          in: query
+          required: false
+          description: '- Additional profile information'
+          schema:
+            type: object
+        - name: profile.phone
+          in: query
+          required: false
+          description: '- Phone number'
+          schema:
+            type: string
+        - name: profile.avatar
+          in: query
+          required: false
+          description: '- Avatar URL'
+          schema:
+            type: string
+      responses:
+        '201':
+          description: '- User created successfully'
+        '400':
+          description: '- Validation error or missing required fields'
+        '401':
+          description: '- Unauthorized'
+        '403':
+          description: '- Insufficient permissions'
+        '409':
+          description: '- Email already exists'
+      security:
+        - bearerAuth: []
+  /api/users/:id:
+    get:
+      summary: Get user by ID
+      description: Retrieves detailed information about a specific user
+      operationId: get_api_users__id
+      tags:
+        - Users
+      parameters:
+        - name: id - User ID (UUID format)
+          in: query
+          required: true
+          description: ''
+          schema:
+            type: string
+      responses:
+        '200':
+          description: '- User found'
+        '401':
+          description: '- Unauthorized'
+        '403':
+          description: '- Insufficient permissions (can only view own profile unless admin)'
+        '404':
+          description: '- User not found'
+      security:
+        - bearerAuth: []
+    put:
+      summary: Update user
+      description: >-
+        Updates user information. Users can update their own profile, admins can
+        update anyone.
+      operationId: put_api_users__id
+      tags:
+        - Users
+      parameters:
+        - name: id - User ID
+          in: query
+          required: true
+          description: ''
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: false
+          description: '- New email address'
+          schema:
+            type: string
+        - name: name
+          in: query
+          required: false
+          description: '- New name'
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: false
+          description: '- New password'
+          schema:
+            type: string
+        - name: role
+          in: query
+          required: false
+          description: '- New role (admin only)'
+          schema:
+            type: string
+        - name: active
+          in: query
+          required: false
+          description: '- Active status (admin only)'
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: '- User updated successfully'
+        '400':
+          description: '- Validation error'
+        '401':
+          description: '- Unauthorized'
+        '403':
+          description: '- Insufficient permissions'
+        '404':
+          description: '- User not found'
+        '409':
+          description: '- Email already in use'
+      security:
+        - bearerAuth: []
+    delete:
+      summary: Delete user
+      description: Permanently deletes a user account. This action cannot be undone.
+      operationId: delete_api_users__id
+      tags:
+        - Users
+        - Admin
+      parameters:
+        - name: id - User ID
+          in: query
+          required: true
+          description: ''
+          schema:
+            type: string
+      responses:
+        '204':
+          description: '- User deleted successfully'
+        '401':
+          description: '- Unauthorized'
+        '403':
+          description: '- Insufficient permissions (admin only)'
+        '404':
+          description: '- User not found'
+      security:
+        - bearerAuth: []
+  /api/users/:id/reset-password:
+    post:
+      summary: Reset user password
+      description: Sends a password reset email to the user
+      operationId: post_api_users__id_reset-password
+      tags:
+        - Users
+        - Authentication
+      parameters:
+        - name: id - User ID
+          in: query
+          required: true
+          description: ''
+          schema:
+            type: string
+      responses:
+        '200':
+          description: '- Password reset email sent'
+        '401':
+          description: '- Unauthorized'
+        '403':
+          description: '- Insufficient permissions'
+        '404':
+          description: '- User not found'
+        '429':
+          description: '- Too many requests (rate limited)'
+      security:
+        - bearerAuth: []
+  /api/users/:id/sessions:
+    get:
+      summary: Get user sessions
+      description: Retrieves all active sessions for a user
+      operationId: get_api_users__id_sessions
+      tags:
+        - Users
+        - Security
+      parameters:
+        - name: id - User ID
+          in: query
+          required: true
+          description: ''
+          schema:
+            type: string
+      responses:
+        '200':
+          description: '- List of active sessions'
+        '401':
+          description: '- Unauthorized'
+        '403':
+          description: '- Can only view own sessions unless admin'
+        '404':
+          description: '- User not found'
+      security:
+        - bearerAuth: []
+  /api/health:
+    get:
+      summary: Health check
+      description: Simple health check endpoint for monitoring
+      operationId: get_api_health
+      tags:
+        - System
+      parameters: []
+      responses:
+        '200':
+          description: '- Service is healthy'
+components:
+  schemas: {}
+  securitySchemes: {}

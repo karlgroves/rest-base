@@ -23,11 +23,28 @@
 
 ## Testing
 
-* Always generate unit tests for new code. Tests should:
-* Follow the appropriate framework (e.g. Jest, Pytest, Mocha, JUnit).
-* Cover happy paths, edge cases, and error conditions.
-* Use descriptive test names.
-* If mocking/stubbing is needed, use idiomatic libraries for the language.
+* Always apply Test-Driven Development (TDD): write tests before or alongside code to define expected behavior.
+* Favor Behavior-Driven Development (BDD) where appropriate: tests should describe observable behavior rather than internal implementation details.
+* Do not generate placeholder, empty, or fake tests (e.g., tests that contain expect(true).toBe(true) or meaningless assertions) simply to increase code coverage. All tests must assert real, verifiable behavior.
+* Front-end tests must run in a real browser environment (e.g. via Puppeteer, Playwright) instead of jsdom or simulated DOM unless explicitly justified. This ensures accurate rendering, event handling, and accessibility testing.
+* All tests must:
+  * Have descriptive, human-readable names that clearly state the intent (e.g., “renders login form with empty fields by default” rather than “test1”).
+  * Cover:
+    * Happy paths
+    * Common edge cases
+    * Error and failure conditions
+    * Avoid brittle selectors or overly tight coupling to non-essential implementation details (e.g., prefer testing via user-visible elements over internal class names).
+* Never generate tests that pass without meaningful assertions or fabricate behavior the code does not provide.
+* Tests must be runnable as-is with the specified tooling (no fictional libraries or APIs).
+* Prefer integration-level tests for user interfaces that simulate real user interaction rather than isolated unit tests where feasible.
+* For APIs:
+  * Validate request/response structure, including headers, status codes, and body content.
+  * Include tests for invalid inputs, authorization failures, and rate limiting or similar controls.
+* Include code examples of running tests (e.g., npm test, pytest) if generating documentation alongside tests.
+* Where mocking or stubbing is required:
+  * Use realistic data structures — never make up object shapes or API fields that don’t exist.
+  * Note assumptions or boundaries clearly in comments.
+* If uncertain about exact behavior of external APIs or systems, generate TODO comments or request clarifications rather than inventing responses or mocks.
 
 ## Error Handling
 

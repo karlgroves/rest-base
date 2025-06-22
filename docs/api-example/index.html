@@ -1,0 +1,896 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        h2 {
+            margin-top: 2rem;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 0.3rem;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+        }
+        h4 {
+            background: #ecf0f1;
+            padding: 0.5rem 1rem;
+            border-left: 4px solid #3498db;
+            margin: 1rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #34495e;
+            color: white;
+            font-weight: bold;
+        }
+        tr:hover {
+            background: #f8f9fa;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .method {
+            font-weight: bold;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            color: white;
+            font-size: 0.9rem;
+        }
+        .method-GET { background: #27ae60; }
+        .method-POST { background: #3498db; }
+        .method-PUT { background: #f39c12; }
+        .method-PATCH { background: #e67e22; }
+        .method-DELETE { background: #e74c3c; }
+        hr {
+            border: none;
+            border-top: 1px solid #ecf0f1;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Documentation</h1>
+<p>Auto-generated API documentation</p>
+<p><strong>Version:</strong> 1.0.0</p>
+<h2>Endpoints</h2>
+<h3>Users</h3>
+<h4><span class="method method-GET">GET</span> /api/users</h4>
+<p>Get all users</p>
+<p>Retrieves a paginated list of all users in the system with optional filtering</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>page=1</td>
+<td>number</td>
+<td>No</td>
+<td>- Page number for pagination</td>
+</tr>
+<tr>
+<td>limit=10</td>
+<td>number</td>
+<td>No</td>
+<td>- Number of items per page (max 100)</td>
+</tr>
+<tr>
+<td>sort=createdAt</td>
+<td>string</td>
+<td>No</td>
+<td>- Sort field (createdAt, updatedAt, email, name)</td>
+</tr>
+<tr>
+<td>order=desc</td>
+<td>string</td>
+<td>No</td>
+<td>- Sort order (asc or desc)</td>
+</tr>
+<tr>
+<td>search</td>
+<td>string</td>
+<td>No</td>
+<td>- Search term for email or name</td>
+</tr>
+<tr>
+<td>role</td>
+<td>string</td>
+<td>No</td>
+<td>- Filter by user role (user, admin, moderator)</td>
+</tr>
+<tr>
+<td>active</td>
+<td>boolean</td>
+<td>No</td>
+<td>- Filter by active status</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>- Successful response with user list and pagination info</td>
+</tr>
+<tr>
+<td>400</td>
+<td>- Invalid query parameters</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Missing or invalid authentication token</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Insufficient permissions</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h4><span class="method method-POST">POST</span> /api/users</h4>
+<p>Create a new user</p>
+<p>Creates a new user account with the provided information. Requires admin privileges.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>email - User email address (must be unique)</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+<tr>
+<td>password - User password (min 8 chars, must include number and special char)</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+<tr>
+<td>name - User full name</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+<tr>
+<td>role=user</td>
+<td>string</td>
+<td>No</td>
+<td>- User role (user, admin, moderator)</td>
+</tr>
+<tr>
+<td>active=true</td>
+<td>boolean</td>
+<td>No</td>
+<td>- Whether the user account is active</td>
+</tr>
+<tr>
+<td>profile</td>
+<td>object</td>
+<td>No</td>
+<td>- Additional profile information</td>
+</tr>
+<tr>
+<td>profile.phone</td>
+<td>string</td>
+<td>No</td>
+<td>- Phone number</td>
+</tr>
+<tr>
+<td>profile.avatar</td>
+<td>string</td>
+<td>No</td>
+<td>- Avatar URL</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>201</td>
+<td>- User created successfully</td>
+</tr>
+<tr>
+<td>400</td>
+<td>- Validation error or missing required fields</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Unauthorized</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Insufficient permissions</td>
+</tr>
+<tr>
+<td>409</td>
+<td>- Email already exists</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h4><span class="method method-GET">GET</span> /api/users/:id</h4>
+<p>Get user by ID</p>
+<p>Retrieves detailed information about a specific user</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id - User ID (UUID format)</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>- User found</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Unauthorized</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Insufficient permissions (can only view own profile unless admin)</td>
+</tr>
+<tr>
+<td>404</td>
+<td>- User not found</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h4><span class="method method-PUT">PUT</span> /api/users/:id</h4>
+<p>Update user</p>
+<p>Updates user information. Users can update their own profile, admins can update anyone.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id - User ID</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>No</td>
+<td>- New email address</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>No</td>
+<td>- New name</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>No</td>
+<td>- New password</td>
+</tr>
+<tr>
+<td>role</td>
+<td>string</td>
+<td>No</td>
+<td>- New role (admin only)</td>
+</tr>
+<tr>
+<td>active</td>
+<td>boolean</td>
+<td>No</td>
+<td>- Active status (admin only)</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>- User updated successfully</td>
+</tr>
+<tr>
+<td>400</td>
+<td>- Validation error</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Unauthorized</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Insufficient permissions</td>
+</tr>
+<tr>
+<td>404</td>
+<td>- User not found</td>
+</tr>
+<tr>
+<td>409</td>
+<td>- Email already in use</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h4><span class="method method-DELETE">DELETE</span> /api/users/:id</h4>
+<p>Delete user</p>
+<p>Permanently deletes a user account. This action cannot be undone.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id - User ID</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>204</td>
+<td>- User deleted successfully</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Unauthorized</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Insufficient permissions (admin only)</td>
+</tr>
+<tr>
+<td>404</td>
+<td>- User not found</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h4><span class="method method-POST">POST</span> /api/users/:id/reset-password</h4>
+<p>Reset user password</p>
+<p>Sends a password reset email to the user</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id - User ID</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>- Password reset email sent</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Unauthorized</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Insufficient permissions</td>
+</tr>
+<tr>
+<td>404</td>
+<td>- User not found</td>
+</tr>
+<tr>
+<td>429</td>
+<td>- Too many requests (rate limited)</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h4><span class="method method-GET">GET</span> /api/users/:id/sessions</h4>
+<p>Get user sessions</p>
+<p>Retrieves all active sessions for a user</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id - User ID</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>- List of active sessions</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Unauthorized</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Can only view own sessions unless admin</td>
+</tr>
+<tr>
+<td>404</td>
+<td>- User not found</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h3>Admin</h3>
+<h4><span class="method method-GET">GET</span> /api/users</h4>
+<p>Get all users</p>
+<p>Retrieves a paginated list of all users in the system with optional filtering</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>page=1</td>
+<td>number</td>
+<td>No</td>
+<td>- Page number for pagination</td>
+</tr>
+<tr>
+<td>limit=10</td>
+<td>number</td>
+<td>No</td>
+<td>- Number of items per page (max 100)</td>
+</tr>
+<tr>
+<td>sort=createdAt</td>
+<td>string</td>
+<td>No</td>
+<td>- Sort field (createdAt, updatedAt, email, name)</td>
+</tr>
+<tr>
+<td>order=desc</td>
+<td>string</td>
+<td>No</td>
+<td>- Sort order (asc or desc)</td>
+</tr>
+<tr>
+<td>search</td>
+<td>string</td>
+<td>No</td>
+<td>- Search term for email or name</td>
+</tr>
+<tr>
+<td>role</td>
+<td>string</td>
+<td>No</td>
+<td>- Filter by user role (user, admin, moderator)</td>
+</tr>
+<tr>
+<td>active</td>
+<td>boolean</td>
+<td>No</td>
+<td>- Filter by active status</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>- Successful response with user list and pagination info</td>
+</tr>
+<tr>
+<td>400</td>
+<td>- Invalid query parameters</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Missing or invalid authentication token</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Insufficient permissions</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h4><span class="method method-POST">POST</span> /api/users</h4>
+<p>Create a new user</p>
+<p>Creates a new user account with the provided information. Requires admin privileges.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>email - User email address (must be unique)</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+<tr>
+<td>password - User password (min 8 chars, must include number and special char)</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+<tr>
+<td>name - User full name</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+<tr>
+<td>role=user</td>
+<td>string</td>
+<td>No</td>
+<td>- User role (user, admin, moderator)</td>
+</tr>
+<tr>
+<td>active=true</td>
+<td>boolean</td>
+<td>No</td>
+<td>- Whether the user account is active</td>
+</tr>
+<tr>
+<td>profile</td>
+<td>object</td>
+<td>No</td>
+<td>- Additional profile information</td>
+</tr>
+<tr>
+<td>profile.phone</td>
+<td>string</td>
+<td>No</td>
+<td>- Phone number</td>
+</tr>
+<tr>
+<td>profile.avatar</td>
+<td>string</td>
+<td>No</td>
+<td>- Avatar URL</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>201</td>
+<td>- User created successfully</td>
+</tr>
+<tr>
+<td>400</td>
+<td>- Validation error or missing required fields</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Unauthorized</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Insufficient permissions</td>
+</tr>
+<tr>
+<td>409</td>
+<td>- Email already exists</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h4><span class="method method-DELETE">DELETE</span> /api/users/:id</h4>
+<p>Delete user</p>
+<p>Permanently deletes a user account. This action cannot be undone.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id - User ID</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>204</td>
+<td>- User deleted successfully</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Unauthorized</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Insufficient permissions (admin only)</td>
+</tr>
+<tr>
+<td>404</td>
+<td>- User not found</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h3>Authentication</h3>
+<h4><span class="method method-POST">POST</span> /api/users/:id/reset-password</h4>
+<p>Reset user password</p>
+<p>Sends a password reset email to the user</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id - User ID</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>- Password reset email sent</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Unauthorized</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Insufficient permissions</td>
+</tr>
+<tr>
+<td>404</td>
+<td>- User not found</td>
+</tr>
+<tr>
+<td>429</td>
+<td>- Too many requests (rate limited)</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h3>Security</h3>
+<h4><span class="method method-GET">GET</span> /api/users/:id/sessions</h4>
+<p>Get user sessions</p>
+<p>Retrieves all active sessions for a user</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id - User ID</td>
+<td>string</td>
+<td>Yes</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>- List of active sessions</td>
+</tr>
+<tr>
+<td>401</td>
+<td>- Unauthorized</td>
+</tr>
+<tr>
+<td>403</td>
+<td>- Can only view own sessions unless admin</td>
+</tr>
+<tr>
+<td>404</td>
+<td>- User not found</td>
+</tr>
+</tbody></table>
+<p><strong>Security:</strong> bearerAuth</p>
+<hr>
+<h3>System</h3>
+<h4><span class="method method-GET">GET</span> /api/health</h4>
+<p>Health check</p>
+<p>Simple health check endpoint for monitoring</p>
+<p><strong>Responses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>- Service is healthy</td>
+</tr>
+</tbody></table>
+<hr>
+
+</body>
+</html>
+  

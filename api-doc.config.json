@@ -1,0 +1,66 @@
+{
+  "title": "REST-SPEC API Documentation",
+  "version": "1.0.0",
+  "description": "Comprehensive API documentation for REST-SPEC compliant applications",
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    },
+    {
+      "url": "https://api.example.com",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Authentication and authorization endpoints"
+    },
+    {
+      "name": "Health",
+      "description": "Health check and monitoring endpoints"
+    },
+    {
+      "name": "Users",
+      "description": "User management endpoints"
+    },
+    {
+      "name": "Items",
+      "description": "Item CRUD operations"
+    }
+  ],
+  "security": {
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
+    },
+    "apiKey": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key"
+    }
+  },
+  "patterns": [
+    "**/routes/**/*.js",
+    "**/api/**/*.js",
+    "**/controllers/**/*.js"
+  ],
+  "ignore": [
+    "**/node_modules/**",
+    "**/test/**",
+    "**/tests/**",
+    "**/*.test.js",
+    "**/*.spec.js"
+  ],
+  "output": {
+    "formats": ["openapi", "markdown", "html"],
+    "directory": "./docs/api",
+    "filename": {
+      "openapi": "openapi.json",
+      "markdown": "API.md",
+      "html": "index.html"
+    }
+  }
+}

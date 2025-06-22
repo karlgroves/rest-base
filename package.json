@@ -9,7 +9,8 @@
     "rest-base-setup-enhanced": "./scripts/setup-standards-enhanced.js",
     "rest-spec-create": "./scripts/create-project-template.js",
     "rest-spec-update": "./scripts/update-manager.js",
-    "rest-spec-errors": "./scripts/error-dashboard.js"
+    "rest-spec-errors": "./scripts/error-dashboard.js",
+    "rest-spec-api-doc": "./scripts/api-doc-generator.js"
   },
   "scripts": {
     "lint:md": "markdownlint *.md",
@@ -37,7 +38,9 @@
     "benchmark:api": "node benchmarks/index.js run api",
     "benchmark:compare": "node benchmarks/index.js compare",
     "benchmark:list": "node benchmarks/index.js list",
-    "benchmark:clean": "node benchmarks/index.js clean"
+    "benchmark:clean": "node benchmarks/index.js clean",
+    "api:doc": "node ./scripts/api-doc-generator.js",
+    "api:doc:watch": "nodemon --watch src --ext js --exec 'npm run api:doc'"
   },
   "repository": {
     "type": "git",
@@ -60,10 +63,15 @@
   },
   "homepage": "https://github.com/karlgroves/rest-base#readme",
   "dependencies": {
+    "@babel/parser": "7.27.5",
+    "@babel/traverse": "7.27.4",
     "chalk": "^5.3.0",
     "commander": "^11.1.0",
     "express": "^4.18.2",
+    "glob": "10.4.5",
     "inquirer": "^9.2.12",
+    "js-yaml": "4.1.0",
+    "marked": "11.2.0",
     "ora": "^7.0.1"
   },
   "devDependencies": {

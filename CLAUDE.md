@@ -41,3 +41,5 @@ This project uses `todo.md` as the primary task tracking system. When working on
 - Remove completed tasks from the file rather than just marking them as done
 - Commit and push changes to `todo.md` after updating task status
 - Work through tasks systematically, completing each one before moving to the next
+- Use the TodoWrite tool to maintain an active task list during development sessions
+- Mark tasks as completed immediately after finishing them, then commit and push changes

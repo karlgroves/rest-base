@@ -1,7 +1,25 @@
 {
   "name": "websocket",
-  "description": "WebSocket server with Socket.IO",
+  "description": "Real-time WebSocket server template with Socket.IO",
   "version": "1.0.0",
+  "author": "REST-SPEC",
+  "tags": ["websocket", "realtime", "socket.io", "chat", "notifications", "nodejs"],
+  "features": [
+    "Socket.IO WebSocket server with authentication",
+    "Real-time chat system with rooms",
+    "Room management with participant limits",
+    "Push notification system with topics",
+    "JWT-based authentication and authorization",
+    "Rate limiting per socket connection",
+    "Kubernetes-compatible health checks",
+    "Bunyan structured logging with rotation",
+    "Comprehensive test suite with Jest",
+    "Docker multi-stage build support",
+    "Redis integration for scaling",
+    "Security headers and CORS configuration",
+    "Graceful shutdown handling",
+    "Connection statistics and monitoring"
+  ],
   "files": [
     {
       "src": "package.json",
@@ -14,39 +32,148 @@
       "template": true
     },
     {
-      "src": "src/socketHandler.js",
-      "dest": "src/socketHandler.js",
+      "src": "src/sockets/index.js",
+      "dest": "src/sockets/index.js",
       "template": true
     },
     {
-      "src": "src/rooms.js",
-      "dest": "src/rooms.js",
+      "src": "src/sockets/chatHandlers.js",
+      "dest": "src/sockets/chatHandlers.js",
       "template": true
     },
     {
-      "src": "public/client.html",
-      "dest": "public/client.html",
+      "src": "src/sockets/roomHandlers.js",
+      "dest": "src/sockets/roomHandlers.js",
+      "template": true
+    },
+    {
+      "src": "src/sockets/notificationHandlers.js",
+      "dest": "src/sockets/notificationHandlers.js",
+      "template": true
+    },
+    {
+      "src": "src/middleware/auth.js",
+      "dest": "src/middleware/auth.js",
+      "template": true
+    },
+    {
+      "src": "src/routes/health.js",
+      "dest": "src/routes/health.js",
+      "template": true
+    },
+    {
+      "src": "src/utils/logger.js",
+      "dest": "src/utils/logger.js",
+      "template": true
+    },
+    {
+      "src": "tests/server.test.js",
+      "dest": "tests/server.test.js",
+      "template": true
+    },
+    {
+      "src": "tests/auth.test.js",
+      "dest": "tests/auth.test.js",
+      "template": true
+    },
+    {
+      "src": "tests/chatHandlers.test.js",
+      "dest": "tests/chatHandlers.test.js",
+      "template": true
+    },
+    {
+      "src": "tests/setup.js",
+      "dest": "tests/setup.js",
+      "template": true
+    },
+    {
+      "src": "jest.config.js",
+      "dest": "jest.config.js",
+      "template": true
+    },
+    {
+      "src": "Dockerfile",
+      "dest": "Dockerfile",
+      "template": false
+    },
+    {
+      "src": "docker-compose.yml",
+      "dest": "docker-compose.yml",
+      "template": true
+    },
+    {
+      "src": ".env.example",
+      "dest": ".env.example",
+      "template": true
+    },
+    {
+      "src": "README.md",
+      "dest": "README.md",
       "template": true
     }
   ],
   "variables": {
     "projectName": "my-websocket-server",
-    "description": "A WebSocket server application",
+    "description": "A real-time WebSocket server with chat and notifications",
     "author": "",
+    "email": "",
     "license": "MIT",
-    "port": "3001"
+    "port": "3000"
+  },
+  "requirements": {
+    "node": ">=22.11.0",
+    "npm": ">=9.0.0",
+    "redis": ">=7.0.0"
+  },
+  "optional": {
+    "postgresql": ">=15.0.0",
+    "docker": ">=20.0.0",
+    "kubernetes": ">=1.25.0"
   },
   "hooks": {
     "postInstall": [
       "npm install",
+      "cp .env.example .env",
+      "mkdir -p logs",
       "git init",
       "git add .",
-      "git commit -m 'Initial commit from WebSocket template'"
+      "git commit -m 'Initial commit from websocket template'"
     ]
   },
-  "dependencies": {
-    "socket.io": "^4.7.4",
-    "socket.io-client": "^4.7.4",
-    "uuid": "^9.0.1"
-  }
+  "scripts": {
+    "start": "Start production WebSocket server",
+    "dev": "Start development server with hot reload",
+    "test": "Run comprehensive test suite",
+    "lint": "Run code linting with ESLint",
+    "docker:build": "Build Docker image",
+    "docker:run": "Run Docker container"
+  },
+  "endpoints": [
+    "GET / - Service information",
+    "GET /health - Health status",
+    "GET /health/detailed - Detailed health info",
+    "GET /health/live - Liveness probe",
+    "GET /health/ready - Readiness probe",
+    "GET /health/startup - Startup probe",
+    "GET /stats - Connection statistics",
+    "WebSocket /socket.io/ - Real-time connections"
+  ],
+  "socketEvents": [
+    "chat:join - Join chat room",
+    "chat:leave - Leave chat room", 
+    "chat:message - Send chat message",
+    "chat:typing - Typing indicator",
+    "chat:history - Get chat history",
+    "room:create - Create new room",
+    "room:join - Join existing room",
+    "room:leave - Leave room",
+    "room:list - List available rooms",
+    "room:info - Get room information",
+    "notification:subscribe - Subscribe to topics",
+    "notification:unsubscribe - Unsubscribe from topics",
+    "notification:mark_read - Mark notifications as read",
+    "ping - Connection ping/pong",
+    "user:status - Update user status",
+    "heartbeat - Heartbeat/keepalive"
+  ]
 }

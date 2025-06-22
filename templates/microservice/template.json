@@ -1,7 +1,23 @@
 {
   "name": "microservice",
-  "description": "Microservice architecture with message queuing",
+  "description": "Production-ready microservice template with comprehensive features",
   "version": "1.0.0",
+  "author": "REST-SPEC",
+  "tags": ["microservice", "api", "rest", "express", "nodejs", "production"],
+  "features": [
+    "Express.js framework with security middleware",
+    "RESTful API with CRUD operations",
+    "Kubernetes-ready health checks",
+    "Swagger/OpenAPI documentation",
+    "Bunyan structured logging",
+    "PostgreSQL and Redis integration",
+    "Comprehensive test suite with Jest",
+    "Docker multi-stage build",
+    "Input validation and sanitization",
+    "Rate limiting and CORS",
+    "Performance monitoring",
+    "Environment-based configuration"
+  ],
   "files": [
     {
       "src": "package.json",
@@ -14,9 +30,59 @@
       "template": true
     },
     {
-      "src": "src/messageQueue.js",
-      "dest": "src/messageQueue.js",
+      "src": "src/config/index.js",
+      "dest": "src/config/index.js",
       "template": true
+    },
+    {
+      "src": "src/routes/index.js",
+      "dest": "src/routes/index.js",
+      "template": true
+    },
+    {
+      "src": "src/routes/items.js",
+      "dest": "src/routes/items.js",
+      "template": true
+    },
+    {
+      "src": "src/routes/health.js",
+      "dest": "src/routes/health.js",
+      "template": true
+    },
+    {
+      "src": "src/middleware/errorHandler.js",
+      "dest": "src/middleware/errorHandler.js",
+      "template": true
+    },
+    {
+      "src": "src/utils/logger.js",
+      "dest": "src/utils/logger.js",
+      "template": true
+    },
+    {
+      "src": "tests/app.test.js",
+      "dest": "tests/app.test.js",
+      "template": true
+    },
+    {
+      "src": "tests/items.test.js",
+      "dest": "tests/items.test.js",
+      "template": true
+    },
+    {
+      "src": "tests/setup.js",
+      "dest": "tests/setup.js",
+      "template": true
+    },
+    {
+      "src": "jest.config.js",
+      "dest": "jest.config.js",
+      "template": true
+    },
+    {
+      "src": "Dockerfile",
+      "dest": "Dockerfile",
+      "template": false
     },
     {
       "src": "docker-compose.yml",
@@ -24,29 +90,66 @@
       "template": true
     },
     {
-      "src": "Dockerfile",
-      "dest": "Dockerfile",
-      "template": false
+      "src": ".env.example",
+      "dest": ".env.example",
+      "template": true
+    },
+    {
+      "src": "README.md",
+      "dest": "README.md",
+      "template": true
     }
   ],
   "variables": {
     "projectName": "my-microservice",
-    "description": "A microservice application",
+    "description": "A production-ready microservice application",
     "author": "",
+    "email": "",
     "license": "MIT",
     "port": "3000"
+  },
+  "requirements": {
+    "node": ">=22.11.0",
+    "npm": ">=9.0.0",
+    "postgresql": ">=15.0.0",
+    "redis": ">=7.0.0"
+  },
+  "optional": {
+    "docker": ">=20.0.0",
+    "kubernetes": ">=1.25.0"
   },
   "hooks": {
     "postInstall": [
       "npm install",
+      "cp .env.example .env",
+      "mkdir -p logs",
       "git init",
       "git add .",
       "git commit -m 'Initial commit from microservice template'"
     ]
   },
-  "dependencies": {
-    "amqplib": "^0.10.3",
-    "bull": "^4.11.5",
-    "redis": "^4.6.10"
-  }
+  "scripts": {
+    "start": "Start production server",
+    "dev": "Start development server with hot reload",
+    "test": "Run test suite",
+    "lint": "Run code linting",
+    "benchmark": "Run performance benchmarks",
+    "docker:build": "Build Docker image",
+    "docker:run": "Run Docker container"
+  },
+  "endpoints": [
+    "GET / - Service information",
+    "GET /health - Health status",
+    "GET /health/detailed - Detailed health info",
+    "GET /health/live - Liveness probe",
+    "GET /health/ready - Readiness probe",
+    "GET /health/startup - Startup probe",
+    "GET /api - API information",
+    "GET /api/items - List items",
+    "POST /api/items - Create item",
+    "GET /api/items/:id - Get item",
+    "PUT /api/items/:id - Update item",
+    "DELETE /api/items/:id - Delete item",
+    "GET /api-docs - API documentation"
+  ]
 }

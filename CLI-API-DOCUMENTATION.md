@@ -1,6 +1,6 @@
 # CLI API Documentation
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [🤖 CLAUDE.md](./CLAUDE.md)
+> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [⌨️ Keyboard Shortcuts](./KEYBOARD-SHORTCUTS.md) | [🤖 CLAUDE.md](./CLAUDE.md)
 
 
 ## Table of Contents
@@ -42,6 +42,7 @@
   - [create-project.js](#create-projectjs)
   - [setup-standards.js  ](#setup-standardsjs)
 - [Environment Requirements](#environment-requirements)
+- [Keyboard Shortcuts and Accessibility](#keyboard-shortcuts-and-accessibility)
 - [Troubleshooting](#troubleshooting)
   - [Common Issues](#common-issues)
     - ["Project directory already exists"](#project-directory-already-exists)
@@ -302,6 +303,38 @@ Both tools provide clear progress feedback:
 - Unix-like or Windows operating system
 - Write permissions to target directories
 - Git (optional, for repository initialization)
+
+---
+
+## Keyboard Shortcuts and Accessibility
+
+The REST-SPEC CLI tools are designed with comprehensive keyboard navigation and accessibility support:
+
+### Interactive Mode Navigation
+- **Arrow Keys** (`↑`/`↓`): Navigate through menu options
+- **Space**: Toggle selection in multi-select menus
+- **Enter**: Confirm selection and proceed
+- **Esc**: Cancel current operation
+- **Tab/Shift+Tab**: Navigate between input fields
+
+### Auto-Completion
+All commands support tab completion for improved efficiency:
+```bash
+create-project --[Tab]  # Shows available options
+setup-standards [Tab]   # Completes directory paths
+```
+
+### Accessibility Features
+- **Screen Reader Mode**: Set `A11Y_MODE=1` for optimized screen reader output
+- **High Contrast**: Set `REST_SPEC_THEME=high-contrast` for better visibility
+- **Progress Announcements**: Automatic progress updates for screen reader users
+
+### Quick Tips
+- Use `--interactive` mode for guided setup with full keyboard navigation
+- Enable verbose mode (`--verbose`) for detailed operation feedback
+- All visual indicators have text alternatives for accessibility
+
+For a comprehensive guide to all keyboard shortcuts, terminal navigation, and accessibility features, see the [Keyboard Shortcuts Documentation](./KEYBOARD-SHORTCUTS.md).
 
 ---
 

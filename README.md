@@ -17,6 +17,7 @@
   - [API Design](#api-design)
   - [Development Tools](#development-tools)
   - [Project Management](#project-management)
+- [Keyboard Shortcuts and Accessibility](#keyboard-shortcuts-and-accessibility)
 - [Troubleshooting](#troubleshooting)
   - [Common Issues](#common-issues)
     - [Node.js version error](#nodejs-version-error)
@@ -150,11 +151,30 @@ npm run setup-standards ../path/to/existing-project
 
 ### Development Tools
 - [⚙️ **CLI API Documentation**](./CLI-API-DOCUMENTATION.md) - Complete guide to REST-SPEC CLI tools
+- [⌨️ **Keyboard Shortcuts**](./KEYBOARD-SHORTCUTS.md) - Keyboard navigation and accessibility shortcuts
 - [🤖 **CLAUDE.md**](./CLAUDE.md) - Guidelines for AI assistants working with this codebase
 - [🎨 **Visual Design Requirements**](./visual-design-requirements.md) - UI/UX standards and guidelines
 
 ### Project Management
 - [📝 **TODO List**](./todo.md) - Current development tasks and improvements
+
+## Keyboard Shortcuts and Accessibility
+
+The REST-SPEC CLI tools are designed with accessibility in mind and support extensive keyboard navigation:
+
+- **⌨️ Full Keyboard Navigation**: All CLI features are accessible via keyboard shortcuts
+- **♿ Screen Reader Support**: Built-in accessibility mode for screen reader users
+- **🎨 High Contrast Mode**: Multiple color themes including high contrast and colorblind-friendly options
+- **⚡ Auto-completion**: Shell completion support for bash, zsh, and fish
+
+### Key Features:
+
+- **Interactive Mode**: Navigate menus with arrow keys, select with Space, confirm with Enter
+- **Tab Completion**: Auto-complete commands, options, and file paths
+- **Accessibility Mode**: Set `A11Y_MODE=1` for optimal screen reader experience
+- **Command History**: Use Ctrl+R for reverse search through command history
+
+For a complete guide to keyboard shortcuts and accessibility features, see the [Keyboard Shortcuts Documentation](./KEYBOARD-SHORTCUTS.md).
 
 ## Troubleshooting
 

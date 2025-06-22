@@ -13,7 +13,6 @@ This document contains the remaining tasks for the REST-SPEC project.
 
 ### CLI Accessibility
 
-- [ ] Support high contrast terminal themes
 - [ ] Add keyboard shortcuts documentation
 
 ## Infrastructure & DevOps

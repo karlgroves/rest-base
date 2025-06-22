@@ -10,28 +10,28 @@ class Logger {
   }
 
   info(message, data = null) {
-    console.log(chalk.blue("ℹ"), message);
+    console.log(chalk.blue("[INFO]"), message);
     if (data && this.verbose) {
       console.log(chalk.gray("  Data:"), data);
     }
   }
 
   success(message, data = null) {
-    console.log(chalk.green("✓"), message);
+    console.log(chalk.green("[SUCCESS]"), message);
     if (data && this.verbose) {
       console.log(chalk.gray("  Data:"), data);
     }
   }
 
   warn(message, data = null) {
-    console.log(chalk.yellow("⚠"), message);
+    console.log(chalk.yellow("[WARNING]"), message);
     if (data && this.verbose) {
       console.log(chalk.gray("  Data:"), data);
     }
   }
 
   error(message, error = null) {
-    console.error(chalk.red("✗"), message);
+    console.error(chalk.red("[ERROR]"), message);
     if (error) {
       console.error(chalk.red("  Error:"), error.message || error);
       if (error.stack && this.verbose) {
@@ -42,7 +42,7 @@ class Logger {
 
   debug(message, data = null) {
     if (this.verbose) {
-      console.log(chalk.gray("●"), message);
+      console.log(chalk.gray("[DEBUG]"), message);
       if (data) {
         console.log(chalk.gray("  Data:"), data);
       }

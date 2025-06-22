@@ -52,7 +52,7 @@ async function checkUpdates() {
   if (!updateAvailable) {
     const currentVersion = await updateChecker.getCurrentVersion();
     log(
-      `✅ You are using the latest version (${currentVersion})`,
+      `Success: You are using the latest version (${currentVersion})`,
       colors.green,
     );
   }
@@ -64,10 +64,10 @@ async function disableUpdates() {
   const success = await updateChecker.disableUpdateChecking();
 
   if (success) {
-    log("✅ Automatic update checking has been disabled", colors.green);
+    log("Success: Automatic update checking has been disabled", colors.green);
     log("You can re-enable it with: rest-spec-update enable", colors.yellow);
   } else {
-    log("❌ Failed to disable update checking", colors.red);
+    log("Error: Failed to disable update checking", colors.red);
   }
 }
 
@@ -79,12 +79,12 @@ async function enableUpdates() {
 
   try {
     await fs.unlink(disableFile);
-    log("✅ Automatic update checking has been enabled", colors.green);
+    log("Success: Automatic update checking has been enabled", colors.green);
   } catch (error) {
     if (error.code === "ENOENT") {
-      log("✅ Automatic update checking is already enabled", colors.green);
+      log("Information: Automatic update checking is already enabled", colors.green);
     } else {
-      log("❌ Failed to enable update checking", colors.red);
+      log("Error: Failed to enable update checking", colors.red);
     }
   }
 }
@@ -96,9 +96,9 @@ async function showStatus() {
   const currentVersion = await updateChecker.getCurrentVersion();
 
   log(`${colors.blue}REST-SPEC Update Status${colors.reset}`);
-  log("========================");
+  log("Status Information Below");
   log(`Current version: ${currentVersion}`);
-  log(`Auto-check enabled: ${disabled ? "❌ No" : "✅ Yes"}`);
+  log(`Auto-check enabled: ${disabled ? "No" : "Yes"}`);
 
   if (disabled) {
     log(

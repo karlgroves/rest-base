@@ -119,7 +119,7 @@ class ProjectGenerator {
    * Create new project
    */
   async createProject() {
-    console.log("🚀 REST-SPEC Project Generator");
+    console.log("REST-SPEC Project Generator");
     console.log("===============================\\n");
 
     // Check for updates (non-blocking)
@@ -142,20 +142,20 @@ class ProjectGenerator {
       // Check if directory already exists
       try {
         await fs.access(projectPath);
-        console.error(`❌ Directory '${validatedName}' already exists`);
+        console.error(`Error: Directory '${validatedName}' already exists`);
         process.exit(1);
       } catch (error) {
         // Directory doesn't exist - this is what we want
       }
 
-      console.log(`\\n📁 Creating project in: ${projectPath}`);
+      console.log(`\nCreating project in: ${projectPath}`);
 
       // Copy template
       const templatePath = path.join(__dirname, "../templates/default");
       try {
         await fs.access(templatePath);
       } catch (error) {
-        console.error("❌ Default template not found");
+        console.error("Error: Default template not found");
         process.exit(1);
       }
 
@@ -168,10 +168,10 @@ class ProjectGenerator {
         author: author || "Developer",
       };
 
-      console.log("🔄 Processing template files...");
+      console.log("Processing template files...");
       await this.processTemplateFiles(projectPath, variables);
 
-      console.log("\\n✅ Project created successfully!");
+      console.log("\nSuccess: Project created successfully!");
       console.log("\\nNext steps:");
       console.log(`  cd ${validatedName}`);
       console.log("  npm install");
@@ -179,7 +179,7 @@ class ProjectGenerator {
       console.log("  # Edit .env with your configuration");
       console.log("  npm run dev");
     } catch (error) {
-      console.error("❌ Error creating project:", error.message);
+      console.error("Error: Failed to create project -", error.message);
       process.exit(1);
     } finally {
       this.rl.close();

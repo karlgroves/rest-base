@@ -211,14 +211,14 @@ class DryRunManager {
    */
   getOperationIcon(type) {
     const icons = {
-      create: "📁",
-      modify: "✏️",
-      delete: "🗑️",
-      copy: "📋",
-      execute: "⚡",
-      backup: "💾",
+      create: "[CREATE]",
+      modify: "[MODIFY]",
+      delete: "[DELETE]",
+      copy: "[COPY]",
+      execute: "[EXECUTE]",
+      backup: "[BACKUP]",
     };
-    return icons[type] || "📌";
+    return icons[type] || "[ACTION]";
   }
 
   /**
@@ -413,7 +413,7 @@ class RollbackManager {
       // In interactive mode, let user select
       const interactive = new InteractiveModeManager();
       const choices = backups.map((b) => ({
-        name: `${b.id} - ${b.operationType} (${new Date(b.timestamp).toLocaleString()})`,
+        name: `Backup: ${b.id} - Operation: ${b.operationType} - Date: ${new Date(b.timestamp).toLocaleString()}`,
         value: b.id,
       }));
 
@@ -553,7 +553,7 @@ class RollbackManager {
     }
 
     if (removedCount > 0) {
-      logger.info(`Cleaned up ${removedCount} old backups`);
+      logger.info(`Information: Cleaned up ${removedCount} old backups`);
     }
   }
 }

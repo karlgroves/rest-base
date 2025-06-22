@@ -177,7 +177,7 @@ async function createDirectory(dir) {
       // Directory doesn't exist, create it
       try {
         await fs.mkdir(dir, { recursive: true });
-        log(`Created directory: ${dir}`, colors.green);
+        log(`Success: Created directory: ${dir}`, colors.green);
       } catch (mkdirError) {
         if (mkdirError.code === "EACCES") {
           throw new Error(
@@ -216,7 +216,7 @@ async function copyFile(source, destination) {
     // Check if source file exists
     await fs.access(source);
     await fs.copyFile(source, destination);
-    log(`Copied: ${path.basename(source)} -> ${destination}`, colors.green);
+    log(`Success: Copied ${path.basename(source)} to ${destination}`, colors.green);
   } catch (error) {
     if (error.code === "ENOENT") {
       throw new Error(`Source file not found: ${source}`);
@@ -291,7 +291,7 @@ async function updatePackageJson(targetDir) {
       return false;
     }
 
-    log("Updated package.json with linting scripts", colors.green);
+    log("Success: Updated package.json with linting scripts", colors.green);
     return true;
   } catch (error) {
     log(`Unexpected error updating package.json: ${error.message}`, colors.red);
@@ -309,9 +309,9 @@ async function installDependencies(dependencies) {
     log(`Installing dev dependencies: ${dependencies.join(", ")}`, colors.blue);
     const success = await safeNpmInstall(dependencies);
     if (success) {
-      log("Dependencies installed successfully", colors.green);
+      log("Success: Dependencies installed successfully", colors.green);
     } else {
-      log("Failed to install some dependencies", colors.red);
+      log("Error: Failed to install some dependencies", colors.red);
     }
     return success;
   } catch (error) {
@@ -393,9 +393,9 @@ async function performSetupRollback(targetDir, config) {
   if (rollbackOperations.length > 0) {
     log("\nRollback summary:", colors.cyan);
     rollbackOperations.forEach((operation) => {
-      log(`  - ${operation}`, colors.gray);
+      log(`  Operation: ${operation}`, colors.gray);
     });
-    log(`\nRemoved ${removedCount} files during rollback`, colors.yellow);
+    log(`\nInformation: Removed ${removedCount} files during rollback`, colors.yellow);
   } else {
     log("No files to roll back", colors.yellow);
   }
@@ -442,14 +442,14 @@ async function main() {
   const scriptsDir = path.join(__dirname, "..");
 
   log("REST-Base Standards Setup", colors.blue);
-  log("=========================", colors.blue);
+  log("Starting REST-Base Standards Setup Process", colors.blue);
 
   try {
     log("Step 1/5: Setting up directories...", colors.cyan);
     // Create directories
     await createDirectory(path.join(targetDir, "docs"));
     await createDirectory(standardsDir);
-    log("✓ Directories created", colors.green);
+    log("Success: Directories created", colors.green);
 
     log("Step 2/5: Copying standards documentation...", colors.cyan);
     // Copy standards files
@@ -460,7 +460,7 @@ async function main() {
         await copyFile(source, destination);
       }),
     );
-    log("✓ Standards documentation copied", colors.green);
+    log("Success: Standards documentation copied", colors.green);
 
     log("Step 3/5: Copying configuration files...", colors.cyan);
     // Copy config files
@@ -471,15 +471,15 @@ async function main() {
         await copyFile(source, destination);
       }),
     );
-    log("✓ Configuration files copied", colors.green);
+    log("Success: Configuration files copied", colors.green);
 
     log("Step 4/5: Creating ESLint configuration...", colors.cyan);
     // Create ESLint config using cached configuration
     const eslintConfig = getEslintConfig();
 
     await fs.writeFile(path.join(targetDir, ".eslintrc.js"), eslintConfig);
-    log("Created .eslintrc.js", colors.green);
-    log("✓ ESLint configuration created", colors.green);
+    log("Success: Created .eslintrc.js", colors.green);
+    log("Success: ESLint configuration created", colors.green);
 
     log("Step 5/5: Installing development dependencies...", colors.cyan);
     // Update package.json
@@ -491,10 +491,10 @@ async function main() {
     } else if (process.env.NODE_ENV === "test") {
       log("Skipping dependency installation in test mode", colors.yellow);
     }
-    log("✓ Dependencies installed", colors.green);
+    log("Success: Dependencies installed", colors.green);
 
     log(
-      "\n🎉 Setup complete! Standards have been incorporated into your project.",
+      "\nSuccess: Setup complete! Standards have been incorporated into your project.",
       colors.green,
     );
     log("To get started with the standards, run: npm run lint", colors.yellow);

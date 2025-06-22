@@ -11,7 +11,8 @@
     "rest-spec-update": "./scripts/update-manager.js",
     "rest-spec-errors": "./scripts/error-dashboard.js",
     "rest-spec-api-doc": "./scripts/api-doc-generator.js",
-    "rest-spec-code-gen": "./scripts/code-generator.js"
+    "rest-spec-code-gen": "./scripts/code-generator.js",
+    "rest-spec-profiler": "./scripts/performance-profiler.js"
   },
   "scripts": {
     "lint:md": "markdownlint *.md",
@@ -41,7 +42,10 @@
     "benchmark:list": "node benchmarks/index.js list",
     "benchmark:clean": "node benchmarks/index.js clean",
     "api:doc": "node ./scripts/api-doc-generator.js",
-    "api:doc:watch": "nodemon --watch src --ext js --exec 'npm run api:doc'"
+    "api:doc:watch": "nodemon --watch src --ext js --exec 'npm run api:doc'",
+    "profiler:monitor": "node ./scripts/performance-profiler.js monitor",
+    "profiler:benchmark": "node ./scripts/performance-profiler.js benchmark",
+    "profiler:analyze": "node ./scripts/performance-profiler.js analyze"
   },
   "repository": {
     "type": "git",

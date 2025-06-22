@@ -6,7 +6,6 @@ This document contains the remaining tasks for the REST-SPEC project.
 
 ### Development Experience
 
-- [ ] Add project scaffolding templates
 
 ## Accessibility Improvements
 

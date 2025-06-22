@@ -10,7 +10,8 @@
     "rest-spec-create": "./scripts/create-project-template.js",
     "rest-spec-update": "./scripts/update-manager.js",
     "rest-spec-errors": "./scripts/error-dashboard.js",
-    "rest-spec-api-doc": "./scripts/api-doc-generator.js"
+    "rest-spec-api-doc": "./scripts/api-doc-generator.js",
+    "rest-spec-code-gen": "./scripts/code-generator.js"
   },
   "scripts": {
     "lint:md": "markdownlint *.md",

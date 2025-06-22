@@ -52,7 +52,7 @@ async function checkUpdates() {
   if (!updateAvailable) {
     const currentVersion = await updateChecker.getCurrentVersion();
     log(
-      `Success: You are using the latest version (${currentVersion})`,
+      `SUCCESS: You are using the latest version (${currentVersion})`,
       colors.green,
     );
   }
@@ -64,10 +64,10 @@ async function disableUpdates() {
   const success = await updateChecker.disableUpdateChecking();
 
   if (success) {
-    log("Success: Automatic update checking has been disabled", colors.green);
-    log("You can re-enable it with: rest-spec-update enable", colors.yellow);
+    log("SUCCESS: Automatic update checking has been disabled", colors.green);
+    log("INFO: You can re-enable it with: rest-spec-update enable", colors.yellow);
   } else {
-    log("Error: Failed to disable update checking", colors.red);
+    log("ERROR: Failed to disable update checking", colors.red);
   }
 }
 
@@ -79,12 +79,12 @@ async function enableUpdates() {
 
   try {
     await fs.unlink(disableFile);
-    log("Success: Automatic update checking has been enabled", colors.green);
+    log("SUCCESS: Automatic update checking has been enabled", colors.green);
   } catch (error) {
     if (error.code === "ENOENT") {
-      log("Information: Automatic update checking is already enabled", colors.green);
+      log("INFO: Automatic update checking is already enabled", colors.green);
     } else {
-      log("Error: Failed to enable update checking", colors.red);
+      log("ERROR: Failed to enable update checking", colors.red);
     }
   }
 }
@@ -96,18 +96,18 @@ async function showStatus() {
   const currentVersion = await updateChecker.getCurrentVersion();
 
   log(`${colors.blue}REST-SPEC Update Status${colors.reset}`);
-  log("Status Information Below");
+  log("STATUS: Information Below");
   log(`Current version: ${currentVersion}`);
   log(`Auto-check enabled: ${disabled ? "No" : "Yes"}`);
 
   if (disabled) {
     log(
-      'Run "rest-spec-update enable" to enable automatic checking',
+      'COMMAND: Run "rest-spec-update enable" to enable automatic checking',
       colors.yellow,
     );
   } else {
     log(
-      'Run "rest-spec-update disable" to disable automatic checking',
+      'COMMAND: Run "rest-spec-update disable" to disable automatic checking',
       colors.yellow,
     );
   }
@@ -142,7 +142,7 @@ async function main() {
 
     default:
       if (command) {
-        log(`Unknown command: ${command}`, colors.red);
+        log(`ERROR: Unknown command: ${command}`, colors.red);
       }
       showHelp();
       process.exit(1);
@@ -151,7 +151,7 @@ async function main() {
 
 if (require.main === module) {
   main().catch((error) => {
-    log(`Error: ${error.message}`, colors.red);
+    log(`ERROR: ${error.message}`, colors.red);
     process.exit(1);
   });
 }

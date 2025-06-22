@@ -243,7 +243,7 @@ class DryRunManager {
 
     console.log(
       chalk.yellow(
-        "No changes were made. Remove --dry-run to apply these changes.",
+        "NOTICE: No changes were made. Remove --dry-run to apply these changes.",
       ),
     );
   }
@@ -553,7 +553,7 @@ class RollbackManager {
     }
 
     if (removedCount > 0) {
-      logger.info(`Information: Cleaned up ${removedCount} old backups`);
+      logger.info(`Cleaned up ${removedCount} old backups`);
     }
   }
 }

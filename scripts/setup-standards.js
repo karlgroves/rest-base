@@ -177,7 +177,7 @@ async function createDirectory(dir) {
       // Directory doesn't exist, create it
       try {
         await fs.mkdir(dir, { recursive: true });
-        log(`Success: Created directory: ${dir}`, colors.green);
+        log(`SUCCESS: Created directory: ${dir}`, colors.green);
       } catch (mkdirError) {
         if (mkdirError.code === "EACCES") {
           throw new Error(
@@ -216,7 +216,7 @@ async function copyFile(source, destination) {
     // Check if source file exists
     await fs.access(source);
     await fs.copyFile(source, destination);
-    log(`Success: Copied ${path.basename(source)} to ${destination}`, colors.green);
+    log(`SUCCESS: Copied ${path.basename(source)} to ${destination}`, colors.green);
   } catch (error) {
     if (error.code === "ENOENT") {
       throw new Error(`Source file not found: ${source}`);
@@ -240,9 +240,9 @@ async function updatePackageJson(targetDir) {
     await fs.access(packageJsonPath);
   } catch (error) {
     if (error.code === "ENOENT") {
-      log("No package.json found. Please run npm init first.", colors.red);
+      log("ERROR: No package.json found. Please run npm init first.", colors.red);
     } else {
-      log(`Cannot access package.json: ${error.message}`, colors.red);
+      log(`ERROR: Cannot access package.json: ${error.message}`, colors.red);
     }
     return false;
   }
@@ -256,11 +256,11 @@ async function updatePackageJson(targetDir) {
       packageJson = JSON.parse(data);
     } catch (parseError) {
       log(
-        `Error: package.json contains invalid JSON: ${parseError.message}`,
+        `ERROR: package.json contains invalid JSON: ${parseError.message}`,
         colors.red,
       );
       log(
-        "Please check your package.json file for syntax errors.",
+        "ADVICE: Please check your package.json file for syntax errors.",
         colors.yellow,
       );
       return false;
@@ -282,19 +282,19 @@ async function updatePackageJson(targetDir) {
     } catch (writeError) {
       if (writeError.code === "EACCES") {
         log(
-          `Permission denied writing to package.json. Please check file permissions.`,
+          `ERROR: Permission denied writing to package.json. Please check file permissions.`,
           colors.red,
         );
       } else {
-        log(`Error writing package.json: ${writeError.message}`, colors.red);
+        log(`ERROR writing package.json: ${writeError.message}`, colors.red);
       }
       return false;
     }
 
-    log("Success: Updated package.json with linting scripts", colors.green);
+    log("SUCCESS: Updated package.json with linting scripts", colors.green);
     return true;
   } catch (error) {
-    log(`Unexpected error updating package.json: ${error.message}`, colors.red);
+    log(`UNEXPECTED ERROR updating package.json: ${error.message}`, colors.red);
     return false;
   }
 }
@@ -309,13 +309,13 @@ async function installDependencies(dependencies) {
     log(`Installing dev dependencies: ${dependencies.join(", ")}`, colors.blue);
     const success = await safeNpmInstall(dependencies);
     if (success) {
-      log("Success: Dependencies installed successfully", colors.green);
+      log("SUCCESS: Dependencies installed successfully", colors.green);
     } else {
-      log("Error: Failed to install some dependencies", colors.red);
+      log("ERROR: Failed to install some dependencies", colors.red);
     }
     return success;
   } catch (error) {
-    log(`Error installing dependencies: ${error.message}`, colors.red);
+    log(`ERROR installing dependencies: ${error.message}`, colors.red);
     return false;
   }
 }
@@ -395,22 +395,22 @@ async function performSetupRollback(targetDir, config) {
     rollbackOperations.forEach((operation) => {
       log(`  Operation: ${operation}`, colors.gray);
     });
-    log(`\nInformation: Removed ${removedCount} files during rollback`, colors.yellow);
+    log(`\nINFO: Removed ${removedCount} files during rollback`, colors.yellow);
   } else {
-    log("No files to roll back", colors.yellow);
+    log("INFO: No files to roll back", colors.yellow);
   }
 
   // Note about package.json
   log(
-    "\nNote: package.json modifications were not rolled back to prevent data loss.",
+    "\nNOTE: package.json modifications were not rolled back to prevent data loss.",
     colors.yellow,
   );
   log(
-    "Please manually review and revert package.json changes if needed.",
+    "ADVICE: Please manually review and revert package.json changes if needed.",
     colors.yellow,
   );
 
-  log("\nTo try setup again:", colors.yellow);
+  log("\nTO TRY AGAIN:", colors.yellow);
   log("  node setup-standards.js", colors.yellow);
 }
 
@@ -434,7 +434,7 @@ async function main() {
   try {
     targetDir = validateTargetPath(args[0] || ".");
   } catch (error) {
-    log(`Error: ${error.message}`, colors.red);
+    log(`ERROR: ${error.message}`, colors.red);
     process.exit(1);
   }
 
@@ -449,7 +449,7 @@ async function main() {
     // Create directories
     await createDirectory(path.join(targetDir, "docs"));
     await createDirectory(standardsDir);
-    log("Success: Directories created", colors.green);
+    log("SUCCESS: Directories created", colors.green);
 
     log("Step 2/5: Copying standards documentation...", colors.cyan);
     // Copy standards files
@@ -460,7 +460,7 @@ async function main() {
         await copyFile(source, destination);
       }),
     );
-    log("Success: Standards documentation copied", colors.green);
+    log("SUCCESS: Standards documentation copied", colors.green);
 
     log("Step 3/5: Copying configuration files...", colors.cyan);
     // Copy config files
@@ -471,15 +471,15 @@ async function main() {
         await copyFile(source, destination);
       }),
     );
-    log("Success: Configuration files copied", colors.green);
+    log("SUCCESS: Configuration files copied", colors.green);
 
     log("Step 4/5: Creating ESLint configuration...", colors.cyan);
     // Create ESLint config using cached configuration
     const eslintConfig = getEslintConfig();
 
     await fs.writeFile(path.join(targetDir, ".eslintrc.js"), eslintConfig);
-    log("Success: Created .eslintrc.js", colors.green);
-    log("Success: ESLint configuration created", colors.green);
+    log("SUCCESS: Created .eslintrc.js", colors.green);
+    log("SUCCESS: ESLint configuration created", colors.green);
 
     log("Step 5/5: Installing development dependencies...", colors.cyan);
     // Update package.json
@@ -489,17 +489,17 @@ async function main() {
     if (packageUpdated && process.env.NODE_ENV !== "test") {
       await installDependencies(config.dependencies.dev);
     } else if (process.env.NODE_ENV === "test") {
-      log("Skipping dependency installation in test mode", colors.yellow);
+      log("INFO: Skipping dependency installation in test mode", colors.yellow);
     }
-    log("Success: Dependencies installed", colors.green);
+    log("SUCCESS: Dependencies installed", colors.green);
 
     log(
-      "\nSuccess: Setup complete! Standards have been incorporated into your project.",
+      "\nSUCCESS: Setup complete! Standards have been incorporated into your project.",
       colors.green,
     );
-    log("To get started with the standards, run: npm run lint", colors.yellow);
+    log("NEXT STEP: To get started with the standards, run: npm run lint", colors.yellow);
   } catch (error) {
-    log(`\nError during setup: ${error.message}`, colors.red);
+    log(`\nERROR during setup: ${error.message}`, colors.red);
 
     // Perform rollback
     await performSetupRollback(targetDir, config);
@@ -509,6 +509,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  log(`Fatal error: ${error.message}`, colors.red);
+  log(`FATAL ERROR: ${error.message}`, colors.red);
   process.exit(1);
 });

@@ -8,7 +8,8 @@
     "rest-base-create-enhanced": "./scripts/create-project-enhanced.js",
     "rest-base-setup-enhanced": "./scripts/setup-standards-enhanced.js",
     "rest-spec-create": "./scripts/create-project-template.js",
-    "rest-spec-update": "./scripts/update-manager.js"
+    "rest-spec-update": "./scripts/update-manager.js",
+    "rest-spec-errors": "./scripts/error-dashboard.js"
   },
   "scripts": {
     "lint:md": "markdownlint *.md",
@@ -24,6 +25,9 @@
     "update": "node ./scripts/update-manager.js",
     "test:high-contrast": "node ./scripts/test-high-contrast.js",
     "test:high-contrast:compare": "node ./scripts/test-high-contrast.js compare",
+    "error:dashboard": "node ./scripts/error-dashboard.js dashboard",
+    "error:summary": "node ./scripts/error-dashboard.js summary",
+    "error:analyze": "node ./scripts/error-dashboard.js analyze",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
     "build:watch": "tsc --watch",

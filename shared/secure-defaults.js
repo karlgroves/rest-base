@@ -113,35 +113,21 @@ const databaseDefaults = {
  * Secure defaults for logging
  */
 const loggingDefaults = {
-  winston: {
+  bunyan: {
     level: process.env.NODE_ENV === "production" ? "info" : "debug",
-    format: "json",
-    defaultMeta: { service: "rest-base" },
-    transports: [
+    name: "rest-base",
+    streams: [
       {
-        type: "console",
-        handleExceptions: true,
-        json: false,
-        colorize: true,
+        level: "info",
+        stream: process.stdout,
       },
       {
-        type: "file",
-        filename: "logs/error.log",
         level: "error",
-        handleExceptions: true,
-        json: true,
-        maxsize: 5242880, // 5MB
-        maxFiles: 5,
-        colorize: false,
+        path: "logs/error.log",
       },
       {
-        type: "file",
-        filename: "logs/combined.log",
-        handleExceptions: true,
-        json: true,
-        maxsize: 5242880, // 5MB
-        maxFiles: 5,
-        colorize: false,
+        level: "info",
+        path: "logs/combined.log",
       },
     ],
   },

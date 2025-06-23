@@ -1,6 +1,6 @@
 # Global Rules
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [🔄 API Operations](./operations-and-responses.md) | [📨 Request Patterns](./request.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) | [Node.js Standards](./node_structure_and_naming_conventions.md) | [API Operations](./operations-and-responses.md) | [Request Patterns](./request.md)
 
 ## Table of Contents
 

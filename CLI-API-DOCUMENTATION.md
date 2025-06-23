@@ -1,9 +1,9 @@
 # CLI API Documentation
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) |
-> [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) |
-> [⌨️ Keyboard Shortcuts](./KEYBOARD-SHORTCUTS.md) |
-> [🤖 CLAUDE.md](./CLAUDE.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) | [Global Rules](./global-rules.md) |
+> [Node.js Standards](./node_structure_and_naming_conventions.md) |
+> [Keyboard Shortcuts](./KEYBOARD-SHORTCUTS.md) |
+> [CLAUDE.md](./CLAUDE.md)
 
 ## Table of Contents
 
@@ -65,8 +65,7 @@ This document provides comprehensive API documentation for the REST-SPEC CLI too
 
 ## Overview
 
-The REST-SPEC project provides two main CLI tools for setting up and managing Node.js projects that follow
-REST-Base standards:
+The REST-SPEC project provides two main CLI tools for setting up and managing Node.js projects that follow REST-Base standards:
 
 1. **create-project.js** - Creates new projects from scratch with all standards pre-applied
 2. **setup-standards.js** - Applies REST-Base standards to existing projects
@@ -112,7 +111,7 @@ node scripts/create-project.js my-api-project
 
 ### Generated Project Structure
 
-```text
+```plaintext
 my-api-project/
 ├── src/
 │   ├── config/
@@ -167,7 +166,7 @@ my-api-project/
 - morgan ^1.10.0
 - mysql2 ^3.6.5
 - sequelize ^6.35.1
-- winston ^3.11.0
+- bunyan ^1.8.15
 
 #### Development Dependencies
 
@@ -192,8 +191,6 @@ my-api-project/
 - Path validation prevents directory traversal
 - Secure spawn execution prevents shell injection
 - Reserved name checking prevents system conflicts
-
----
 
 ## setup-standards.js
 
@@ -282,8 +279,6 @@ node scripts/setup-standards.js ./my-existing-project
 - Preserves package.json modifications (manual review recommended)
 - Detailed rollback summary with affected files
 
----
-
 ## Common Features
 
 ### Progress Indicators
@@ -317,8 +312,6 @@ Both tools provide clear progress feedback:
 - Graceful handling of permission and file system errors
 - Preservation of existing project state on setup failure
 
----
-
 ## Exit Codes
 
 ### create-project.js Exit Codes
@@ -331,8 +324,6 @@ Both tools provide clear progress feedback:
 - `0`: Success
 - `1`: Invalid arguments, missing prerequisites, or setup error
 
----
-
 ## Environment Requirements
 
 - Node.js 22.x LTS or higher
@@ -340,8 +331,6 @@ Both tools provide clear progress feedback:
 - Unix-like or Windows operating system
 - Write permissions to target directories
 - Git (optional, for repository initialization)
-
----
 
 ## Keyboard Shortcuts and Accessibility
 
@@ -379,8 +368,6 @@ setup-standards [Tab]   # Completes directory paths
 For a comprehensive guide to all keyboard shortcuts, terminal navigation, and accessibility features,
 see the [Keyboard Shortcuts Documentation](./KEYBOARD-SHORTCUTS.md).
 
----
-
 ## Troubleshooting
 
 ### Common Issues
@@ -414,8 +401,6 @@ Both tools provide detailed logging including:
 - Dependency installation progress
 - Error details with file paths
 - Rollback operation summaries
-
----
 
 ## API Function Reference
 
@@ -459,8 +444,6 @@ Both tools provide detailed logging including:
 - `safeNpmInstall(dependencies)` - Secure npm execution
 - `performSetupRollback(targetDir, config)` - Error recovery and cleanup
 - `getEslintConfig()` - Cached ESLint configuration
-
----
 
 This documentation provides complete reference for using and understanding the REST-SPEC CLI tools.
 For additional support, refer to the project's README.md and standards documentation in the `docs/standards/` directory.

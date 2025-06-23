@@ -1,6 +1,8 @@
 # File Upload and Download Patterns
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🔄 Operations & Responses](./operations-and-responses.md) | [📋 Global Rules](./global-rules.md) | [✅ Validation](./validation-consolidated.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) |
+> [Operations & Responses](./operations-and-responses.md) | [Global Rules](./global-rules.md) |
+> [✅ Validation](./validation-consolidated.md)
 
 ## Table of Contents
 
@@ -42,7 +44,9 @@
 
 ## Purpose
 
-This document defines comprehensive patterns for handling file uploads and downloads in REST-SPEC APIs. It covers security considerations, validation rules, storage strategies, and implementation patterns for reliable file handling.
+This document defines comprehensive patterns for handling file uploads and downloads in REST-SPEC APIs.
+It covers security considerations, validation rules, storage strategies, and implementation patterns
+for reliable file handling.
 
 ## File Upload Patterns
 
@@ -253,7 +257,8 @@ const validateFileContent = async (buffer, filename) => {
   
   if (expectedMime && detectedType?.mime !== expectedMime) {
     throw new ValidationError(
-      `File content does not match extension. Expected ${expectedMime}, got ${detectedType?.mime}`
+      `File content does not match extension. Expected ${expectedMime}, ` +
+      `got ${detectedType?.mime}`
     );
   }
 
@@ -659,7 +664,8 @@ app.post('/api/files/:fileId/download-url', async (req, res, next) => {
       { expiresIn }
     );
 
-    const downloadUrl = `${req.protocol}://${req.get('host')}/api/files/${fileId}/download?token=${downloadToken}`;
+    const downloadUrl = 
+      `${req.protocol}://${req.get('host')}/api/files/${fileId}/download?token=${downloadToken}`;
 
     res.json({
       data: {
@@ -745,7 +751,9 @@ app.get('/api/files/:fileId/download', async (req, res, next) => {
 ## Resources
 
 - [Multer Documentation](https://github.com/expressjs/multer)
-- [AWS S3 Upload Guide](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/s3-example-photo-album.html)
-- [File Upload Security Best Practices](https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload)
+- [AWS S3 Upload Guide](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/
+  s3-example-photo-album.html)
+- [File Upload Security Best Practices](https://owasp.org/www-community/vulnerabilities/
+  Unrestricted_File_Upload)
 - [HTTP Range Requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests)
 - [JWT for Download Tokens](https://auth0.com/blog/a-look-at-the-latest-draft-for-jwt-bcp/)

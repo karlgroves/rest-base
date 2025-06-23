@@ -343,19 +343,3 @@ Required knowledge areas:
   (<https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/>)
 - [Node.js Security Best Practices](https://nodejs.org/en/docs/guides/security/)
 - [Express Security Best Practices](https://expressjs.com/en/advanced/best-practice-security.html)
-
-## Contact Information
-
-- **Security Team**: [security@rest-spec.org](mailto:security@rest-spec.org)
-- **General Contact**: [info@rest-spec.org](mailto:info@rest-spec.org)
-- **Emergency Contact**: Available 24/7 for critical security issues
-
-## Acknowledgments
-
-We thank the security researchers and community members who have responsibly disclosed vulnerabilities
-to help improve the security of REST-SPEC.
-
----
-
-**Last Updated**: December 2024
-**Next Review**: June 2025

@@ -1,7 +1,7 @@
 # Node.js structure and naming conventions
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) |
-> [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md) |
+> [📋 Global Rules](./global-rules.md) | [Technologies](./technologies.md) |
 > [📊 SQL Standards](./sql-standards-and-patterns.md)
 
 ## Table of Contents
@@ -79,15 +79,21 @@
 
 ## On the Applicability of these Standards
 
-All work performed on the project shall conform to these standards, without exception. Failure to conform to these standards will result in denial of the work delivered until the delivered code conforms to these standards.
+All work performed on the project shall conform to these standards, without exception. Failure to conform to these
+standards will result in denial of the work delivered until the delivered code conforms to these standards.
 
 ## Readability Comes Before Anything
 
-In order to streamline the development process, avoid bugs, and ease maintenance of the system, developers should ensure that - above all - readability matters most. Almost all of the items listed in this document relate to improving the readability of the code so that it can be more easily read by others (including yourself). A good guide to keep in mind is to ask someone to take a quick glance at the code. If even a marginally experienced developer can't understand what's happening, something is wrong.
+In order to streamline the development process, avoid bugs, and ease maintenance of the system, developers should
+ensure that - above all - readability matters most. Almost all of the items listed in this document relate to
+improving the readability of the code so that it can be more easily read by others (including yourself). A good guide
+to keep in mind is to ask someone to take a quick glance at the code. If even a marginally experienced developer can't
+understand what's happening, something is wrong.
 
 ## JavaScript Code Style
 
-JavaScript code should follow modern ES6+ standards with consistent styling. When working with Node.js, leveraging modern JavaScript features is encouraged, including:
+JavaScript code should follow modern ES6+ standards with consistent styling. When working with Node.js, leveraging
+modern JavaScript features is encouraged, including:
 
 - Arrow functions
 - Destructuring assignments
@@ -95,17 +101,24 @@ JavaScript code should follow modern ES6+ standards with consistent styling. Whe
 - Async/await for asynchronous operations
 - ES modules (where supported by your Node version)
 
-For compatibility reasons, always be aware of which Node.js version you're targeting, as some features may require transpilation for older versions.
+For compatibility reasons, always be aware of which Node.js version you're targeting, as some features may require
+transpilation for older versions.
 
 ## Comments
 
-Informative documentation is the cornerstone of easier maintenance and repair of the system. For that reason, developers should take a rather liberal approach to commenting their code. A general rule of thumb is that if you look at a section of code and think "Wow, I don't want to try and describe that", you need to comment it before you forget how it works. Comments should document decisions. At every point where you had a choice of what to do place a comment describing which choice you made and why.
+Informative documentation is the cornerstone of easier maintenance and repair of the system. For that reason,
+developers should take a rather liberal approach to commenting their code. A general rule of thumb is that if you look
+at a section of code and think "Wow, I don't want to try and describe that", you need to comment it before you forget
+how it works. Comments should document decisions. At every point where you had a choice of what to do place a comment
+describing which choice you made and why.
 
-All documentation blocks ("docblocks") must be compatible with the JSDoc format. Describing the JSDoc format is beyond the scope of this document. For more information, visit: <https://jsdoc.app/>
+All documentation blocks ("docblocks") must be compatible with the JSDoc format. Describing the JSDoc format is
+beyond the scope of this document. For more information, visit: <https://jsdoc.app/>
 
 ### File Level Document Block
 
-Every file that contains JavaScript code must have a header block at the top of the file. The header block should contain these items, at minimum:
+Every file that contains JavaScript code must have a header block at the top of the file. The header block should
+contain these items, at minimum:
 
 - Short description for the file
 - Long description of the file
@@ -123,7 +136,8 @@ Every file that contains JavaScript code must have a header block at the top of 
 
 ### Function Level Documentation Block
 
-Every function definition must have a documentation block above the function. The documentation block should contain these items, at a minimum:
+Every function definition must have a documentation block above the function. The documentation block should contain
+these items, at a minimum:
 
 - Description of the function
 - Any external dependencies used
@@ -140,7 +154,10 @@ Every function definition must have a documentation block above the function. Th
 
 ### Inline Comments
 
-JavaScript style comments (`// single-line` and `/* multi-line */`) are both fine. Use of hash-style comments (`#`) should not be used, even though Node.js now supports them in newer versions. The primary convention is to use `//` for single-line comments and `/* */` for multi-line comments (with `/**` being used as the marker for the top of the multi-line comment).
+JavaScript style comments (`// single-line` and `/* multi-line */`) are both fine. Use of hash-style comments (`#`)
+should not be used, even though Node.js now supports them in newer versions. The primary convention is to use `//` for
+single-line comments and `/* */` for multi-line comments (with `/**` being used as the marker for the top of the
+multi-line comment).
 
 #### Examples
 
@@ -156,14 +173,17 @@ JavaScript style comments (`// single-line` and `/* multi-line */`) are both fin
 
 ### Comment Your "Gotchas"
 
-Developers should ensure that all those places where something happens which may trip up future developers has been commented clearly and that you make these comments much easier to notice by others than normal comments.
+Developers should ensure that all those places where something happens which may trip up future developers has been
+commented clearly and that you make these comments much easier to notice by others than normal comments.
 
 - @TODO means there's more to be done to finish/ improve/ repair that section.
 - :BUG: means there's a known bug in that section of code.
-- :KLUDGE: means you've done something ugly, inefficient, or inideal. Explain how you would do it differently next time if you had more time.
+- :KLUDGE: means you've done something ugly, inefficient, or inideal. Explain how you would do it differently next
+  time if you had more time.
 - :WARNING: Tells others that the following code is very tricky so don't go changing it without thinking.
 
-*Committing @TODO code to master is a pretty terrible idea and should be avoided if possible. If you have a @TODO comment, it **must** also have a JIRA ticket associated with it. i.e.:*
+*Committing @TODO code to master is a pretty terrible idea and should be avoided if possible. If you have a @TODO
+comment, it **must** also have a JIRA ticket associated with it. i.e.:*
 
 ```js
 // @TODO Jira ticket XYZ-123 add param foo to indicate whether bar applies
@@ -171,11 +191,16 @@ Developers should ensure that all those places where something happens which may
 
 #### Formatting of a "Gotcha" Comment Block
 
-Make the gotcha keyword the first symbol in the comment. If you have a keyword you feel is more appropriate than any of the ones listed above, feel free to make up your own.
+Make the gotcha keyword the first symbol in the comment. If you have a keyword you feel is more appropriate than any
+of the ones listed above, feel free to make up your own.
 
 Comments may consist of multiple lines, but the first line should be a self-containing, meaningful summary.
 
-The writer's name and the date of the remark (in YY-MM-DD format) should be part of the comment. This information is in the source repository, but it can take a quite a while to find out when and by whom it was added. Often gotchas stick around longer than they should. Embedding date information allows other programmer to make this decision. Embedding who information lets us know who to ask. If, during your inquiry, you discover the issue has been resolved, please add that to the comments as "FIXED"
+The writer's name and the date of the remark (in YY-MM-DD format) should be part of the comment. This information is
+in the source repository, but it can take a quite a while to find out when and by whom it was added. Often gotchas
+stick around longer than they should. Embedding date information allows other programmer to make this decision.
+Embedding who information lets us know who to ask. If, during your inquiry, you discover the issue has been resolved,
+please add that to the comments as "FIXED"
 
 #### Example "Gotcha" blocks
 
@@ -202,25 +227,33 @@ The writer's name and the date of the remark (in YY-MM-DD format) should be part
 
 ### Tabs vs. Spaces
 
-Developers must use spaces all the time. Developers should set their editors to format "tabs" as 2 spaces, which is the standard for Node.js and JavaScript projects.
+Developers must use spaces all the time. Developers should set their editors to format "tabs" as 2 spaces, which is
+the standard for Node.js and JavaScript projects.
 
 ### Line Length
 
-The target line length is 100 characters for basic code lines but readability is the primary consideration in determining how and when lines should wrap.
+The target line length is 100 characters for basic code lines but readability is the primary consideration in
+determining how and when lines should wrap.
 
 ### Linefeeds
 
-The three major operating systems (Unix, Windows and Mac OS) use different ways to represent the end of a line. Unix systems use the newline character (\n), Mac systems use a carriage return (\r), and Windows systems use a carriage return followed by a line feed (\r\n).
+The three major operating systems (Unix, Windows and Mac OS) use different ways to represent the end of a line. Unix
+systems use the newline character (\n), Mac systems use a carriage return (\r), and Windows systems use a carriage
+return followed by a line feed (\r\n).
 
-Developers should use simple newlines (Unix/LF style), as this is the standard for all Node.js projects. If you develop on Windows, be sure to set up your editor to save files in Unix format.
+Developers should use simple newlines (Unix/LF style), as this is the standard for all Node.js projects. If you
+develop on Windows, be sure to set up your editor to save files in Unix format.
 
 ### Always Use Braces
 
-Braces must be included when writing code using if, for, while etc. blocks. There are no exceptions to this rule, even if the braces could be omitted per language syntax. Leaving out braces makes code harder to maintain in the future and can also cause bugs that are very difficult to track down.
+Braces must be included when writing code using if, for, while etc. blocks. There are no exceptions to this rule, even
+if the braces could be omitted per language syntax. Leaving out braces makes code harder to maintain in the future and
+can also cause bugs that are very difficult to track down.
 
 ### Placement of Braces
 
-For JavaScript, braces should follow the "K&R style" (Kernighan and Ritchie) convention. The opening brace is placed on the same line as the statement, with one space before it:
+For JavaScript, braces should follow the "K&R style" (Kernighan and Ritchie) convention. The opening brace is placed
+on the same line as the statement, with one space before it:
 
 ```js
 if (condition) {
@@ -239,7 +272,9 @@ if (condition)
 
 ### Spaces Between Tokens
 
-There must be one space on either side of a token in expressions, statements etc. The only exceptions are commas (which should have one space after, but none before), semi-colons (which should not have spaces on either side if they are at the end of a line, and one space after otherwise).
+There must be one space on either side of a token in expressions, statements etc. The only exceptions are commas
+(which should have one space after, but none before), semi-colons (which should not have spaces on either side if they
+are at the end of a line, and one space after otherwise).
 
 Variable assignment:
 
@@ -269,7 +304,9 @@ for (let i = 1; i <= 10; i++) {
 
 ### Operator Precedence (parens)
 
-Even though operator precedence in JavaScript follows established standards, it's not reasonable to expect everyone to know the exact precedence of all operators. Always use brackets or parentheses to make your intentions absolutely clear. This makes maintainability much easier for anyone reviewing the code later.
+Even though operator precedence in JavaScript follows established standards, it's not reasonable to expect everyone to
+know the exact precedence of all operators. Always use brackets or parentheses to make your intentions absolutely
+clear. This makes maintainability much easier for anyone reviewing the code later.
 
 ## Variables
 
@@ -314,11 +351,15 @@ Do not use the variable `l` (lowercase 'L') in any of your code as it looks too 
 
 ### Abbreviations and Acronyms
 
-Abbreviations and acronyms should not be used unless the abbreviation or acronym is likely to be universally understood among all other developers likely to be working on the system. For example 'WCAG' is an acronym likely to be understood by all team members as "Web Content Accessibility Guidelines", whereas 'SBC' (Small Block Chevy) is a bit less likely to be understood by those same employees.
+Abbreviations and acronyms should not be used unless the abbreviation or acronym is likely to be universally
+understood among all other developers likely to be working on the system. For example 'WCAG' is an acronym likely to
+be understood by all team members as "Web Content Accessibility Guidelines", whereas 'SBC' (Small Block Chevy) is a bit
+less likely to be understood by those same employees.
 
 ### Private Variables and Methods
 
-In modern JavaScript classes, private members should use the `#` prefix notation (where supported) or a convention of preceding private members with an underscore (`_`) if the code must support older Node versions:
+In modern JavaScript classes, private members should use the `#` prefix notation (where supported) or a convention of
+preceding private members with an underscore (`_`) if the code must support older Node versions:
 
 ```js
 class MyClass {
@@ -409,19 +450,23 @@ All classes should be separated into their own files. The name of the file shoul
 
 Do not do any real work with an object's constructor. Instead, use the constructor to initialize variables only and/or do only actions that can't fail. This is because constructors can't return a rejected promise or throw nicely handled errors.
 
-Create a method for an object which needs to do stuff that completes construction. This method should be called after object instantiation. The conventional name for this method tends to be `init()` or a more descriptive name like `connect()` for database connections.
+Create a method for an object which needs to do stuff that completes construction. This method should be called after
+object instantiation. The conventional name for this method tends to be `init()` or a more descriptive name like
+`connect()` for database connections.
 
 ## Functions
 
 ### Naming
 
-Like variables, functions and methods should be named in a way that is clear and concise. In general that means the name of the function should be as accurate a description of what the function does as possible:
+Like variables, functions and methods should be named in a way that is clear and concise. In general that means the
+name of the function should be as accurate a description of what the function does as possible:
 
 - If a function prints user information to the screen the name of the function should be `printUserInformation`.
 - If a function validates that an e-mail address is formatted properly it should be called `isValidEmail()`.
 - In general functions that return a boolean value should start with `is` or `has`
 - Functions should use camelCase (first letter lowercase, subsequent words capitalized)
-- Functions should be stateless and as a general rule *never* rely on global information not directly passed to the function
+- Functions should be stateless and as a general rule *never* rely on global information not directly passed to the
+  function
 - Private functions or methods (not exported) should begin with underscore `_calculateTotal()`
 
 ### Arguments
@@ -446,7 +491,8 @@ function searchUsers(query, { limit = 20, offset = 0, sortBy = 'name' } = {}) {
 
 ### Be wary of writing functions without a return value
 
-A common practice is making functions that perform side effects without returning a value. While sometimes necessary, this can limit reusability. Consider the following:
+A common practice is making functions that perform side effects without returning a value. While sometimes necessary,
+this can limit reusability. Consider the following:
 
 ```js
 function mySum(numX, numY) {
@@ -460,7 +506,9 @@ In the case of the example above, there's only one thing the `mySum` function ca
 - It keeps the function from being able to be included as part of another function or bigger process.
 - Any remediation to this function (to make it return, rather than log its result) will break all already-existing code which uses this function.
 
-A better approach would be to ensure all functions return some value, even if that value is a primitive or a boolean. Doing so makes for much more robust & reusable code which also enables you to do better error handling and provide greater usability for the end user. The example function can be modified as follows:
+A better approach would be to ensure all functions return some value, even if that value is a primitive or a boolean.
+Doing so makes for much more robust & reusable code which also enables you to do better error handling and provide
+greater usability for the end user. The example function can be modified as follows:
 
 ```js
 function mySum(numX, numY) {
@@ -469,7 +517,9 @@ function mySum(numX, numY) {
 }
 ```
 
-The function can now also be modified further to do some basic type checking to make sure the input parameters are indeed numbers (and set to return NaN if they're not) and the function can also be used elsewhere, such as within other functions.
+The function can now also be modified further to do some basic type checking to make sure the input parameters are
+indeed numbers (and set to return NaN if they're not) and the function can also be used elsewhere, such as within
+other functions.
 
 ```js
 // Example usage
@@ -502,15 +552,20 @@ switch (numPeople) {
 
 The `default` case must not be omitted from a switch statement.
 
-NOTE: It is sometimes useful to write a case statement which falls through to the next case by not including a break or return in that case. To distinguish these cases from bugs, any case statement where break or return are omitted must contain the comment `// break intentionally omitted`.
+NOTE: It is sometimes useful to write a case statement which falls through to the next case by not including a break
+or return in that case. To distinguish these cases from bugs, any case statement where break or return are omitted must
+contain the comment `// break intentionally omitted`.
 
 ### if/else/elseif
 
-Control statements based on the if and else constructs must have a single space before the opening parenthesis of the conditional, and a single space after the closing parenthesis.
+Control statements based on the if and else constructs must have a single space before the opening parenthesis of the
+conditional, and a single space after the closing parenthesis.
 
-Within the conditional statements between the parentheses, operators must be separated by spaces for readability. Inner parentheses are encouraged to improve logical grouping of larger conditionals.
+Within the conditional statements between the parentheses, operators must be separated by spaces for readability.
+Inner parentheses are encouraged to improve logical grouping of larger conditionals.
 
-The opening brace is written on the same line as the conditional statement. The closing brace is always written on its own line. Any content within the braces must be indented two spaces.
+The opening brace is written on the same line as the conditional statement. The closing brace is always written on its
+own line. Any content within the braces must be indented two spaces.
 
 ```js
 if (a !== 2) {
@@ -538,11 +593,13 @@ if (a !== 2) {
 }
 ```
 
-JavaScript allows for these statements to be written without braces in some circumstances. The coding standard makes no differentiation and all "if", "else if" or "else" statements must use braces.
+JavaScript allows for these statements to be written without braces in some circumstances. The coding standard makes
+no differentiation and all "if", "else if" or "else" statements must use braces.
 
 ### Ternary Operators
 
-In general don't use ternary operators - use the longer form if / else statements. The exception would be cases where the ternary operation is painfully obvious or for simple assignments:
+In general don't use ternary operators - use the longer form if / else statements. The exception would be cases where
+the ternary operation is painfully obvious or for simple assignments:
 
 ```js
 // Acceptable use of ternary
@@ -758,10 +815,10 @@ async function doSomething() {
 
 ### Logging
 
-Use appropriate logging levels for different types of information. Never use `console.log` in production code - use Winston for all logging needs:
+Use appropriate logging levels for different types of information. Never use `console.log` in production code - use Bunyan for all logging needs:
 
 ```js
-// Example with Winston
+// Example with Bunyan
 const logger = require('./utils/logger');
 
 // Different log levels
@@ -915,6 +972,32 @@ As stated above, all site assets should be grouped together according to their p
 ### Exception: Assets That Aren't Used Globally
 
 One exception to the above is when site assets are not shared throughout the most (or even majority) of the system. For more specific assets, place them closer to where they're used.
+
+## Modularity & Design Principles
+
+### Code Organization
+
+- **Small, Focused Functions**: Generate small, focused functions that do one thing well
+- **Pure Functions**: Prefer pure functions when possible (no side effects)
+- **Separation of Concerns**: Encourage separation of concerns (e.g., business logic separate from I/O)
+- **Design Patterns**: Use appropriate design patterns (e.g., Factory, Singleton) where justified
+- **Module Boundaries**: Keep clear boundaries between modules - each module should have a single, well-defined purpose
+
+### Dependencies Management
+
+- **Minimize Dependencies**: Minimize external dependencies; justify when adding a dependency
+- **Well-Maintained Libraries**: Prefer well-maintained, popular libraries with permissive licenses
+- **Pin Versions**: Always pin dependency versions in generated package files
+- **Security Updates**: Regularly audit dependencies for security vulnerabilities
+- **Peer Dependencies**: Clearly document peer dependencies and version requirements
+
+### Versioning & Compatibility
+
+- **Runtime Compatibility**: Ensure generated code is compatible with the specified runtime (e.g., Node.js 22.x as per .nvmrc)
+- **Framework Versions**: Clearly indicate framework version requirements (e.g., Express 4.x)
+- **Environment Requirements**: Clearly indicate if code requires a specific environment or toolchain
+- **Breaking Changes**: Follow semantic versioning principles - major version for breaking changes
+- **Backward Compatibility**: Maintain backward compatibility within minor versions
 
 ## Security
 

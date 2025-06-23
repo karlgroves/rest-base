@@ -46,10 +46,10 @@ describe("Secure Defaults", () => {
     it("should return logging defaults", () => {
       const config = getSecureDefaults("logging");
 
-      expect(config).toHaveProperty("winston");
-      expect(config.winston).toHaveProperty("level");
-      expect(config.winston).toHaveProperty("transports");
-      expect(Array.isArray(config.winston.transports)).toBe(true);
+      expect(config).toHaveProperty("bunyan");
+      expect(config.bunyan).toHaveProperty("level");
+      expect(config.bunyan).toHaveProperty("streams");
+      expect(Array.isArray(config.bunyan.streams)).toBe(true);
     });
 
     it("should return auth defaults", () => {
@@ -100,8 +100,8 @@ describe("Secure Defaults", () => {
       const devConfig = getSecureDefaults("logging", "development");
       const prodConfig = getSecureDefaults("logging", "production");
 
-      expect(devConfig.winston.level).toBe("debug");
-      expect(prodConfig.winston.level).toBe("info");
+      expect(devConfig.bunyan.level).toBe("debug");
+      expect(prodConfig.bunyan.level).toBe("info");
     });
   });
 
@@ -233,19 +233,19 @@ describe("Secure Defaults", () => {
     it("should use development defaults when NODE_ENV is development", () => {
       process.env.NODE_ENV = "development";
       const config = getSecureDefaults("logging");
-      expect(config.winston.level).toBe("debug");
+      expect(config.bunyan.level).toBe("debug");
     });
 
     it("should use production defaults when NODE_ENV is production", () => {
       process.env.NODE_ENV = "production";
       const config = getSecureDefaults("logging");
-      expect(config.winston.level).toBe("info");
+      expect(config.bunyan.level).toBe("info");
     });
 
     it("should default to development when NODE_ENV is not set", () => {
       delete process.env.NODE_ENV;
       const config = getSecureDefaults("logging");
-      expect(config.winston.level).toBe("debug");
+      expect(config.bunyan.level).toBe("debug");
     });
   });
 });

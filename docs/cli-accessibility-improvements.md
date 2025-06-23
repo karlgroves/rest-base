@@ -69,7 +69,7 @@ In the dry-run and operation tracking, icons have been replaced:
 - 📁 → [CREATE]
 - ✏️ → [MODIFY]
 - 🗑️ → [DELETE]
-- 📋 → [COPY]
+- → [COPY]
 - ⚡ → [EXECUTE]
 - 💾 → [BACKUP]
 

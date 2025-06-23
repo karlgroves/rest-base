@@ -1,6 +1,7 @@
 # Monitoring and Alerting Standards
 
-This document establishes comprehensive monitoring and alerting standards for REST-Base applications, ensuring proper observability, performance tracking, and incident response.
+This document establishes comprehensive monitoring and alerting standards for REST-Base applications,
+ensuring proper observability, performance tracking, and incident response.
 
 ## Table of Contents
 
@@ -33,7 +34,7 @@ This document establishes comprehensive monitoring and alerting standards for RE
 
 ### Monitoring Levels
 
-```
+```plaintext
 ┌─────────────────────────────────────────────────────────────┐
 │                    Business Metrics                        │
 │  (User engagement, revenue, conversion rates)              │
@@ -60,17 +61,17 @@ This document establishes comprehensive monitoring and alerting standards for RE
 
 ### SLI, SLO, and SLA Framework
 
-**Service Level Indicators (SLIs)**
+#### Service Level Indicators (SLIs)
 
 - Specific metrics that measure service performance
 - Must be measurable and meaningful to users
 
-**Service Level Objectives (SLOs)**
+#### Service Level Objectives (SLOs)
 
 - Target values or ranges for SLIs
 - Internal goals for service reliability
 
-**Service Level Agreements (SLAs)**
+#### Service Level Agreements (SLAs)
 
 - External commitments to customers
 - Often based on SLOs with stricter requirements
@@ -319,45 +320,46 @@ volumes:
 
 ```javascript
 // utils/logger.js
-const winston = require('winston');
+const bunyan = require('bunyan');
+const path = require('path');
 
-const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.errors({ stack: true }),
-    winston.format.json()
-  ),
-  defaultMeta: {
-    service: process.env.SERVICE_NAME || 'rest-api',
-    version: process.env.npm_package_version || '1.0.0',
-    environment: process.env.NODE_ENV || 'development'
-  },
-  transports: [
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-      )
-    })
-  ]
-});
+// Create streams array
+const streams = [
+  {
+    level: 'info',
+    stream: process.stdout
+  }
+];
 
-// Add file transport for production
+// Add file streams for production
 if (process.env.NODE_ENV === 'production') {
-  logger.add(new winston.transports.File({
-    filename: 'logs/error.log',
+  streams.push({
     level: 'error',
-    maxsize: 10485760, // 10MB
-    maxFiles: 5
-  }));
+    path: path.join('logs', 'error.log'),
+    type: 'rotating-file',
+    period: '1d',
+    count: 5
+  });
   
-  logger.add(new winston.transports.File({
-    filename: 'logs/combined.log',
-    maxsize: 10485760, // 10MB
-    maxFiles: 5
-  }));
+  streams.push({
+    level: 'info',
+    path: path.join('logs', 'combined.log'),
+    type: 'rotating-file',
+    period: '1d',
+    count: 5
+  });
 }
+
+const logger = bunyan.createLogger({
+  name: process.env.SERVICE_NAME || 'rest-api',
+  level: process.env.LOG_LEVEL || 'info',
+  serializers: bunyan.stdSerializers,
+  streams,
+  src: process.env.NODE_ENV !== 'production', // Include source file info in dev
+  service: process.env.SERVICE_NAME || 'rest-api',
+  version: process.env.npm_package_version || '1.0.0',
+  environment: process.env.NODE_ENV || 'development'
+});
 
 module.exports = logger;
 ```
@@ -1093,4 +1095,6 @@ module.exports = app;
 - Post in #incidents Slack channel
 ```
 
-This comprehensive monitoring and alerting standards document provides the foundation for maintaining reliable, observable REST-Base applications with proactive issue detection and rapid incident response capabilities.
+This comprehensive monitoring and alerting standards document provides the foundation for maintaining
+reliable, observable REST-Base applications with proactive issue detection and rapid incident
+response capabilities.

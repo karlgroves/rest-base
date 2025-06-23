@@ -350,7 +350,7 @@ class CompletionInstaller {
     await this.generateCompletions();
 
     const instructions = this.getInstallationInstructions(shell);
-    console.log(`\\n📋 Installation instructions for ${shell}:`);
+    console.log(`\\nInstallation instructions for ${shell}:`);
     console.log(instructions);
   }
 

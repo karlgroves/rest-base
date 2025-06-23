@@ -13,7 +13,7 @@ Node.js, Express, and MySQL.
 - **MySQL with Sequelize**: Robust database ORM with migrations and validations
 - **Security**: Built-in security middleware (helmet, cors, rate limiting)
 - **Authentication**: JWT-based authentication ready to implement
-- **Logging**: Winston logger with file and console outputs
+- **Logging**: Bunyan logger with file and console outputs
 - **Error Handling**: Comprehensive error handling with custom error classes
 - **Validation**: Input validation middleware
 - **Testing**: Jest testing framework setup

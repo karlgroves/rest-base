@@ -1,6 +1,7 @@
 # Deployment Procedures Guide
 
-This document provides comprehensive deployment procedures for REST-Base applications, covering various environments and deployment strategies.
+This document provides comprehensive deployment procedures for REST-Base applications, covering
+various environments and deployment strategies.
 
 ## Table of Contents
 
@@ -30,7 +31,7 @@ REST-Base applications typically deploy to these environments:
 
 ### Deployment Pipeline
 
-```
+```text
 Code Commit → CI/CD Pipeline → Testing → Staging → Production
      ↓             ↓            ↓          ↓           ↓
   Linting      Unit Tests   Integration  User      Performance
@@ -191,7 +192,8 @@ kubectl apply -f k8s/canary-deployment.yaml
 kubectl logs -l version=canary
 
 # Gradually increase traffic
-kubectl patch virtualservice myapp-vs --type='merge' -p='{"spec":{"http":[{"match":[{"headers":{"canary":{"exact":"true"}}}],"route":[{"destination":{"host":"myapp","subset":"canary"}}]},{"route":[{"destination":{"host":"myapp","subset":"stable"},"weight":90},{"destination":{"host":"myapp","subset":"canary"},"weight":10}]}]}}'
+kubectl patch virtualservice myapp-vs --type='merge' \
+  -p='{"spec":{"http":[{"match":[{"headers":{"canary":{"exact":"true"}}}],"route":[{"destination":{"host":"myapp","subset":"canary"}}]},{"route":[{"destination":{"host":"myapp","subset":"stable"},"weight":90},{"destination":{"host":"myapp","subset":"canary"},"weight":10}]}]}}'
 
 # Full rollout if successful
 kubectl apply -f k8s/production-deployment.yaml
@@ -578,7 +580,9 @@ router.get('/health/detailed', async (req, res) => {
     }
   };
 
-  const isHealthy = Object.values(results.checks).every(status => status === 'healthy');
+  const isHealthy = Object.values(results.checks).every(
+    status => status === 'healthy'
+  );
   results.status = isHealthy ? 'healthy' : 'unhealthy';
 
   res.status(isHealthy ? 200 : 503).json(results);

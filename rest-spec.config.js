@@ -89,7 +89,7 @@ module.exports = {
       'morgan': '^1.10.0',
       'mysql2': '^3.6.5',
       'sequelize': '^6.35.1',
-      'winston': '^3.11.0'
+      'bunyan': '^1.8.15'
     },
     
     // Development dependencies to install

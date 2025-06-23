@@ -12,7 +12,7 @@ This API Gateway provides a centralized entry point for microservices architectu
 - **⚡ Rate Limiting**: Redis-backed rate limiting with customizable rules per endpoint
 - **🔀 Service Proxy**: Dynamic service discovery and intelligent request routing
 - **📊 Health Monitoring**: Comprehensive health checks for gateway and downstream services
-- **🛡️ Security**: Built-in security headers, CORS support, and request validation
+- **Security**: Built-in security headers, CORS support, and request validation
 - **📈 Logging**: Structured logging with Bunyan for monitoring and debugging
 - **🐳 Docker Ready**: Full containerization support with Docker Compose
 - **🧪 Tested**: Comprehensive test suite with Jest and Supertest

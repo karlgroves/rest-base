@@ -4,21 +4,21 @@
 
 - [Core Technologies](#core-technologies)
 - [Main Dependencies](#main-dependencies)
-  - [API & Server](#api-server)
-  - [Authentication & Security](#authentication-security)
-  - [Database & ORM](#database-orm)
-  - [Logging & Debugging](#logging-debugging)
+  - [API & Server](#api--server)
+  - [Authentication & Security](#authentication--security)
+  - [Database & ORM](#database--orm)
+  - [Logging & Debugging](#logging--debugging)
   - [File Operations](#file-operations)
   - [Utilities](#utilities)
   - [Email](#email)
   - [Payments](#payments)
   - [Process Management](#process-management)
-  - [Code Formatting & Quality](#code-formatting-quality)
+  - [Code Formatting & Quality](#code-formatting--quality)
 - [Development Dependencies](#development-dependencies)
   - [Testing](#testing)
   - [TypeScript](#typescript)
-  - [Linting & Formatting](#linting-formatting)
-  - [Build & Deployment](#build-deployment)
+  - [Linting & Formatting](#linting--formatting)
+  - [Build & Deployment](#build--deployment)
 - [Coding Standards](#coding-standards)
 - [Database Conventions](#database-conventions)
 - [Security Requirements](#security-requirements)
@@ -65,7 +65,7 @@
 
 ### Logging & Debugging
 
-- **winston**: Primary logging framework - provides structured logging with multiple transports
+- **bunyan**: Primary logging framework - provides structured logging with multiple transports
 - **debug**: Debug utility for development debugging
 - **morgan**: HTTP request logger middleware for Express
 
@@ -95,6 +95,7 @@
 ### Payments
 
 - **stripe**: Payment processing
+- **outseta**: User and subscription management
 
 ### Process Management
 

@@ -3,7 +3,7 @@
 This checklist ensures that all security best practices are followed when developing with REST-SPEC.
 Use this as a guide for code reviews, pull requests, and security audits.
 
-## 🛡️ Pre-Development Checklist
+## Pre-Development Checklist
 
 ### Environment Setup
 
@@ -179,7 +179,7 @@ Use this as a guide for code reviews, pull requests, and security audits.
 - [ ] Regular security updates are scheduled
 - [ ] Backup and recovery procedures are tested
 
-## 📋 Code Quality Checks
+## Code Quality Checks
 
 ### Before Committing
 

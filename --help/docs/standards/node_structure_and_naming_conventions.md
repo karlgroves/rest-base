@@ -1,6 +1,6 @@
 # Node.js structure and naming conventions
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md) | [📊 SQL Standards](./sql-standards-and-patterns.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) | [Global Rules](./global-rules.md) | [Technologies](./technologies.md) | [📊 SQL Standards](./sql-standards-and-patterns.md)
 
 ## Table of Contents
 
@@ -756,10 +756,10 @@ async function doSomething() {
 
 ### Logging
 
-Use appropriate logging levels for different types of information. Never use `console.log` in production code - use Winston for all logging needs:
+Use appropriate logging levels for different types of information. Never use `console.log` in production code - use Bunyan for all logging needs:
 
 ```js
-// Example with Winston
+// Example with Bunyan
 const logger = require('./utils/logger');
 
 // Different log levels

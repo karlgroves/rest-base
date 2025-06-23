@@ -65,7 +65,7 @@
 
 ### Logging & Debugging
 
-- **winston**: Primary logging framework - provides structured logging with multiple transports
+- **bunyan**: Primary logging framework - provides structured logging with multiple transports
 - **debug**: Debug utility for development debugging
 - **morgan**: HTTP request logger middleware for Express
 

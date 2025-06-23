@@ -285,7 +285,7 @@ code --extensionDevelopmentPath=/path/to/extension
 
 ## Support
 
-- 📖 [Documentation](https://github.com/rest-spec/rest-spec)
+- [Documentation](https://github.com/rest-spec/rest-spec)
 - 🐛 [Issue Tracker](https://github.com/rest-spec/rest-spec/issues)
 - 💬 [Discussions](https://github.com/rest-spec/rest-spec/discussions)
 

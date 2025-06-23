@@ -1,6 +1,8 @@
 # TypeScript Standards and Guidelines
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) |
+> [Node.js Standards](./node_structure_and_naming_conventions.md) | [Global Rules](./global-rules.md) |
+> [Technologies](./technologies.md)
 
 ## Table of Contents
 
@@ -42,7 +44,8 @@
 
 ## Purpose
 
-This document outlines TypeScript coding standards, configuration guidelines, and best practices for REST-SPEC projects. These standards ensure type safety, maintainability, and consistency across TypeScript codebases.
+This document outlines TypeScript coding standards, configuration guidelines, and best practices for REST-SPEC
+projects. These standards ensure type safety, maintainability, and consistency across TypeScript codebases.
 
 ## TypeScript Configuration
 

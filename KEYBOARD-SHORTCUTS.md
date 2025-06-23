@@ -1,6 +1,8 @@
 # Keyboard Shortcuts and CLI Navigation Guide
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [⚙️ CLI API Documentation](./CLI-API-DOCUMENTATION.md) | [♿ Accessibility](./docs/cli-accessibility-improvements.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) |
+> [⚙️ CLI API Documentation](./CLI-API-DOCUMENTATION.md) |
+> [♿ Accessibility](./docs/cli-accessibility-improvements.md)
 
 ## Table of Contents
 
@@ -27,7 +29,9 @@
 
 ## Overview
 
-The REST-SPEC CLI tools are designed to be fully accessible and navigable using only the keyboard. This guide covers all keyboard shortcuts, navigation patterns, and accessibility features available in the CLI tools.
+The REST-SPEC CLI tools are designed to be fully accessible and navigable using only the keyboard.
+This guide covers all keyboard shortcuts, navigation patterns, and accessibility features available
+in the CLI tools.
 
 ## Terminal Navigation Shortcuts
 
@@ -363,4 +367,6 @@ Ctrl+R create → Ctrl+E --dry-run
 
 ---
 
-For more information about CLI tools, see the [CLI API Documentation](./CLI-API-DOCUMENTATION.md). For accessibility features, see the [Accessibility Improvements](./docs/cli-accessibility-improvements.md) guide.
+For more information about CLI tools, see the [CLI API Documentation](./CLI-API-DOCUMENTATION.md).
+For accessibility features, see the [Accessibility Improvements](./docs/cli-accessibility-improvements.md)
+guide.

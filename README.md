@@ -140,22 +140,22 @@ npm run setup-standards ../path/to/existing-project
 
 ### Standards and Guidelines
 
-- [📋 **Global Rules**](./global-rules.md) - Project-wide standards and conventions
-- [🏗️ **Node.js Structure & Naming**](./node_structure_and_naming_conventions.md) - Code organization and naming conventions
-- [🛡️ **Technologies**](./technologies.md) - Approved technologies, frameworks, and dependencies
+- [**Global Rules**](./global-rules.md) - Project-wide standards and conventions
+- [**Node.js Structure & Naming**](./node_structure_and_naming_conventions.md) - Code organization and naming conventions
+- [**Technologies**](./technologies.md) - Approved technologies, frameworks, and dependencies
 - [📊 **SQL Standards**](./sql-standards-and-patterns.md) - Database design patterns and SQL conventions
 
 ### API Design
 
-- [🔄 **Operations & Responses**](./operations-and-responses.md) - REST API response formats and patterns
-- [📨 **Request Patterns**](./request.md) - API request structure and conventions
+- [**Operations & Responses**](./operations-and-responses.md) - REST API response formats and patterns
+- [**Request Patterns**](./request.md) - API request structure and conventions
 - [✅ **Validation**](./validation.md) - Input validation requirements and patterns
 
 ### Development Tools
 
 - [⚙️ **CLI API Documentation**](./CLI-API-DOCUMENTATION.md) - Complete guide to REST-SPEC CLI tools
-- [⌨️ **Keyboard Shortcuts**](./KEYBOARD-SHORTCUTS.md) - Keyboard navigation and accessibility shortcuts
-- [🤖 **CLAUDE.md**](./CLAUDE.md) - Guidelines for AI assistants working with this codebase
+- [**Keyboard Shortcuts**](./KEYBOARD-SHORTCUTS.md) - Keyboard navigation and accessibility shortcuts
+- [**CLAUDE.md**](./CLAUDE.md) - Guidelines for AI assistants working with this codebase
 - [🎨 **Visual Design Requirements**](./visual-design-requirements.md) - UI/UX standards and guidelines
 
 ### Project Management
@@ -164,7 +164,8 @@ npm run setup-standards ../path/to/existing-project
 
 ## API Documentation Generator
 
-REST-SPEC includes a powerful API documentation generator that automatically creates comprehensive documentation from your Express.js routes.
+REST-SPEC includes a powerful API documentation generator that automatically creates comprehensive documentation from
+your Express.js routes.
 
 ### Features
 
@@ -174,7 +175,7 @@ REST-SPEC includes a powerful API documentation generator that automatically cre
 - **🎯 Smart Parameter Detection**: Automatically identifies path and query parameters
 - **🏷️ Tag-based Organization**: Group endpoints by tags for better organization
 
-### Quick Start
+### Documentation Generator Quick Start
 
 ```bash
 # Generate documentation for your project
@@ -212,7 +213,7 @@ For complete documentation, see the [API Documentation Generator Guide](./docs/a
 
 The REST-SPEC CLI tools are designed with accessibility in mind and support extensive keyboard navigation:
 
-- **⌨️ Full Keyboard Navigation**: All CLI features are accessible via keyboard shortcuts
+- **Full Keyboard Navigation**: All CLI features are accessible via keyboard shortcuts
 - **♿ Screen Reader Support**: Built-in accessibility mode for screen reader users
 - **🎨 High Contrast Mode**: Multiple color themes including high contrast and colorblind-friendly options
 - **⚡ Auto-completion**: Shell completion support for bash, zsh, and fish
@@ -236,7 +237,8 @@ For a complete guide to keyboard shortcuts and accessibility features, see the [
 Error: This package requires Node.js >= 22.11.0
 ```
 
-Solution: Update Node.js to version 22.11.0 or higher using [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm). Use `nvm install --lts` to install the latest LTS version.
+Solution: Update Node.js to version 22.11.0 or higher using [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm).
+Use `nvm install --lts` to install the latest LTS version.
 
 #### Permission denied when installing globally
 
@@ -273,7 +275,7 @@ npm run lint:js -- --fix
 
 ### Getting Help
 
-- Check the [documentation files](#standards-files) for detailed guidelines
+- Check the [documentation files](#standards-and-guidelines) for detailed guidelines
 - Review the generated project structure and example code
 - Submit issues on [GitHub](https://github.com/karlgroves/rest-base/issues)
 

@@ -1,6 +1,7 @@
 # CI/CD Pipeline Requirements
 
-This document establishes comprehensive CI/CD pipeline requirements for REST-Base applications, ensuring automated, reliable, and secure software delivery processes.
+This document establishes comprehensive CI/CD pipeline requirements for REST-Base applications,
+ensuring automated, reliable, and secure software delivery processes.
 
 ## Table of Contents
 
@@ -41,7 +42,7 @@ This document establishes comprehensive CI/CD pipeline requirements for REST-Bas
 
 ### Standard Pipeline Flow
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │                        Source Control                          │
 │                     (Git Repository)                           │
@@ -191,7 +192,9 @@ class BuildValidator {
     const failures = results.filter(result => result.status === 'rejected');
     
     if (failures.length > 0) {
-      throw new Error(`Build validation failed: ${failures.map(f => f.reason).join(', ')}`);
+      throw new Error(
+        `Build validation failed: ${failures.map(f => f.reason).join(', ')}`
+      );
     }
     
     return true;
@@ -202,7 +205,9 @@ class BuildValidator {
     const auditResult = await this.runCommand('npm audit --audit-level moderate');
     
     if (auditResult.exitCode !== 0) {
-      throw new Error('Security vulnerabilities detected in dependencies');
+      throw new Error(
+        'Security vulnerabilities detected in dependencies'
+      );
     }
     
     // Validate lockfile

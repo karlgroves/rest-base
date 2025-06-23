@@ -1,6 +1,8 @@
 # Testing Standards and Guidelines
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) |
+> [Node.js Standards](./node_structure_and_naming_conventions.md) | [Global Rules](./global-rules.md) |
+> [Technologies](./technologies.md)
 
 ## Table of Contents
 
@@ -42,13 +44,18 @@
 
 ## Purpose
 
-This document outlines comprehensive testing standards, patterns, and best practices for REST-SPEC projects. These standards ensure reliable, maintainable, and comprehensive test coverage across all aspects of Node.js RESTful API applications.
+This document outlines comprehensive testing standards, patterns, and best practices for REST-SPEC projects. These
+standards ensure reliable, maintainable, and comprehensive test coverage across all aspects of Node.js RESTful API
+applications.
 
 ## Testing Philosophy
 
 ### Core Principles
 
-- **Test-Driven Development (TDD)**: Write tests before implementation when possible
+- **Test-Driven Development (TDD)**: Always apply Test-Driven Development - write tests before or alongside code to define expected behavior
+- **Behavior-Driven Development (BDD)**: Favor BDD where appropriate - tests should describe observable behavior rather than internal implementation details
+- **No Placeholder Tests**: Do not generate placeholder, empty, or fake tests (e.g., tests that contain `expect(true).toBe(true)` or meaningless assertions) simply to increase code coverage
+- **Real Browser Testing**: Front-end tests must run in a real browser environment (e.g. via Puppeteer, Playwright) instead of jsdom or simulated DOM unless explicitly justified
 - **Comprehensive Coverage**: Aim for 90%+ code coverage with meaningful tests
 - **Fast Feedback**: Unit tests should run in milliseconds, integration tests in seconds
 - **Isolated Testing**: Each test should be independent and repeatable
@@ -56,7 +63,7 @@ This document outlines comprehensive testing standards, patterns, and best pract
 
 ### Testing Pyramid
 
-```
+```plaintext
     E2E Tests (5-10%)
       ↑ Slow, Expensive, Brittle
   Integration Tests (20-30%)
@@ -130,10 +137,29 @@ global.testHelpers = {
 
 ### Test Structure and Naming
 
-- Use descriptive test names that explain the scenario
-- Follow the AAA pattern: Arrange, Act, Assert
-- Group related tests using `describe` blocks
-- Use `it` or `test` for individual test cases
+- **Descriptive Names**: Have descriptive, human-readable names that clearly state the intent (e.g., "renders login form with empty fields by default" rather than "test1")
+- **AAA Pattern**: Follow the AAA pattern: Arrange, Act, Assert
+- **Test Organization**: Group related tests using `describe` blocks
+- **Test Cases**: Use `it` or `test` for individual test cases
+- **Coverage Requirements**: All tests must cover:
+  - Happy paths
+  - Common edge cases
+  - Error and failure conditions
+- **Avoid Brittle Selectors**: Avoid brittle selectors or overly tight coupling to non-essential implementation details (e.g., prefer testing via user-visible elements over internal class names)
+
+### Test Quality Standards
+
+- **Meaningful Assertions**: Never generate tests that pass without meaningful assertions or fabricate behavior the code does not provide
+- **Runnable Tests**: Tests must be runnable as-is with the specified tooling (no fictional libraries or APIs)
+- **Integration Over Unit**: Prefer integration-level tests for user interfaces that simulate real user interaction rather than isolated unit tests where feasible
+- **API Testing Requirements**:
+  - Validate request/response structure, including headers, status codes, and body content
+  - Include tests for invalid inputs, authorization failures, and rate limiting or similar controls
+- **Test Documentation**: Include code examples of running tests (e.g., npm test, pytest) if generating documentation alongside tests
+- **Mocking Guidelines**:
+  - Use realistic data structures — never make up object shapes or API fields that don't exist
+  - Note assumptions or boundaries clearly in comments
+  - If uncertain about exact behavior of external APIs or systems, generate TODO comments or request clarifications rather than inventing responses or mocks
 
 ```javascript
 // ✅ Good test structure

@@ -1,8 +1,8 @@
 # API Versioning Strategy
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) |
-> [🔄 Operations & Responses](./operations-and-responses.md) | [📨 Request Patterns](./request.md) |
-> [📋 Global Rules](./global-rules.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) |
+> [Operations & Responses](./operations-and-responses.md) | [Request Patterns](./request.md) |
+> [Global Rules](./global-rules.md)
 
 ## Table of Contents
 

@@ -1,6 +1,6 @@
 # SQL Standards and Design Patterns
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) | [Node.js Standards](./node_structure_and_naming_conventions.md) | [Global Rules](./global-rules.md) | [Technologies](./technologies.md)
 
 ## Table of Contents
 

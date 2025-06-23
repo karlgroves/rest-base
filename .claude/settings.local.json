@@ -17,7 +17,11 @@
       "Bash(npm run typecheck:*)",
       "Bash(chmod:*)",
       "Bash(npm run lint:*)",
-      "Bash(npx husky:*)"
+      "Bash(npx husky:*)",
+      "Bash(npx markdownlint:*)",
+      "Bash(find:*)",
+      "Bash(sed:*)",
+      "Bash(mv:*)"
     ]
   },
   "enableAllProjectMcpServers": false

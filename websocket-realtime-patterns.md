@@ -1,6 +1,7 @@
 # WebSocket and Real-time Communication Patterns
 
-This document provides comprehensive patterns and standards for implementing real-time communication in REST-Base applications using WebSockets, Server-Sent Events, and other real-time technologies.
+This document provides comprehensive patterns and standards for implementing real-time communication in REST-Base
+applications using WebSockets, Server-Sent Events, and other real-time technologies.
 
 ## Table of Contents
 
@@ -12,12 +13,8 @@ This document provides comprehensive patterns and standards for implementing rea
 - [Authentication and Authorization](#authentication-and-authorization)
 - [Message Patterns](#message-patterns)
 - [Scaling and Performance](#scaling-and-performance)
-- [Error Handling and Resilience](#error-handling-and-resilience)
 - [Security Considerations](#security-considerations)
-- [Monitoring and Observability](#monitoring-and-observability)
 - [Testing Strategies](#testing-strategies)
-- [Implementation Examples](#implementation-examples)
-- [Best Practices](#best-practices)
 
 ## Overview
 
@@ -2335,4 +2332,5 @@ describe('WebSocket Load Tests', () => {
 });
 ```
 
-This comprehensive WebSocket and real-time communication patterns document provides a complete framework for implementing scalable, secure, and maintainable real-time features in REST-Base applications.
+This comprehensive WebSocket and real-time communication patterns document provides a complete framework for
+implementing scalable, secure, and maintainable real-time features in REST-Base applications.

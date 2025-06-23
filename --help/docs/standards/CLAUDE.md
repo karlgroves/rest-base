@@ -29,7 +29,7 @@ This project contains comprehensive standards documentation that should be follo
 - **Naming**: camelCase for variables/functions, PascalCase for classes/components
 - **Variables**: Use `const` by default, `let` when needed, never `var`
 - **Imports**: Group by type (npm packages first, then local files)
-- **Error Handling**: Always use try/catch with proper logging (Winston)
+- **Error Handling**: Always use try/catch with proper logging (Bunyan)
 - **Documentation**: JSDoc comments required for all files and functions
 - **Security**: Follow Express security best practices, validate all inputs
 - **Database**: Use parameterized queries, follow SQL naming conventions

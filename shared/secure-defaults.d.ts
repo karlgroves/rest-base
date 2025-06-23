@@ -99,24 +99,18 @@ export interface DatabaseDefaults {
   sequelize: SequelizeConfig;
 }
 
-export interface WinstonConfig {
+export interface BunyanConfig {
   level: string;
-  format: string;
-  defaultMeta: { service: string };
-  transports: Array<{
-    type: string;
-    handleExceptions?: boolean;
-    json?: boolean;
-    colorize?: boolean;
-    filename?: string;
-    level?: string;
-    maxsize?: number;
-    maxFiles?: number;
+  name: string;
+  streams: Array<{
+    level: string;
+    stream?: NodeJS.WritableStream;
+    path?: string;
   }>;
 }
 
 export interface LoggingDefaults {
-  winston: WinstonConfig;
+  bunyan: BunyanConfig;
 }
 
 export interface JWTConfig {

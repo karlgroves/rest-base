@@ -103,7 +103,7 @@ jobs:
             const coverage = '${{ steps.coverage.outputs.coverage }}';
             const breakingChanges = '${{ env.breaking_changes }}';
             
-            let comment = '## 🤖 Automated PR Review\n\n';
+            let comment = '## Automated PR Review\n\n';
             comment += `### Code Coverage: ${coverage}%\n`;
             comment += coverage >= 80 ? '✅ ' : '❌ ';
             comment += `Coverage ${coverage >= 80 ? 'meets' : 'below'} threshold (80%)\n\n`;

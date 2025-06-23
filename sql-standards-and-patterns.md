@@ -1,6 +1,8 @@
 # SQL Standards and Design Patterns
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) |
+> [Node.js Standards](./node_structure_and_naming_conventions.md) | [Global Rules](./global-rules.md) |
+> [Technologies](./technologies.md)
 
 ## Table of Contents
 
@@ -16,7 +18,7 @@
 - [Column Naming Conventions](#column-naming-conventions)
 - [SQL Keywords and Formatting](#sql-keywords-and-formatting)
   - [SQL Keywords Must Be Capitalized](#sql-keywords-must-be-capitalized)
-  - [SQL Formatting & Indentation](#sql-formatting-indentation)
+  - [SQL Formatting & Indentation](#sql-formatting--indentation)
   - [Use Standard SQL Operators](#use-standard-sql-operators)
 - [Database Design Patterns](#database-design-patterns)
   - [ID Strategies](#id-strategies)
@@ -56,7 +58,10 @@
 
 ## Introduction
 
-All database development for this system is built for MySQL/MariaDB, but should strive for cross-database compatibility when practical. SQL used in the application should adhere to standard SQL syntax where possible, balancing MySQL's specific features with broader compatibility. Where MySQL doesn't support the standard, the MySQL-specific approach should be used. When writing SQL, aim for compatibility with:
+All database development for this system is built for MySQL/MariaDB, but should strive for cross-database compatibility
+when practical. SQL used in the application should adhere to standard SQL syntax where possible, balancing MySQL's
+specific features with broader compatibility. Where MySQL doesn't support the standard, the MySQL-specific approach
+should be used. When writing SQL, aim for compatibility with:
 
 1. MySQL 8.0.40+ / MariaDB 10.11+ (primary)
 2. PostgreSQL
@@ -199,8 +204,8 @@ class UserAnalyticsService {
 
 1. All MySQL databases should use InnoDB as the engine
 2. All MySQL databases should use `DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci`;
-3. All MySQL databases should have a column, `inc` set to be an auto incrementing integer. This should be an index, but not be used as a referenceable primary key.
-It is rather used to help MySQL indexing.
+3. All MySQL databases should have a column, `inc` set to be an auto incrementing integer. This should be an index,
+   but not be used as a referenceable primary key. It is rather used to help MySQL indexing.
 
 ## Table Naming Conventions
 
@@ -227,7 +232,8 @@ It is rather used to help MySQL indexing.
 
 ### SQL Keywords Must Be Capitalized
 
-When writing SQL queries, capitalize all SQL keywords (SELECT, FROM, VALUES, AS, etc.) and leave everything else in the relevant case. WHERE clauses should be grouped by parentheses if they get too complex.
+When writing SQL queries, capitalize all SQL keywords (`SELECT`, `FROM`, `VALUES`, `AS`, etc.) and leave everything
+else in the relevant case. `WHERE` clauses should be grouped by parentheses if they get too complex.
 
 ### SQL Formatting & Indentation
 
@@ -341,9 +347,9 @@ GROUP BY t.teamId, t.name;
 **Index Maintenance Guidelines:**
 
 - **Monitor Performance**: Regularly analyze slow query logs to identify missing indexes
-- **Avoid Over-Indexing**: Each index adds overhead to INSERT/UPDATE operations
+- **Avoid Over-Indexing**: Each index adds overhead to `INSERT`/`UPDATE` operations
 - **Composite Index Order**: Place most selective columns first in composite indexes
-- **Partial Indexes**: Use WHERE clauses in indexes for filtered queries (MySQL 8.0+)
+- **Partial Indexes**: Use `WHERE` clauses in indexes for filtered queries (MySQL 8.0+)
 - **Index Documentation**: Document the purpose and queries each index serves
 
 ### Data Types
@@ -365,7 +371,7 @@ GROUP BY t.teamId, t.name;
 
 ### Limit Results
 
-Always include a LIMIT clause in your queries, even when you expect only one record to be returned:
+Always include a `LIMIT` clause in your queries, even when you expect only one record to be returned:
 
 ```sql
 SELECT
@@ -473,7 +479,7 @@ UTC is used as the standard time zone: `SET GLOBAL time_zone = '+0:00'`.
 
 SQL injection vulnerabilities are a serious security risk. In Node.js applications:
 
-1. **Use an ORM or Query Builder**: Sequelize, TypeORM, or Knex.js provide built-in protection against SQL injection.
+1. **Use an ORM or Query Builder**: Sequelize, TypeORM, or Knex.js provide built-in protection against SQL injection. We use Sequelize by default.
 2. **Parameterized Queries**: Always use parameterized queries with the MySQL driver.
 3. **Input Validation**: Validate all input before using it in database queries.
 

@@ -4,7 +4,9 @@ This document describes the high contrast terminal theme support implemented in 
 
 ## Overview
 
-The REST-SPEC CLI tools now include comprehensive support for high contrast terminal themes and accessibility features. This ensures that all CLI output remains readable and accessible in various terminal environments.
+The REST-SPEC CLI tools now include comprehensive support for high contrast terminal themes and
+accessibility features. This ensures that all CLI output remains readable and accessible in various
+terminal environments.
 
 ## Features
 

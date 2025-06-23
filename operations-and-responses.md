@@ -1,7 +1,7 @@
 # Operations and Responses
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) |
-> [📨 Request Patterns](./request.md) | [✅ Validation](./validation.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) | [Global Rules](./global-rules.md) |
+> [Request Patterns](./request.md) | [✅ Validation](./validation.md)
 
 ## Table of Contents
 
@@ -189,22 +189,25 @@ Include correlation ID in all log messages for request tracing:
 
 ```javascript
 // Logger with correlation ID
-const logger = winston.createLogger({
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.printf(({ timestamp, level, message, correlationId, ...meta }) => {
-      return `${timestamp} [${correlationId}] ${level}: ${message} ${JSON.stringify(meta)}`;
-    })
-  )
+const logger = bunyan.createLogger({
+  name: 'rest-api',
+  serializers: bunyan.stdSerializers,
+  streams: [{
+    stream: process.stdout,
+    level: 'info'
+  }]
 });
+
+// Log with correlation ID
+const childLogger = logger.child({ correlationId: req.correlationId });
 
 // Usage in request handler
 app.get('/api/users/:id', (req, res) => {
-  logger.info('Fetching user', { 
-    correlationId: req.correlationId,
+  const childLogger = logger.child({ correlationId: req.correlationId });
+  childLogger.info({
     userId: req.params.id,
     userAgent: req.get('User-Agent')
-  });
+  }, 'Fetching user');
 });
 ```
 

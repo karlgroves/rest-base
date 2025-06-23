@@ -15,9 +15,7 @@
 - [`expand` Parameter](#expand-parameter)
 - [Pagination](#pagination)
 
-Note: Below, we use `integer` to refer to data types, but those values might arrive as strings of numeric
-characters, because browsers treat the parameters in a `GET` URL as strings. Validation should understand and
-allow this, explicitly casting those values to the proper type before validating and using them.
+Note: Below, we use `integer` to refer to data types, but those values might arrive as strings of numeric characters, because browsers treat the parameters in a `GET` URL as strings. Validation should understand and allow this, explicitly casting those values to the proper type before validating and using them.
 
 ## URL Structure
 
@@ -51,10 +49,7 @@ Once actual UUIDs are added:
 
 ```javascript
 
-https://{{baseUrl}}/tenant/8a007b15-1f39-45cd-afaf-fa6177ed1c3b/system/b3f022a4-2970-4840-b9bb-3d14709c9d2a/
-project/af6c1308-613f-40ff-9133-a6b993249c8/issues/3f16dca9-870e-4692-be2a-ea6d883b9dfd/
-comment/c0b2c9df-1df8-4b7c-bb1e-3e449ce746af
-
+https://{{baseUrl}}/tenant/8a007b15-1f39-45cd-afaf-fa6177ed1c3b/system/b3f022a4-2970-4840-b9bb-3d14709c9d2a/project/af6c1308-613f-40ff-9133-a6b993249c8/issues/3f16dca9-870e-4692-be2a-ea6d883b9dfd/comment/c0b2c9df-1df8-4b7c-bb1e-3e449ce746af
 
 ```
 
@@ -98,16 +93,10 @@ Would result in the following query being made in the database:
 
 ```
 
-NOTE: default values for `order` and `dir` will depend on the type of object being requested. Generally speaking,
-the following patterns apply:
+NOTE: default values for `order` and `dir` will depend on the type of object being requested. Generally speaking, the following patterns apply:
 
-- When there's a date-related property in the object, results will be ordered by that field by default, ordered
-  by most recent result fist. For example, assuming a field called `startDate`, the default would be
-  `order=startDate&dir=desc`
-- If there is no date-related property to the object, results will be ordered by the next most useful field,
-  which will typically be a name, title, or other short, human-readable descriptor of the object. In those cases,
-  the results will be ordered `asc` (which returns results A-Z). For example, assuming a field called `name`,
-  the default would be `order=name&dir=asc`
+- When there's a date-related property in the object, results will be ordered by that field by default, ordered by most recent result fist. For example, assuming a field called `startDate`, the default would be `order=startDate&dir=desc`
+- If there is no date-related property to the object, results will be ordered by the next most useful field, which will typically be a name, title, or other short, human-readable descriptor of the object. In those cases, the results will be ordered `asc` (which returns results A-Z). For example, assuming a field called `name`, the default would be `order=name&dir=asc`
 
 #### Special Params: `expand` and `q`
 

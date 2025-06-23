@@ -1,6 +1,8 @@
 # Global Rules
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [🔄 API Operations](./operations-and-responses.md) | [📨 Request Patterns](./request.md)
+> **Navigation:** [Main Documentation](./README.md#documentation-navigation) |
+> [Node.js Standards](./node_structure_and_naming_conventions.md) |
+> [API Operations](./operations-and-responses.md) | [Request Patterns](./request.md)
 
 ## Table of Contents
 
@@ -12,17 +14,22 @@
 
 ## Authentication and Security
 
-- All requests to the API (other than the authentication and register routes) must have a JWT bearer token.
+- All requests to the API (other than the authentication and register routes) must have a JWT
+  bearer token.
 - All requests **should** have `Accept-Language` header set to a supported ISO 2-character language code.
-- All responses **must** have `Content-Language` header set to an ISO 2-character language code which matches the `Accept-Language` header OR which defaults to `en`.
+- All responses **must** have `Content-Language` header set to an ISO 2-character language code
+  which matches the `Accept-Language` header OR which defaults to `en`.
 - All `GET`, `POST`, and `PUT` responses **must** have a `Content-Type` header with a value of `application/json`
 - All `POST` and `PUT` requests **must** have a `Content-Type` header with a value of `application/json`
 - All successful `DELETE` responses **must not** have a body.
 - All `HEAD` responses **must not** have a body.
 - `PUT` requests **may not** provide all possible fields in their requests.
-- `PUT` requests **must** have the unique ID for the records being updated, however all other properties are optional (as the assumption is that any required properties were supplied during `POST`).
+- `PUT` requests **must** have the unique ID for the records being updated, however all other
+  properties are optional (as the assumption is that any required properties were supplied during
+  `POST`).
 - All fields that are supplied during `PUT` requests must pass their relevant validation requirements.
-- All successful `POST` and `PUT` requests will respond with the full object details as would be retrieved by a "`GET` by ID" request.
+- All successful `POST` and `PUT` requests will respond with the full object details as would be
+  retrieved by a "`GET` by ID" request.
 - All `description` fields (or fields with similar purpose) **must** accept Markdown
 - All JSON responses **must* adhere to the [JSON specification](https://datatracker.ietf.org/doc/html/rfc8259)
 - All connections **should** use `Keep-Alive`
@@ -115,8 +122,10 @@
 
 - **Authorization Header**: Bearer token format in request headers:
 
-  ```
-  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLXV1aWQtaGVyZSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjA5NDU5MjAwLCJleHAiOjE2MDk1NDU2MDAsImlzcyI6ImFwaS5leGFtcGxlLmNvbSIsImF1ZCI6ImFwaS5leGFtcGxlLmNvbSJ9.signature-hash-here
+  ```http
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.\
+    eyJzdWIiOiJ1c2VyLXV1aWQtaGVyZSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjA5NDU5MjAwLCJleHAiOjE2MDk1NDU2MDAsImlzcyI6ImFwaS5leGFtcGxlLmNvbSIsImF1ZCI6ImFwaS5leGFtcGxlLmNvbSJ9.\
+    signature-hash-here
   ```
 
 - **Token Validation Requirements**:
@@ -130,6 +139,34 @@
   - Implement token rotation for long-lived sessions
   - Store tokens securely on client side (httpOnly cookies preferred over localStorage)
   - Log authentication events for security monitoring
+
+## Error Handling
+
+- **Explicit Handling**: Prefer explicit error handling over silent failures (e.g., try/catch, Result/Either types)
+- **Never Swallow Exceptions**: Never swallow exceptions without logging or justification
+- **Fail Fast**: Validate input data before processing; fail fast and clearly
+- **Meaningful Messages**: Provide clear, actionable error messages that help developers understand and fix issues
+- **Error Logging**: All errors must be logged with appropriate context and severity levels
+- **Recovery Strategies**: Implement recovery strategies where possible rather than crashing
+
+## Security & Safety
+
+- **Secure By Default**: Follow the principle of secure defaults - avoid insecure practices by default
+- **No Hardcoded Secrets**: Never include hard-coded secrets, API keys, or passwords
+- **Input Sanitization**: Sanitize and validate any user input before processing
+- **SQL Injection Prevention**: Use parameterized queries or ORM features to prevent SQL injection
+- **Authentication**: Implement proper authentication and authorization checks on all protected routes
+- **HTTPS Only**: All production APIs must use HTTPS; redirect HTTP to HTTPS
+- **Security Headers**: Implement security headers (CSP, X-Frame-Options, etc.) using helmet
+
+## Performance Considerations
+
+- **Avoid Premature Optimization**: Don't optimize until you have evidence of performance issues
+- **No Obviously Inefficient Code**: Do not generate obviously inefficient code (e.g., nested O(n²) loops without explanation)
+- **Flag Bottlenecks**: Flag any potential bottlenecks with comments
+- **Database Query Optimization**: Use indexes appropriately and avoid N+1 query problems
+- **Caching Strategy**: Implement caching where appropriate for frequently accessed data
+- **Resource Cleanup**: Always clean up resources (database connections, file handles, etc.)
 
 ## File Size and Code Limits
 

@@ -2,7 +2,6 @@
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md)
 
-
 ## Table of Contents
 
 - [Purpose](#purpose)
@@ -50,6 +49,7 @@ This document outlines TypeScript coding standards, configuration guidelines, an
 ### Compiler Options
 
 #### Target and Module Settings
+
 ```json
 {
   "compilerOptions": {
@@ -62,6 +62,7 @@ This document outlines TypeScript coding standards, configuration guidelines, an
 ```
 
 #### Strict Type Checking
+
 ```json
 {
   "compilerOptions": {
@@ -78,6 +79,7 @@ This document outlines TypeScript coding standards, configuration guidelines, an
 ```
 
 #### Path Mapping
+
 ```json
 {
   "compilerOptions": {
@@ -95,6 +97,7 @@ This document outlines TypeScript coding standards, configuration guidelines, an
 ## Type Definition Standards
 
 ### Interface Naming
+
 - Use PascalCase for interface names
 - Prefix interfaces with `I` only when necessary to avoid naming conflicts
 - Use descriptive, domain-specific names
@@ -120,6 +123,7 @@ interface IUser {  // Unnecessary I prefix
 ```
 
 ### Type Aliases
+
 - Use PascalCase for type aliases
 - Prefer union types over enums when possible
 - Use descriptive names that indicate the domain
@@ -143,6 +147,7 @@ type DB = any;          // No type safety
 ```
 
 ### Generic Type Parameters
+
 - Use single uppercase letters starting with `T`
 - Use descriptive names for complex generics
 - Provide default types when appropriate
@@ -169,6 +174,7 @@ interface Repository<Type, KeyType> {  // Too verbose for simple cases
 ## Function and Method Standards
 
 ### Function Signatures
+
 - Always specify return types explicitly
 - Use readonly for parameters that shouldn't be modified
 - Prefer specific types over `any` or `unknown`
@@ -209,6 +215,7 @@ async function getStuff(id) {  // Missing types
 ```
 
 ### Optional vs Required Parameters
+
 - Use optional parameters judiciously
 - Prefer required parameters with default values
 - Use object parameters for functions with many arguments
@@ -257,6 +264,7 @@ function createUser(
 ## Error Handling Standards
 
 ### Custom Error Types
+
 - Extend built-in Error class
 - Provide structured error information
 - Use discriminated unions for error types
@@ -313,6 +321,7 @@ async function safeParseJson<T>(json: string): Promise<Result<T, SyntaxError>> {
 ## Utility Types and Patterns
 
 ### Common Utility Types
+
 ```typescript
 // ✅ Useful utility types
 type DeepPartial<T> = {
@@ -337,6 +346,7 @@ function validateEmail(email: string): EmailAddress | null {
 ```
 
 ### Configuration and Constants
+
 ```typescript
 // ✅ Good - typed configuration
 interface DatabaseConfig {
@@ -373,6 +383,7 @@ type Currency = typeof SUPPORTED_CURRENCIES[number];
 ## Module and Import Standards
 
 ### Import Organization
+
 ```typescript
 // ✅ Good import organization
 // 1. Node.js built-in modules
@@ -397,6 +408,7 @@ import type { UserProfile, CreateUserRequest } from '@shared/types';
 ```
 
 ### Export Patterns
+
 ```typescript
 // ✅ Named exports (preferred)
 export interface UserService {
@@ -432,6 +444,7 @@ export default class ApiServer {
 ## Testing with TypeScript
 
 ### Test Type Safety
+
 ```typescript
 // ✅ Good test typing
 import type { User, CreateUserRequest } from '../types';
@@ -472,6 +485,7 @@ const mockUserRepository: jest.Mocked<UserRepository> = {
 ## Integration with Node.js Standards
 
 ### Express.js Integration
+
 ```typescript
 // ✅ Typed Express handlers
 interface AuthenticatedRequest extends Request {
@@ -513,6 +527,7 @@ const getUser: AsyncHandler<AuthenticatedRequest> = async (req, res, next) => {
 ## Performance Considerations
 
 ### Type-Only Imports
+
 ```typescript
 // ✅ Use type-only imports to reduce bundle size
 import type { User } from './types';
@@ -526,6 +541,7 @@ import * as lodash from 'lodash';
 ```
 
 ### Lazy Loading Types
+
 ```typescript
 // ✅ Conditional type loading
 type DatabaseConnection = import('./database').Connection;
@@ -557,6 +573,7 @@ async function getDatabaseConnection(): Promise<DatabaseConnection> {
 ## Tools Integration
 
 ### ESLint Configuration
+
 ```json
 {
   "extends": [
@@ -577,6 +594,7 @@ async function getDatabaseConnection(): Promise<DatabaseConnection> {
 ```
 
 ### Jest Configuration
+
 ```json
 {
   "preset": "ts-jest",

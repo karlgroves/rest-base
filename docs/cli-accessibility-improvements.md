@@ -55,6 +55,7 @@ UPDATE AVAILABLE: REST-SPEC
 ### 6. Logger Updates
 
 The shared logger now uses text labels instead of symbols:
+
 - [INFO] instead of ℹ
 - [SUCCESS] instead of ✓
 - [WARNING] instead of ⚠
@@ -64,6 +65,7 @@ The shared logger now uses text labels instead of symbols:
 ### 7. CLI Enhancement Icons
 
 In the dry-run and operation tracking, icons have been replaced:
+
 - 📁 → [CREATE]
 - ✏️ → [MODIFY]
 - 🗑️ → [DELETE]

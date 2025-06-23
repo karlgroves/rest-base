@@ -2,7 +2,6 @@
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🏗️ Node.js Standards](./node_structure_and_naming_conventions.md) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md)
 
-
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -85,6 +84,7 @@ When using MySQL-specific features, ensure they are available in MySQL 8.0.40+.
 ### When to Use Sequelize ORM
 
 **Recommended for:**
+
 - **CRUD Operations**: Standard create, read, update, delete operations
 - **Model Relationships**: Managing associations between tables (hasMany, belongsTo, etc.)
 - **Schema Migrations**: Database schema changes and version control
@@ -94,6 +94,7 @@ When using MySQL-specific features, ensure they are available in MySQL 8.0.40+.
 - **Type Safety**: When using TypeScript with Sequelize models
 
 **Sequelize Example:**
+
 ```javascript
 // User model with associations
 const User = sequelize.define('User', {
@@ -117,6 +118,7 @@ const newUser = await User.create({
 ### When to Use Raw SQL
 
 **Recommended for:**
+
 - **Complex Queries**: Multi-table joins with complex conditions
 - **Performance-Critical Operations**: Optimized queries for high-traffic endpoints
 - **Database-Specific Features**: MySQL-specific functions and optimizations
@@ -126,6 +128,7 @@ const newUser = await User.create({
 - **Legacy Database Integration**: Working with existing database schemas
 
 **Raw SQL Example:**
+
 ```javascript
 // Complex analytics query
 const monthlyStats = await sequelize.query(`
@@ -147,6 +150,7 @@ const monthlyStats = await sequelize.query(`
 ### Hybrid Approach Guidelines
 
 **Best Practice Pattern:**
+
 ```javascript
 // Use Sequelize for model definition and simple operations
 const User = sequelize.define('User', { /* ... */ });
@@ -178,12 +182,14 @@ class UserAnalyticsService {
 ### Performance Considerations
 
 **Sequelize Optimization:**
+
 - Use `attributes` to select only needed columns
 - Include associations efficiently with `include`
 - Use `raw: true` for read-only operations
 - Implement proper indexing on frequently queried fields
 
 **Raw SQL Optimization:**
+
 - Always use parameterized queries to prevent SQL injection
 - Implement proper error handling and connection management
 - Use database-specific optimizations when appropriate
@@ -193,7 +199,7 @@ class UserAnalyticsService {
 
 1. All MySQL databases should use InnoDB as the engine
 2. All MySQL databases should use `DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci`;
-3. All MySQL databases should have a column, `inc` set to be an auto incrementing integer. This should be an index, but not be used as a referenceable primary key. 
+3. All MySQL databases should have a column, `inc` set to be an auto incrementing integer. This should be an index, but not be used as a referenceable primary key.
 It is rather used to help MySQL indexing.
 
 ## Table Naming Conventions
@@ -243,6 +249,7 @@ WHERE
 ### Use Standard SQL Operators
 
 Use standard SQL operators for better cross-database compatibility:
+
 - Use `<>` for "not equals" instead of `!=`
 - Avoid MySQL-specific syntax like backticks (`) to enclose identifiers
 - Use standard SQL functions when available
@@ -269,6 +276,7 @@ Use standard SQL operators for better cross-database compatibility:
 ### Index and View Naming Conventions
 
 **Index Naming Standards:**
+
 - **Primary Key Indexes**: Use table name + `_pk` (automatically created, but for reference: `users_pk`)
 - **Unique Indexes**: Use `uq_` prefix + table name + column name(s): `uq_users_email`, `uq_teams_name`
 - **Foreign Key Indexes**: Use `fk_` prefix + table name + referenced table: `fk_userTeams_users`, `fk_userTeams_teams`
@@ -276,6 +284,7 @@ Use standard SQL operators for better cross-database compatibility:
 - **Performance Indexes**: Use `perf_` prefix + table name + purpose: `perf_users_login_lookup`, `perf_logs_recent_activity`
 
 **Index Examples:**
+
 ```sql
 -- Unique constraint index
 CREATE UNIQUE INDEX uq_users_email ON users (email);
@@ -291,12 +300,14 @@ CREATE INDEX perf_users_active_lookup ON users (isActive, lastLogin) WHERE delet
 ```
 
 **View Naming Standards:**
+
 - **Simple Views**: Use `v_` prefix + descriptive name: `v_activeUsers`, `v_teamSummary`
 - **Aggregate Views**: Use `v_agg_` prefix + purpose: `v_agg_userStatistics`, `v_agg_monthlyMetrics`
 - **Reporting Views**: Use `v_rpt_` prefix + report name: `v_rpt_userActivity`, `v_rpt_teamPerformance`
 - **Security Views**: Use `v_sec_` prefix + purpose: `v_sec_userPermissions`, `v_sec_auditTrail`
 
 **View Examples:**
+
 ```sql
 -- Simple view for active users
 CREATE VIEW v_activeUsers AS
@@ -328,6 +339,7 @@ GROUP BY t.teamId, t.name;
 ```
 
 **Index Maintenance Guidelines:**
+
 - **Monitor Performance**: Regularly analyze slow query logs to identify missing indexes
 - **Avoid Over-Indexing**: Each index adds overhead to INSERT/UPDATE operations
 - **Composite Index Order**: Place most selective columns first in composite indexes
@@ -373,6 +385,7 @@ Limiting queries tells the database to stop looking for more records once the li
 When using SQL in Node.js applications, always use parameterized queries to prevent SQL injection. Never concatenate user input directly into SQL strings.
 
 **Bad Example (vulnerable to SQL injection):**
+
 ```javascript
 // DON'T DO THIS
 const query = `SELECT * FROM users WHERE id = ${req.params.id}`;
@@ -380,6 +393,7 @@ db.query(query);
 ```
 
 **Good Example (using parameterized queries):**
+
 ```javascript
 // DO THIS INSTEAD
 const query = "SELECT * FROM users WHERE id = ?";
@@ -464,6 +478,7 @@ SQL injection vulnerabilities are a serious security risk. In Node.js applicatio
 3. **Input Validation**: Validate all input before using it in database queries.
 
 Example with Sequelize ORM:
+
 ```javascript
 // Safely querying with Sequelize
 const user = await User.findOne({
@@ -472,6 +487,7 @@ const user = await User.findOne({
 ```
 
 Example with MySQL2 driver:
+
 ```javascript
 // Safely querying with parameterized query
 const [rows] = await connection.execute(
@@ -497,6 +513,7 @@ A list of MySQL reserved words: [MySQL Reserved Words](http://dev.mysql.com/doc/
 ### Role System
 
 Role-based access control implemented via `ENUM` fields:
+
 - User roles: `'superadmin'`, `'admin'`, `'attendee'`
 - Team member roles: `'teamMember'`, `'teamAdmin'`
 
@@ -505,11 +522,13 @@ Role-based access control implemented via `ENUM` fields:
 ### Soft Deletion
 
 When implementing soft deletion:
+
 ```sql
 ALTER TABLE users ADD COLUMN deletedAt DATETIME NULL DEFAULT NULL;
 ```
 
 And in queries:
+
 ```sql
 SELECT * FROM users WHERE deletedAt IS NULL;
 ```

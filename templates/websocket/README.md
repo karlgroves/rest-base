@@ -31,17 +31,20 @@ A production-ready WebSocket server built with Socket.IO, Express.js, and Node.j
 
 1. **Clone or use this template**
 2. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 3. **Configure environment**:
+
    ```bash
    cp .env.example .env
    # Edit .env with your configuration
    ```
 
 4. **Start development server**:
+
    ```bash
    npm run dev
    ```
@@ -66,6 +69,7 @@ A production-ready WebSocket server built with Socket.IO, Express.js, and Node.j
 ### WebSocket Events
 
 #### Chat Events
+
 - `chat:join` - Join a chat room
 - `chat:leave` - Leave a chat room
 - `chat:message` - Send a chat message
@@ -73,6 +77,7 @@ A production-ready WebSocket server built with Socket.IO, Express.js, and Node.j
 - `chat:history` - Get chat history
 
 #### Room Events
+
 - `room:create` - Create a new room
 - `room:join` - Join an existing room
 - `room:leave` - Leave a room
@@ -80,11 +85,13 @@ A production-ready WebSocket server built with Socket.IO, Express.js, and Node.j
 - `room:info` - Get room information
 
 #### Notification Events
+
 - `notification:subscribe` - Subscribe to notification topics
 - `notification:unsubscribe` - Unsubscribe from topics
 - `notification:mark_read` - Mark notifications as read
 
 #### General Events
+
 - `ping` - Ping/pong for connection testing
 - `user:status` - Update user status (online, away, busy, offline)
 - `heartbeat` - Heartbeat/keepalive
@@ -158,6 +165,7 @@ const socket = io('ws://localhost:3000', {
 ### Token Requirements
 
 Your JWT token should include:
+
 - `userId` or `id` or `sub` - User identifier
 - `email` - User email (optional)
 - `role` - User role (user, moderator, admin)
@@ -302,6 +310,7 @@ startupProbe:
 ### Logs
 
 Logs are written to:
+
 - `logs/app.log` - Application logs (rotated daily)
 - `logs/error.log` - Error logs (rotated daily)
 - Console output in development
@@ -331,6 +340,7 @@ Logs are written to:
 ### Debug Mode
 
 Enable debug logging:
+
 ```bash
 LOG_LEVEL=debug npm run dev
 ```

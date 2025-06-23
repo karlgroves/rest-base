@@ -1,6 +1,8 @@
 # Node.js structure and naming conventions
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md) | [📊 SQL Standards](./sql-standards-and-patterns.md)
+> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) |
+> [📋 Global Rules](./global-rules.md) | [🛡️ Technologies](./technologies.md) |
+> [📊 SQL Standards](./sql-standards-and-patterns.md)
 
 ## Table of Contents
 
@@ -87,11 +89,11 @@ In order to streamline the development process, avoid bugs, and ease maintenance
 
 JavaScript code should follow modern ES6+ standards with consistent styling. When working with Node.js, leveraging modern JavaScript features is encouraged, including:
 
-* Arrow functions
-* Destructuring assignments
-* Template literals
-* Async/await for asynchronous operations
-* ES modules (where supported by your Node version)
+- Arrow functions
+- Destructuring assignments
+- Template literals
+- Async/await for asynchronous operations
+- ES modules (where supported by your Node version)
 
 For compatibility reasons, always be aware of which Node.js version you're targeting, as some features may require transpilation for older versions.
 
@@ -99,15 +101,15 @@ For compatibility reasons, always be aware of which Node.js version you're targe
 
 Informative documentation is the cornerstone of easier maintenance and repair of the system. For that reason, developers should take a rather liberal approach to commenting their code. A general rule of thumb is that if you look at a section of code and think "Wow, I don't want to try and describe that", you need to comment it before you forget how it works. Comments should document decisions. At every point where you had a choice of what to do place a comment describing which choice you made and why.
 
-All documentation blocks ("docblocks") must be compatible with the JSDoc format. Describing the JSDoc format is beyond the scope of this document. For more information, visit: https://jsdoc.app/
+All documentation blocks ("docblocks") must be compatible with the JSDoc format. Describing the JSDoc format is beyond the scope of this document. For more information, visit: <https://jsdoc.app/>
 
 ### File Level Document Block
 
 Every file that contains JavaScript code must have a header block at the top of the file. The header block should contain these items, at minimum:
 
-* Short description for the file
-* Long description of the file
-* JSDoc for author
+- Short description for the file
+- Long description of the file
+- JSDoc for author
 
 ```js
 /**
@@ -115,7 +117,7 @@ Every file that contains JavaScript code must have a header block at the top of 
  *
  * (optional) Long description for file ...
  *
- * @author 	author name 
+ * @author  author name 
  */
 ```
 
@@ -123,10 +125,10 @@ Every file that contains JavaScript code must have a header block at the top of 
 
 Every function definition must have a documentation block above the function. The documentation block should contain these items, at a minimum:
 
-* Description of the function
-* Any external dependencies used
-* Parameters
-* Return value
+- Description of the function
+- Any external dependencies used
+- Parameters
+- Return value
 
 ```js
 /** 
@@ -140,7 +142,7 @@ Every function definition must have a documentation block above the function. Th
 
 JavaScript style comments (`// single-line` and `/* multi-line */`) are both fine. Use of hash-style comments (`#`) should not be used, even though Node.js now supports them in newer versions. The primary convention is to use `//` for single-line comments and `/* */` for multi-line comments (with `/**` being used as the marker for the top of the multi-line comment).
 
-#### Examples:
+#### Examples
 
 ```js
 // single line comment
@@ -156,10 +158,10 @@ JavaScript style comments (`// single-line` and `/* multi-line */`) are both fin
 
 Developers should ensure that all those places where something happens which may trip up future developers has been commented clearly and that you make these comments much easier to notice by others than normal comments.
 
-* @TODO means there's more to be done to finish/ improve/ repair that section.
-* :BUG: means there's a known bug in that section of code.
-* :KLUDGE: means you've done something ugly, inefficient, or inideal. Explain how you would do it differently next time if you had more time.
-* :WARNING: Tells others that the following code is very tricky so don't go changing it without thinking.
+- @TODO means there's more to be done to finish/ improve/ repair that section.
+- :BUG: means there's a known bug in that section of code.
+- :KLUDGE: means you've done something ugly, inefficient, or inideal. Explain how you would do it differently next time if you had more time.
+- :WARNING: Tells others that the following code is very tricky so don't go changing it without thinking.
 
 *Committing @TODO code to master is a pretty terrible idea and should be avoided if possible. If you have a @TODO comment, it **must** also have a JIRA ticket associated with it. i.e.:*
 
@@ -305,8 +307,8 @@ Object.entries(myObject).forEach(([key, value]) => {
 
 There are, however certain conventions to consider when naming variables within loops:
 
-* `i`, `j`, and `k` are often used as generic names for integer variables in nested loops
-* When working with arrays, `item` or a descriptive singular noun is preferable as the iterated value
+- `i`, `j`, and `k` are often used as generic names for integer variables in nested loops
+- When working with arrays, `item` or a descriptive singular noun is preferable as the iterated value
 
 Do not use the variable `l` (lowercase 'L') in any of your code as it looks too much like the number 'one'.
 
@@ -415,12 +417,12 @@ Create a method for an object which needs to do stuff that completes constructio
 
 Like variables, functions and methods should be named in a way that is clear and concise. In general that means the name of the function should be as accurate a description of what the function does as possible:
 
-* If a function prints user information to the screen the name of the function should be `printUserInformation`.
-* If a function validates that an e-mail address is formatted properly it should be called `isValidEmail()`.
-* In general functions that return a boolean value should start with `is` or `has`
-* Functions should use camelCase (first letter lowercase, subsequent words capitalized)
-* Functions should be stateless and as a general rule *never* rely on global information not directly passed to the function
-* Private functions or methods (not exported) should begin with underscore `_calculateTotal()`
+- If a function prints user information to the screen the name of the function should be `printUserInformation`.
+- If a function validates that an e-mail address is formatted properly it should be called `isValidEmail()`.
+- In general functions that return a boolean value should start with `is` or `has`
+- Functions should use camelCase (first letter lowercase, subsequent words capitalized)
+- Functions should be stateless and as a general rule *never* rely on global information not directly passed to the function
+- Private functions or methods (not exported) should begin with underscore `_calculateTotal()`
 
 ### Arguments
 
@@ -455,8 +457,8 @@ function mySum(numX, numY) {
 
 In the case of the example above, there's only one thing the `mySum` function can do: log the results of a simple addition. While, on the surface, that might not be a big deal, it creates two problems:
 
-* It keeps the function from being able to be included as part of another function or bigger process.
-* Any remediation to this function (to make it return, rather than log its result) will break all already-existing code which uses this function.
+- It keeps the function from being able to be included as part of another function or bigger process.
+- Any remediation to this function (to make it return, rather than log its result) will break all already-existing code which uses this function.
 
 A better approach would be to ensure all functions return some value, even if that value is a primitive or a boolean. Doing so makes for much more robust & reusable code which also enables you to do better error handling and provide greater usability for the end user. The example function can be modified as follows:
 
@@ -807,21 +809,21 @@ app.post('/user',
 
 All files must:
 
-* Be stored as UTF-8 encoded text files
-* Be Unix formatted "Unix formatted" means lines must end only with a line feed (LF). Line feeds are represented as ordinal 10, octal 012 and hex 0A. Do not use carriage returns (CR) like Macintosh computers do or the carriage return/line feed combination (CRLF) like Windows computers do.
+- Be stored as UTF-8 encoded text files
+- Be Unix formatted "Unix formatted" means lines must end only with a line feed (LF). Line feeds are represented as ordinal 10, octal 012 and hex 0A. Do not use carriage returns (CR) like Macintosh computers do or the carriage return/line feed combination (CRLF) like Windows computers do.
 
 ### Extensions for files
 
-* `.js` for JavaScript files
-* `.mjs` for ES modules (if used)
-* `.cjs` for CommonJS modules (if explicit)
-* `.jsx` for React JSX files
-* `.ts` for TypeScript files
-* `.tsx` for TypeScript React files
-* `.json` for JSON configuration files
-* `.html` for HTML files
-* `.css` for CSS files
-* `.test.js` or `.spec.js` for test files
+- `.js` for JavaScript files
+- `.mjs` for ES modules (if used)
+- `.cjs` for CommonJS modules (if explicit)
+- `.jsx` for React JSX files
+- `.ts` for TypeScript files
+- `.tsx` for TypeScript React files
+- `.json` for JSON configuration files
+- `.html` for HTML files
+- `.css` for CSS files
+- `.test.js` or `.spec.js` for test files
 
 ### Naming Conventions for files and directories
 
@@ -831,11 +833,11 @@ All names for files and directories must make sense when read. Ensure that the n
 
 For Node.js projects, follow these conventions:
 
-* Use kebab-case (lowercase with hyphens) for directories and most files: `user-authentication/`
-* Use camelCase for JavaScript files that export a single function or object: `userService.js`
-* Use PascalCase for files that export a class or React component: `UserController.js`, `LoginForm.jsx`
-* Use UPPER_SNAKE_CASE for constants files: `DEFAULT_CONSTANTS.js`
-* Use lowercase for configuration files: `package.json`, `.eslintrc.js`
+- Use kebab-case (lowercase with hyphens) for directories and most files: `user-authentication/`
+- Use camelCase for JavaScript files that export a single function or object: `userService.js`
+- Use PascalCase for files that export a class or React component: `UserController.js`, `LoginForm.jsx`
+- Use UPPER_SNAKE_CASE for constants files: `DEFAULT_CONSTANTS.js`
+- Use lowercase for configuration files: `package.json`, `.eslintrc.js`
 
 Exception: Files containing classes should mirror the casing of the class. For instance, a `UserService` class file would be `UserService.js`.
 
@@ -865,8 +867,8 @@ When it comes to publicly viewable pages, they should be placed in a directory s
 
 For instance:
 
-* http://www.example.com/newsletters/2023/ - good
-* http://www.example.com/newsletters/2023/january/ - bad, if the '2023' folder will only hold 12 files (one for each month), or good, if each month's folder contains multiple files, such as newsletter assets or if newsletters are published weekly.
+- <http://www.example.com/newsletters/2023/> - good
+- <http://www.example.com/newsletters/2023/january/> - bad, if the '2023' folder will only hold 12 files (one for each month), or good, if each month's folder contains multiple files, such as newsletter assets or if newsletters are published weekly.
 
 ### Node.js Project Structure
 
@@ -905,10 +907,10 @@ project-root/
 
 As stated above, all site assets should be grouped together according to their purpose.
 
-* All images in a `public/images` directory
-* All style sheets in a `public/styles` directory
-* All client-side JavaScript files in a `public/scripts` directory
-* All server modules in appropriately named directories under `src/`
+- All images in a `public/images` directory
+- All style sheets in a `public/styles` directory
+- All client-side JavaScript files in a `public/scripts` directory
+- All server modules in appropriately named directories under `src/`
 
 ### Exception: Assets That Aren't Used Globally
 
@@ -966,7 +968,7 @@ app.post('/user',
 
 After being filtered, all external data must be validated as well. This applies to all routes, including ones that receive query parameters.
 
-For example, if the page in question has a URL like 'http://www.example.com/users?id=1', you should validate that `req.query.id` is indeed an integer and not something else:
+For example, if the page in question has a URL like '<http://www.example.com/users?id=1>', you should validate that `req.query.id` is indeed an integer and not something else:
 
 ```js
 // Route parameter validation

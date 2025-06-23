@@ -37,6 +37,7 @@ This project contains comprehensive standards documentation that should be follo
 ## Task Management
 
 This project uses `todo.md` as the primary task tracking system. When working on tasks:
+
 - Always check `todo.md` for the current list of uncompleted tasks
 - Remove completed tasks from the file rather than just marking them as done
 - Commit and push changes to `todo.md` after updating task status

@@ -61,14 +61,17 @@ This document establishes comprehensive monitoring and alerting standards for RE
 ### SLI, SLO, and SLA Framework
 
 **Service Level Indicators (SLIs)**
+
 - Specific metrics that measure service performance
 - Must be measurable and meaningful to users
 
 **Service Level Objectives (SLOs)**
+
 - Target values or ranges for SLIs
 - Internal goals for service reliability
 
 **Service Level Agreements (SLAs)**
+
 - External commitments to customers
 - Often based on SLOs with stricter requirements
 
@@ -1026,16 +1029,19 @@ module.exports = app;
 ### Cloud Provider Solutions
 
 **AWS**
+
 - CloudWatch for metrics and logs
 - X-Ray for distributed tracing
 - CloudTrail for audit logs
 
 **Google Cloud Platform**
+
 - Cloud Monitoring (Stackdriver)
 - Cloud Logging
 - Cloud Trace
 
 **Azure**
+
 - Azure Monitor
 - Application Insights
 - Log Analytics

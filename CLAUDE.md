@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Core Standards Reference
 
-This project uses Node.js 22.x LTS (version 22.11.0) as defined in .nvmrc and requires Node.js >=22.11.0 (see package.json engines field). Node.js 22.x "Jod" is the current LTS with Active support until October 2025 and Maintenance support until April 2027.
+This project uses Node.js 22.x LTS (version 22.11.0) as defined in .nvmrc and requires Node.js >=22.11.0 (see
+package.json engines field). Node.js 22.x "Jod" is the current LTS with Active support until October 2025 and
+Maintenance support until April 2027.
 
 This project contains comprehensive standards documentation that should be followed for all development:
 
@@ -37,6 +39,7 @@ This project contains comprehensive standards documentation that should be follo
 ## Task Management
 
 This project uses `todo.md` as the primary task tracking system. When working on tasks:
+
 - Always check `todo.md` for the current list of uncompleted tasks
 - Remove completed tasks from the file rather than just marking them as done
 - Commit and push changes to `todo.md` after updating task status

@@ -1,6 +1,5 @@
 # REST Base
 
-
 ## Table of Contents
 
 - [Purpose](#purpose)
@@ -140,23 +139,27 @@ npm run setup-standards ../path/to/existing-project
 ## Documentation Navigation
 
 ### Standards and Guidelines
+
 - [📋 **Global Rules**](./global-rules.md) - Project-wide standards and conventions
 - [🏗️ **Node.js Structure & Naming**](./node_structure_and_naming_conventions.md) - Code organization and naming conventions
 - [🛡️ **Technologies**](./technologies.md) - Approved technologies, frameworks, and dependencies
 - [📊 **SQL Standards**](./sql-standards-and-patterns.md) - Database design patterns and SQL conventions
 
 ### API Design
+
 - [🔄 **Operations & Responses**](./operations-and-responses.md) - REST API response formats and patterns
 - [📨 **Request Patterns**](./request.md) - API request structure and conventions
 - [✅ **Validation**](./validation.md) - Input validation requirements and patterns
 
 ### Development Tools
+
 - [⚙️ **CLI API Documentation**](./CLI-API-DOCUMENTATION.md) - Complete guide to REST-SPEC CLI tools
 - [⌨️ **Keyboard Shortcuts**](./KEYBOARD-SHORTCUTS.md) - Keyboard navigation and accessibility shortcuts
 - [🤖 **CLAUDE.md**](./CLAUDE.md) - Guidelines for AI assistants working with this codebase
 - [🎨 **Visual Design Requirements**](./visual-design-requirements.md) - UI/UX standards and guidelines
 
 ### Project Management
+
 - [📝 **TODO List**](./todo.md) - Current development tasks and improvements
 
 ## API Documentation Generator
@@ -214,7 +217,7 @@ The REST-SPEC CLI tools are designed with accessibility in mind and support exte
 - **🎨 High Contrast Mode**: Multiple color themes including high contrast and colorblind-friendly options
 - **⚡ Auto-completion**: Shell completion support for bash, zsh, and fish
 
-### Key Features:
+### Key Features
 
 - **Interactive Mode**: Navigate menus with arrow keys, select with Space, confirm with Enter
 - **Tab Completion**: Auto-complete commands, options, and file paths

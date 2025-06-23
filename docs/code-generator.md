@@ -46,6 +46,7 @@ npx rest-spec-code-gen crud product --output ./api --author "John Doe"
 ```
 
 This generates:
+
 - **Model** (`src/models/User.js`) - Sequelize model with associations
 - **Controller** (`src/controllers/userController.js`) - CRUD operations
 - **Routes** (`src/routes/user.js`) - Express routes with documentation
@@ -114,7 +115,9 @@ npx rest-spec-code-gen test user --template controller
 ### Route Templates
 
 #### CRUD Template
+
 Generates RESTful routes with full CRUD operations:
+
 - `GET /api/entities` - List with pagination and filtering
 - `GET /api/entities/:id` - Get by ID
 - `POST /api/entities` - Create new entity
@@ -122,13 +125,16 @@ Generates RESTful routes with full CRUD operations:
 - `DELETE /api/entities/:id` - Delete entity
 
 Features:
+
 - Authentication middleware
 - Input validation
 - JSDoc API documentation
 - Consistent error handling
 
 #### Auth Template
+
 Generates authentication routes:
+
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/login` - User login
 - `POST /api/auth/logout` - User logout
@@ -139,7 +145,9 @@ Generates authentication routes:
 ### Controller Templates
 
 #### CRUD Controller
+
 Generates controller with full CRUD operations:
+
 - Pagination and sorting support
 - Input validation
 - Error handling and logging
@@ -147,7 +155,9 @@ Generates controller with full CRUD operations:
 - Proper HTTP status codes
 
 #### Auth Controller
+
 Generates authentication controller:
+
 - User registration and login
 - JWT token generation and validation
 - Password hashing with bcrypt
@@ -157,7 +167,9 @@ Generates authentication controller:
 ### Model Templates
 
 #### Sequelize Model
+
 Generates Sequelize model with:
+
 - UUID primary keys
 - Common fields (name, description, status, timestamps)
 - Associations setup
@@ -168,14 +180,18 @@ Generates Sequelize model with:
 ### Middleware Templates
 
 #### Validation Middleware
+
 Generates Joi validation schemas:
+
 - Create and update schemas
 - Query parameter validation
 - Custom validation rules
 - Error formatting
 
 #### Auth Middleware
+
 Generates authentication middleware:
+
 - JWT token verification
 - Role-based authorization
 - Rate limiting
@@ -185,7 +201,9 @@ Generates authentication middleware:
 ### Test Templates
 
 #### Controller Tests
+
 Generates comprehensive test suite:
+
 - Setup and teardown
 - Authentication tests
 - CRUD operation tests

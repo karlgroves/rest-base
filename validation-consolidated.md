@@ -2,7 +2,6 @@
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [📋 Global Rules](./global-rules.md) | [📨 Request Patterns](./request.md) | [🔄 Operations & Responses](./operations-and-responses.md)
 
-
 ## Table of Contents
 
 - [Purpose](#purpose)
@@ -55,12 +54,14 @@ This document consolidates all validation requirements for REST-SPEC APIs, combi
 ## Core Validation Principles
 
 ### Security-First Approach
+
 - **Input Sanitization**: All user inputs must be validated and sanitized before processing
 - **Type Coercion**: Handle string-to-type conversion safely (e.g., URL parameters as strings)
 - **Parameter Whitelisting**: Explicitly validate allowed parameters and ignore/unset others
 - **Authentication Verification**: Validate JWT tokens and check blacklist status
 
 ### Data Integrity
+
 - **Required Field Validation**: Enforce mandatory fields for each operation type
 - **Format Validation**: Ensure data matches expected formats (UUID, email, etc.)
 - **Business Logic Validation**: Apply domain-specific rules and constraints
@@ -69,6 +70,7 @@ This document consolidates all validation requirements for REST-SPEC APIs, combi
 ## Universal Validation Rules
 
 ### Authentication and Authorization
+
 All requests (except authentication and registration routes) must:
 
 1. **JWT Token Validation**:
@@ -83,6 +85,7 @@ All requests (except authentication and registration routes) must:
    - Validate role-based access for administrative operations
 
 ### Data Type Handling
+
 - **String-to-Type Conversion**: Browser URL parameters arrive as strings; validation must handle type casting
 - **UUID Validation**: Use regex pattern: `/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i`
 - **Integer Validation**: Cast string numbers to integers with bounds checking
@@ -93,11 +96,14 @@ All requests (except authentication and registration routes) must:
 ### GET Requests
 
 #### List Operations (`GET /api/resource`)
+
 **Required Validation:**
+
 - User has `read` permissions for the resource type
 - User is owner of records OR has appropriate access level
 
 **Optional Query Parameters:**
+
 ```javascript
 {
   limit: {
@@ -141,32 +147,40 @@ All requests (except authentication and registration routes) must:
 ```
 
 **Security Requirements:**
+
 - Ignore and unset all other query parameters
 - Validate `order` field against allowed fields for resource type
 - Prevent SQL injection through parameterized queries
 
 **Default Ordering Rules:**
+
 - **Date-based fields**: Most recent first (`created_at DESC`, `updated_at DESC`)
 - **Name/Title fields**: Alphabetical ascending (`name ASC`, `title ASC`)
 - **Priority/Status fields**: Custom business logic ordering
 
 #### Single Resource Operations (`GET /api/resource/:id`)
+
 **Required Validation:**
+
 - `id` parameter is present and valid UUID
 - Record exists in database
 - User has read access to specific record
 
 **Optional Parameters:**
+
 - `expand`: Same as list operations
 
 **Security Requirements:**
+
 - Ignore all URL parameters except `id`
 - Return 404 for both non-existent and unauthorized records (security through obscurity)
 
 ### POST Requests
 
 #### Create Operations (`POST /api/resource`)
+
 **Required Validation:**
+
 - Request has `Content-Type: application/json` header
 - JSON body is valid and parseable
 - All required fields are present
@@ -174,6 +188,7 @@ All requests (except authentication and registration routes) must:
 - Business logic constraints are satisfied
 
 **Standard Validation Flow:**
+
 ```javascript
 // 1. Parse and validate JSON body
 const data = await parseJsonBody(req);
@@ -192,6 +207,7 @@ const sanitizedData = sanitizeInput(validatedData);
 ```
 
 **Common Field Validations:**
+
 - **Email**: RFC 5322 compliant regex
 - **Phone**: E.164 international format
 - **URLs**: Valid HTTP/HTTPS URLs only
@@ -201,7 +217,9 @@ const sanitizedData = sanitizeInput(validatedData);
 ### PUT Requests
 
 #### Update Operations (`PUT /api/resource/:id`)
+
 **Required Validation:**
+
 - `id` parameter is present and valid UUID
 - Request has `Content-Type: application/json` header
 - JSON body is valid and parseable
@@ -209,12 +227,14 @@ const sanitizedData = sanitizeInput(validatedData);
 - User has write permissions for record
 
 **Partial Update Support:**
+
 - Only validate fields that are present in request body
 - Do not require all fields (unlike POST)
 - Maintain referential integrity for related records
 - Preserve existing values for omitted fields
 
 **Update Validation Flow:**
+
 ```javascript
 // 1. Verify record exists and user has access
 const existingRecord = await findAndAuthorize(id, user);
@@ -235,13 +255,16 @@ await validateCompleteRecord(mergedData);
 ### DELETE Requests
 
 #### Delete Operations (`DELETE /api/resource/:id`)
+
 **Required Validation:**
+
 - `id` parameter is present and valid UUID
 - Record exists in database
 - User has delete permissions for record
 - Check for dependent records (unless cascade delete is configured)
 
 **Security Considerations:**
+
 - Log all delete operations for audit trail
 - Consider soft delete vs hard delete based on compliance requirements
 - Validate cascade delete operations don't orphan critical data
@@ -249,7 +272,9 @@ await validateCompleteRecord(mergedData);
 ### HEAD Requests
 
 #### Existence Check (`HEAD /api/resource/:id`)
+
 **Required Validation:**
+
 - `id` parameter is present and valid UUID
 - User has read permissions for resource type
 - Return 200 if exists and accessible, 404 otherwise
@@ -257,6 +282,7 @@ await validateCompleteRecord(mergedData);
 ## Advanced Validation Patterns
 
 ### Input Sanitization
+
 ```javascript
 // HTML sanitization
 const sanitizeHtml = (input) => {
@@ -279,6 +305,7 @@ const sanitizeXss = (input) => {
 ```
 
 ### Complex Field Validation
+
 ```javascript
 // Custom validators
 const validators = {
@@ -305,6 +332,7 @@ const validators = {
 ```
 
 ### Conditional Validation
+
 ```javascript
 // Validation that depends on other fields
 const conditionalValidation = {
@@ -336,6 +364,7 @@ const conditionalValidation = {
 ## Validation Error Handling
 
 ### Error Response Format
+
 ```json
 {
   "error": {
@@ -358,6 +387,7 @@ const conditionalValidation = {
 ```
 
 ### Custom Error Classes
+
 ```javascript
 class ValidationError extends Error {
   constructor(message, field = null, value = null) {
@@ -392,6 +422,7 @@ class DuplicateError extends Error {
 ## Schema Definition Patterns
 
 ### JSON Schema Validation
+
 ```javascript
 const userSchema = {
   type: 'object',
@@ -424,6 +455,7 @@ const userSchema = {
 ```
 
 ### Joi Schema Validation
+
 ```javascript
 const Joi = require('joi');
 
@@ -444,12 +476,14 @@ const userValidationSchema = Joi.object({
 ## Performance Considerations
 
 ### Validation Optimization
+
 - **Schema Caching**: Cache compiled validation schemas
 - **Early Exit**: Fail fast on first validation error
 - **Async Validation**: Use Promise.all for independent async validations
 - **Database Optimization**: Use indexes for uniqueness checks
 
 ### Rate Limiting for Validation
+
 ```javascript
 // Separate rate limits for expensive validation operations
 const validationRateLimits = {
@@ -470,12 +504,14 @@ const validationRateLimits = {
 ## Security Best Practices
 
 ### Input Validation Security
+
 1. **Whitelist Approach**: Define allowed inputs rather than blocked ones
 2. **Multiple Validation Layers**: Client-side AND server-side validation
 3. **Context-Aware Validation**: Different rules for different user roles
 4. **Audit Logging**: Log validation failures for security monitoring
 
 ### Common Attack Prevention
+
 - **SQL Injection**: Use parameterized queries exclusively
 - **XSS Prevention**: Sanitize HTML content and escape output
 - **LDAP Injection**: Validate and escape LDAP query parameters
@@ -485,6 +521,7 @@ const validationRateLimits = {
 ## Testing Validation Logic
 
 ### Unit Testing Validation
+
 ```javascript
 describe('User Validation', () => {
   it('should accept valid user data', async () => {
@@ -513,6 +550,7 @@ describe('User Validation', () => {
 ```
 
 ### Integration Testing
+
 ```javascript
 describe('POST /api/users validation', () => {
   it('should return 400 for missing required fields', async () => {
@@ -530,6 +568,7 @@ describe('POST /api/users validation', () => {
 ## Migration from Legacy Validation
 
 ### Consolidation Strategy
+
 This document consolidates validation rules previously split between `validation.md` and `request.md`:
 
 1. **Core Validation Logic**: Moved from `validation.md`
@@ -538,6 +577,7 @@ This document consolidates validation rules previously split between `validation
 4. **Comprehensive Coverage**: Expanded to cover all HTTP methods and edge cases
 
 ### Deprecated Files
+
 - `validation.md`: Content merged into this document
 - `request.md`: Request pattern validation integrated here
 

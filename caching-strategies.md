@@ -1,6 +1,7 @@
 # Caching Strategies
 
-This document outlines comprehensive caching strategies for REST-Base applications, covering various caching layers, implementation patterns, and best practices to optimize performance and scalability.
+This document outlines comprehensive caching strategies for REST-Base applications, covering various caching layers,
+implementation patterns, and best practices to optimize performance and scalability.
 
 ## Table of Contents
 
@@ -11,10 +12,7 @@ This document outlines comprehensive caching strategies for REST-Base applicatio
 - [Cache Invalidation](#cache-invalidation)
 - [Performance Considerations](#performance-considerations)
 - [Security Considerations](#security-considerations)
-- [Monitoring and Metrics](#monitoring-and-metrics)
 - [Best Practices](#best-practices)
-- [Implementation Examples](#implementation-examples)
-- [Cache Management](#cache-management)
 - [Troubleshooting](#troubleshooting)
 
 ## Overview
@@ -29,7 +27,7 @@ This document outlines comprehensive caching strategies for REST-Base applicatio
 
 ### Cache Hierarchy
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                    Browser Cache                           │
 │              (Client-side caching)                         │
@@ -1526,4 +1524,5 @@ class CachePerformanceOptimizer {
 }
 ```
 
-This comprehensive caching strategies document provides a complete framework for implementing efficient, secure, and maintainable caching solutions in REST-Base applications.
+This comprehensive caching strategies document provides a complete framework for implementing efficient,
+secure, and maintainable caching solutions in REST-Base applications.

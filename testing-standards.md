@@ -47,6 +47,7 @@ This document outlines comprehensive testing standards, patterns, and best pract
 ## Testing Philosophy
 
 ### Core Principles
+
 - **Test-Driven Development (TDD)**: Write tests before implementation when possible
 - **Comprehensive Coverage**: Aim for 90%+ code coverage with meaningful tests
 - **Fast Feedback**: Unit tests should run in milliseconds, integration tests in seconds
@@ -54,6 +55,7 @@ This document outlines comprehensive testing standards, patterns, and best pract
 - **Clear Intent**: Tests should serve as living documentation of expected behavior
 
 ### Testing Pyramid
+
 ```
     E2E Tests (5-10%)
       ↑ Slow, Expensive, Brittle
@@ -66,6 +68,7 @@ This document outlines comprehensive testing standards, patterns, and best pract
 ## Test Framework Configuration
 
 ### Jest Configuration
+
 ```json
 {
   "testEnvironment": "node",
@@ -92,6 +95,7 @@ This document outlines comprehensive testing standards, patterns, and best pract
 ```
 
 ### Test Setup File
+
 ```javascript
 // tests/setup.js
 const { sequelize } = require('../src/models');
@@ -125,6 +129,7 @@ global.testHelpers = {
 ## Unit Testing Standards
 
 ### Test Structure and Naming
+
 - Use descriptive test names that explain the scenario
 - Follow the AAA pattern: Arrange, Act, Assert
 - Group related tests using `describe` blocks
@@ -183,6 +188,7 @@ describe('UserService', () => {
 ```
 
 ### Testing Async Operations
+
 ```javascript
 // ✅ Good async testing patterns
 describe('async operations', () => {
@@ -212,6 +218,7 @@ describe('async operations', () => {
 ```
 
 ### Mocking Best Practices
+
 ```javascript
 // ✅ Good mocking patterns
 describe('UserController', () => {
@@ -265,6 +272,7 @@ describe('UserController', () => {
 ## Integration Testing Standards
 
 ### Database Integration Tests
+
 ```javascript
 // tests/integration/user.integration.test.js
 const request = require('supertest');
@@ -331,6 +339,7 @@ describe('User API Integration', () => {
 ```
 
 ### API Testing with Authentication
+
 ```javascript
 // tests/integration/auth.integration.test.js
 const request = require('supertest');
@@ -384,6 +393,7 @@ describe('Authenticated API endpoints', () => {
 ## End-to-End Testing Standards
 
 ### E2E Test Setup
+
 ```javascript
 // tests/e2e/user-workflow.e2e.test.js
 const request = require('supertest');
@@ -453,6 +463,7 @@ describe('User Workflow E2E', () => {
 ## Testing Database Operations
 
 ### Repository Testing
+
 ```javascript
 // tests/unit/repositories/userRepository.test.js
 const { User } = require('../../src/models');
@@ -500,6 +511,7 @@ describe('UserRepository', () => {
 ```
 
 ### Transaction Testing
+
 ```javascript
 // Testing database transactions
 describe('UserService with transactions', () => {
@@ -525,6 +537,7 @@ describe('UserService with transactions', () => {
 ## Testing Middleware
 
 ### Authentication Middleware Testing
+
 ```javascript
 // tests/unit/middleware/auth.test.js
 const authMiddleware = require('../../src/middleware/auth');
@@ -569,6 +582,7 @@ describe('Auth Middleware', () => {
 ```
 
 ### Error Handling Middleware Testing
+
 ```javascript
 // tests/unit/middleware/errorHandler.test.js
 const errorHandler = require('../../src/middleware/errorHandler');
@@ -622,6 +636,7 @@ describe('Error Handler Middleware', () => {
 ## Performance Testing
 
 ### Load Testing with Jest
+
 ```javascript
 // tests/performance/api.performance.test.js
 describe('API Performance Tests', () => {
@@ -673,6 +688,7 @@ describe('API Performance Tests', () => {
 ## Test Data Management
 
 ### Fixtures and Factories
+
 ```javascript
 // tests/fixtures/userFixtures.js
 const bcrypt = require('bcrypt');
@@ -720,6 +736,7 @@ module.exports = userFixtures;
 ```
 
 ### Database Seeding for Tests
+
 ```javascript
 // tests/helpers/seedDatabase.js
 const { User, Team, Project } = require('../../src/models');
@@ -759,6 +776,7 @@ module.exports = { seedDatabase, cleanDatabase };
 ## Continuous Integration Testing
 
 ### GitHub Actions Configuration
+
 ```yaml
 # .github/workflows/test.yml
 name: Tests
@@ -824,6 +842,7 @@ jobs:
 ## Test Scripts Configuration
 
 ### Package.json Test Scripts
+
 ```json
 {
   "scripts": {
@@ -841,6 +860,7 @@ jobs:
 ## Testing Best Practices Summary
 
 ### DO
+
 1. **Write tests first** - Use TDD when possible
 2. **Test behavior, not implementation** - Focus on what the code does, not how
 3. **Use descriptive test names** - Tests should read like specifications
@@ -851,6 +871,7 @@ jobs:
 8. **Run tests frequently** - Integrate with CI/CD for every commit
 
 ### DON'T
+
 1. **Don't test framework code** - Focus on your business logic
 2. **Don't write brittle tests** - Avoid testing implementation details
 3. **Don't ignore failing tests** - Fix them immediately or remove them

@@ -1,6 +1,5 @@
 # Contributing to REST-SPEC
 
-
 ## Table of Contents
 
 - [Development Process](#development-process)

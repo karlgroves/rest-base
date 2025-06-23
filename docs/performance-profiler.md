@@ -67,11 +67,13 @@ npx rest-spec-profiler monitor [options]
 ```
 
 **Options:**
+
 - `-i, --interval <ms>` - Sample interval in milliseconds (default: 1000)
 - `-o, --output <file>` - Output file for report
 - `--gc` - Enable garbage collection monitoring
 
 **Example:**
+
 ```bash
 # Monitor with 500ms intervals, save to file
 npx rest-spec-profiler monitor -i 500 -o perf-report.json
@@ -89,11 +91,13 @@ npx rest-spec-profiler profile <target> [options]
 ```
 
 **Options:**
+
 - `-d, --duration <ms>` - Profile duration in milliseconds (default: 10000)
 - `-i, --interval <ms>` - Sample interval in milliseconds (default: 100)
 - `-o, --output <file>` - Output file for report
 
 **Example:**
+
 ```bash
 # Profile for 60 seconds with detailed sampling
 npx rest-spec-profiler profile myapp -d 60000 -i 50 -o profile.json
@@ -108,10 +112,12 @@ npx rest-spec-profiler benchmark [options]
 ```
 
 **Options:**
+
 - `-n, --iterations <count>` - Number of iterations (default: 100)
 - `-o, --output <file>` - Output file for results
 
 **Example:**
+
 ```bash
 # Run 1000 iterations and save results
 npx rest-spec-profiler benchmark -n 1000 -o benchmark-results.json
@@ -126,9 +132,11 @@ npx rest-spec-profiler analyze <file> [options]
 ```
 
 **Options:**
+
 - `-f, --format <type>` - Output format: console, html (default: console)
 
 **Example:**
+
 ```bash
 # Analyze existing report
 npx rest-spec-profiler analyze performance-report.json
@@ -587,6 +595,7 @@ DEBUG=profiler npx rest-spec-profiler monitor
 ### Performance Impact
 
 The profiler itself has minimal performance impact:
+
 - Memory overhead: ~1-5MB
 - CPU overhead: <1% with default settings
 - Request overhead: <1ms per request

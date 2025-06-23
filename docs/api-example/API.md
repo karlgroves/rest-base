@@ -366,4 +366,3 @@ Simple health check endpoint for monitoring
 | 200 | - Service is healthy |
 
 ---
-

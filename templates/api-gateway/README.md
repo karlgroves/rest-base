@@ -48,6 +48,7 @@ This API Gateway provides a centralized entry point for microservices architectu
 ### Installation
 
 1. **Clone and setup the project:**
+
    ```bash
    git clone <repository-url>
    cd {{projectName}}
@@ -55,17 +56,20 @@ This API Gateway provides a centralized entry point for microservices architectu
    ```
 
 2. **Configure environment variables:**
+
    ```bash
    cp .env.example .env
    # Edit .env with your configuration
    ```
 
 3. **Start Redis (if not using Docker):**
+
    ```bash
    redis-server
    ```
 
 4. **Start the gateway:**
+
    ```bash
    # Development
    npm run dev
@@ -77,6 +81,7 @@ This API Gateway provides a centralized entry point for microservices architectu
 ### Docker Setup
 
 1. **Using Docker Compose (recommended):**
+
    ```bash
    # Copy environment file
    cp .env.example .env
@@ -89,6 +94,7 @@ This API Gateway provides a centralized entry point for microservices architectu
    ```
 
 2. **Build and run manually:**
+
    ```bash
    # Build image
    npm run docker:build
@@ -167,6 +173,7 @@ Authorization: Bearer <your-jwt-token>
 ### Rate Limiting
 
 Default rate limits:
+
 - **General API**: 100 requests per 15 minutes
 - **Authentication**: 5 requests per 15 minutes  
 - **Public endpoints**: 1000 requests per 15 minutes
@@ -217,6 +224,7 @@ npm run typecheck   # Run TypeScript checks
 ### Adding New Services
 
 1. **Register the service:**
+
    ```javascript
    // In src/middleware/proxy.js
    const serviceRegistry = new Map([
@@ -229,6 +237,7 @@ npm run typecheck   # Run TypeScript checks
    ```
 
 2. **Add routing rules:**
+
    ```javascript
    // In src/routes/proxy.js
    v1Router.use('/newservice/*', jwtAuth, asyncHandler(async (req, res, next) => {
@@ -238,6 +247,7 @@ npm run typecheck   # Run TypeScript checks
    ```
 
 3. **Update environment variables:**
+
    ```env
    NEWSERVICE_URL=http://localhost:3010
    ```
@@ -307,6 +317,7 @@ logger.info('Request processed', {
 ### Metrics
 
 Access metrics via admin endpoint:
+
 ```bash
 curl -H "Authorization: Bearer <admin-token>" \
      http://localhost:8080/admin/metrics
@@ -327,6 +338,7 @@ curl -H "Authorization: Bearer <admin-token>" \
 ### Security Headers
 
 The gateway automatically adds security headers:
+
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: DENY`
 - `X-XSS-Protection: 1; mode=block`
@@ -395,6 +407,7 @@ spec:
 ### Common Issues
 
 1. **Redis Connection Failed**
+
    ```bash
    # Check Redis status
    redis-cli ping
@@ -404,6 +417,7 @@ spec:
    ```
 
 2. **Service Proxy Timeout**
+
    ```bash
    # Check service health
    curl http://your-service:port/health
@@ -412,6 +426,7 @@ spec:
    ```
 
 3. **JWT Authentication Errors**
+
    ```bash
    # Verify JWT secret is set
    echo $JWT_SECRET
@@ -422,6 +437,7 @@ spec:
 ### Debug Mode
 
 Enable debug logging:
+
 ```env
 LOG_LEVEL=debug
 NODE_ENV=development

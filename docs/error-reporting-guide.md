@@ -168,6 +168,7 @@ await errorReporter.report(error, {
 ## Error Storage
 
 Error reports are stored in the system's temporary directory:
+
 - Location: `$TMPDIR/rest-spec-errors/`
 - Format: `error-{id}-{timestamp}.json`
 - Retention: Last 100 error reports are kept
@@ -263,16 +264,19 @@ node scripts/error-dashboard.js export weekly-errors.json
 ### Error Reporting Not Working
 
 1. Check if error reporting is enabled:
+
    ```bash
    echo $REST_SPEC_ERROR_REPORTING
    ```
 
 2. Verify temp directory permissions:
+
    ```bash
    ls -la $TMPDIR/rest-spec-errors/
    ```
 
 3. Enable verbose logging:
+
    ```bash
    VERBOSE=true node your-script.js
    ```
@@ -280,6 +284,7 @@ node scripts/error-dashboard.js export weekly-errors.json
 ### Too Many Error Reports
 
 Clean up old reports:
+
 ```bash
 node scripts/error-dashboard.js clean
 ```

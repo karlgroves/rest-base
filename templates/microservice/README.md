@@ -29,42 +29,47 @@ A production-ready microservice built with Node.js and Express, following REST-S
 ### Local Development
 
 1. **Clone and install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Set up environment variables:**
+
    ```bash
    cp .env.example .env
    # Edit .env with your configuration
    ```
 
 3. **Start development server:**
+
    ```bash
    npm run dev
    ```
 
 4. **Access the application:**
-   - API: http://localhost:3000/api
-   - Health: http://localhost:3000/health
-   - Documentation: http://localhost:3000/api-docs
+   - API: <http://localhost:3000/api>
+   - Health: <http://localhost:3000/health>
+   - Documentation: <http://localhost:3000/api-docs>
 
 ### Docker Development
 
 1. **Start all services:**
+
    ```bash
    docker-compose up
    ```
 
 2. **Start with management tools:**
+
    ```bash
    docker-compose --profile tools up
    ```
 
 3. **Access services:**
-   - API: http://localhost:3000
-   - Adminer (DB): http://localhost:8080
-   - Redis Commander: http://localhost:8081
+   - API: <http://localhost:3000>
+   - Adminer (DB): <http://localhost:8080>
+   - Redis Commander: <http://localhost:8081>
 
 ## API Endpoints
 
@@ -146,11 +151,13 @@ The project includes:
 ### Production Environment
 
 1. **Build Docker image:**
+
    ```bash
    docker build -t {{projectName}}-microservice .
    ```
 
 2. **Run container:**
+
    ```bash
    docker run -p 3000:3000 \
      -e NODE_ENV=production \

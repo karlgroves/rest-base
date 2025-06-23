@@ -1,7 +1,8 @@
 # API Versioning Strategy
 
-> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🔄 Operations & Responses](./operations-and-responses.md) | [📨 Request Patterns](./request.md) | [📋 Global Rules](./global-rules.md)
-
+> **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) |
+> [🔄 Operations & Responses](./operations-and-responses.md) | [📨 Request Patterns](./request.md) |
+> [📋 Global Rules](./global-rules.md)
 
 ## Table of Contents
 
@@ -43,11 +44,14 @@
 
 ## Purpose
 
-This document defines the comprehensive API versioning strategy for REST-SPEC projects. It establishes standards for version management, backward compatibility, deprecation processes, and migration strategies to ensure stable, maintainable APIs.
+This document defines the comprehensive API versioning strategy for REST-SPEC projects. It establishes standards
+for version management, backward compatibility, deprecation processes, and migration strategies to ensure stable,
+maintainable APIs.
 
 ## Versioning Philosophy
 
 ### Core Principles
+
 - **Semantic Versioning**: Follow semver principles for API versions
 - **Backward Compatibility**: Maintain compatibility within major versions
 - **Graceful Deprecation**: Provide clear deprecation timelines and migration paths
@@ -55,6 +59,7 @@ This document defines the comprehensive API versioning strategy for REST-SPEC pr
 - **Documentation-Driven**: Maintain comprehensive version documentation
 
 ### Version Significance
+
 - **Major Version (v1, v2, v3)**: Breaking changes that require consumer updates
 - **Minor Version (v1.1, v1.2)**: New features that are backward compatible
 - **Patch Version (v1.1.1, v1.1.2)**: Bug fixes and security updates
@@ -62,21 +67,24 @@ This document defines the comprehensive API versioning strategy for REST-SPEC pr
 ## Versioning Methods
 
 ### 1. URL Path Versioning (Recommended)
+
 Include version in the URL path for clear, explicit versioning.
 
-```
+```http
 GET /api/v1/users
 GET /api/v2/users
 GET /api/v1.2/users
 ```
 
 **Advantages:**
+
 - Clear and explicit
 - Easy to implement
 - Cacheable
 - RESTful
 
 **Implementation:**
+
 ```javascript
 // Express.js router setup
 const v1Router = express.Router();
@@ -91,6 +99,7 @@ v2Router.get('/users', userControllerV2.getUsers);
 ```
 
 ### 2. Header Versioning (Alternative)
+
 Use custom headers for version specification.
 
 ```http
@@ -102,6 +111,7 @@ API-Version: v2
 ```
 
 **Implementation:**
+
 ```javascript
 // Middleware to handle version headers
 const versionMiddleware = (req, res, next) => {
@@ -129,6 +139,7 @@ const getUsers = (req, res) => {
 ```
 
 ### 3. Content Negotiation (Specialized Use Cases)
+
 Use Accept header with custom media types.
 
 ```http
@@ -142,6 +153,7 @@ Accept: application/vnd.api+json;version=2
 ## Version Lifecycle Management
 
 ### Version States
+
 1. **Development**: Pre-release, subject to breaking changes
 2. **Active**: Current stable version, receiving new features
 3. **Maintenance**: Stable version, receiving only bug fixes
@@ -149,11 +161,13 @@ Accept: application/vnd.api+json;version=2
 5. **Retired**: No longer supported
 
 ### Lifecycle Timeline
-```
+
+```text
 Development → Active (6-12 months) → Maintenance (12-18 months) → Deprecated (6 months) → Retired
 ```
 
 ### Version Support Policy
+
 - **Active Versions**: 1-2 major versions maximum
 - **Maintenance Period**: Minimum 12 months for major versions
 - **Deprecation Notice**: Minimum 6 months before retirement
@@ -162,6 +176,7 @@ Development → Active (6-12 months) → Maintenance (12-18 months) → Deprecat
 ## Breaking Changes Management
 
 ### What Constitutes a Breaking Change
+
 - Removing endpoints or fields
 - Changing data types
 - Modifying authentication requirements
@@ -170,6 +185,7 @@ Development → Active (6-12 months) → Maintenance (12-18 months) → Deprecat
 - Modifying URL structures
 
 ### Non-Breaking Changes
+
 - Adding new endpoints
 - Adding optional parameters
 - Adding new response fields
@@ -178,6 +194,7 @@ Development → Active (6-12 months) → Maintenance (12-18 months) → Deprecat
 - Bug fixes
 
 ### Breaking Change Process
+
 1. **Planning Phase**: Identify necessity and impact
 2. **Design Phase**: Design backward-compatible approach if possible
 3. **Documentation Phase**: Document changes and migration guide
@@ -189,7 +206,8 @@ Development → Active (6-12 months) → Maintenance (12-18 months) → Deprecat
 ## Versioning Implementation Patterns
 
 ### Route Organization
-```
+
+```text
 src/
 ├── controllers/
 │   ├── v1/
@@ -230,6 +248,7 @@ src/
 ```
 
 ### Shared Logic Management
+
 ```javascript
 // src/services/shared/baseUserService.js
 class BaseUserService {
@@ -291,6 +310,7 @@ class UserServiceV2 extends BaseUserService {
 ```
 
 ### Database Schema Evolution
+
 ```javascript
 // migrations/20231201000001-create-users-v1.js
 module.exports = {
@@ -359,6 +379,7 @@ module.exports = {
 ## Deprecation Strategy
 
 ### Deprecation Headers
+
 ```javascript
 // Middleware to add deprecation headers
 const deprecationMiddleware = (version, sunset) => {
@@ -378,6 +399,7 @@ v1Router.use(deprecationMiddleware('v1', 'Wed, 11 Nov 2024 07:28:00 GMT'));
 ```
 
 ### Deprecation Response Format
+
 ```json
 {
   "data": {
@@ -395,6 +417,7 @@ v1Router.use(deprecationMiddleware('v1', 'Wed, 11 Nov 2024 07:28:00 GMT'));
 ```
 
 ### Communication Timeline
+
 - **T-6 months**: Initial deprecation announcement
 - **T-4 months**: Add deprecation headers to responses
 - **T-2 months**: Final migration reminder
@@ -403,6 +426,7 @@ v1Router.use(deprecationMiddleware('v1', 'Wed, 11 Nov 2024 07:28:00 GMT'));
 ## Client Communication Strategy
 
 ### Version Discovery
+
 ```javascript
 // GET /api/versions
 {
@@ -424,6 +448,7 @@ v1Router.use(deprecationMiddleware('v1', 'Wed, 11 Nov 2024 07:28:00 GMT'));
 ```
 
 ### Migration Guides
+
 ```markdown
 # Migration Guide: v1 to v2
 
@@ -443,6 +468,7 @@ API v2 introduces improved user data structure and enhanced authentication.
 ```
 
 **v2 Response:**
+
 ```json
 {
   "id": "123",
@@ -454,6 +480,7 @@ API v2 introduces improved user data structure and enhanced authentication.
 ```
 
 ### Required Changes
+
 1. Update user object parsing to handle `firstName` and `lastName`
 2. Use `fullName` instead of `name` for display purposes
 3. Update any logic that depends on the `name` field
@@ -461,6 +488,7 @@ API v2 introduces improved user data structure and enhanced authentication.
 ## Code Examples
 
 ### JavaScript/Node.js
+
 ```javascript
 // v1 code
 const userName = user.name;
@@ -470,9 +498,9 @@ const userName = user.fullName;
 const firstName = user.firstName;
 const lastName = user.lastName;
 ```
-```
 
 ### Testing Version Compatibility
+
 ```javascript
 // tests/versioning/compatibility.test.js
 describe('API Version Compatibility', () => {
@@ -507,6 +535,7 @@ describe('API Version Compatibility', () => {
 ## Monitoring and Analytics
 
 ### Version Usage Tracking
+
 ```javascript
 // Middleware to track version usage
 const versionAnalytics = (req, res, next) => {
@@ -531,6 +560,7 @@ const versionAnalytics = (req, res, next) => {
 ```
 
 ### Deprecation Metrics
+
 ```javascript
 // Track deprecation warnings
 const deprecationMetrics = (req, res, next) => {
@@ -558,6 +588,7 @@ const deprecationMetrics = (req, res, next) => {
 ## Best Practices Summary
 
 ### DO
+
 1. **Use semantic versioning** - Follow semver for clear version meaning
 2. **Maintain backward compatibility** - Within major versions when possible
 3. **Document everything** - Changes, deprecations, and migration paths
@@ -568,6 +599,7 @@ const deprecationMetrics = (req, res, next) => {
 8. **Plan for the future** - Design with evolution in mind
 
 ### DON'T
+
 1. **Don't break without notice** - Always communicate breaking changes
 2. **Don't support too many versions** - Limit active versions to 2-3
 3. **Don't rush deprecation** - Give adequate time for migration

@@ -36,6 +36,7 @@ Three color themes are available:
 ### Enhanced Visual Elements
 
 In high contrast mode:
+
 - Text is displayed in bold for better visibility
 - Important elements use underline for emphasis
 - Status indicators use both color and text symbols
@@ -83,6 +84,7 @@ rest-spec-update theme
 ```
 
 This shows:
+
 - Current color support level
 - Active theme
 - Environment variables
@@ -93,11 +95,13 @@ This shows:
 ### Logger Module (`shared/logger.js`)
 
 The logger has been enhanced with:
+
 - Theme-aware color output
 - Additional methods for styled output
 - Dynamic theme refresh capability
 
 New methods:
+
 - `heading()` - Display section headings
 - `subheading()` - Display subsection headings
 - `labelValue()` - Format label-value pairs
@@ -108,6 +112,7 @@ New methods:
 ### Color Themes Module (`shared/color-themes.js`)
 
 Provides:
+
 - Theme definitions (standard, high contrast, monochrome)
 - Automatic theme detection
 - Helper functions for styled output
@@ -116,6 +121,7 @@ Provides:
 ### CLI Utilities Module (`shared/cli-utils.js`)
 
 Offers high-level formatting functions:
+
 - `createSpinner()` - Theme-aware loading spinners
 - `formatSection()` - Section headers with underlines
 - `formatStatus()` - Status indicators with icons
@@ -134,6 +140,7 @@ Offers high-level formatting functions:
 ## Examples
 
 ### Standard Output
+
 ```
 [INFO] Creating new project: my-app
 [SUCCESS] Project structure created
@@ -141,6 +148,7 @@ Offers high-level formatting functions:
 ```
 
 ### High Contrast Output
+
 ```
 [INFO] Creating new project: my-app    (bold, bright blue)
 [SUCCESS] Project structure created     (bold, bright green)
@@ -148,6 +156,7 @@ Offers high-level formatting functions:
 ```
 
 ### No Color Output
+
 ```
 [INFO] Creating new project: my-app     (bold)
 [OK] Project structure created          (bold)
@@ -157,6 +166,7 @@ Offers high-level formatting functions:
 ## Compatibility
 
 The high contrast support is compatible with:
+
 - All major terminal emulators
 - Screen readers
 - SSH sessions
@@ -167,6 +177,7 @@ The high contrast support is compatible with:
 ## Future Enhancements
 
 Potential improvements:
+
 - User-configurable color themes
 - Persistent theme preferences
 - Additional accessibility features

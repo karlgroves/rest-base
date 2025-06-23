@@ -1,6 +1,5 @@
 # Security Policy
 
-
 ## Table of Contents
 
 - [Supported Versions](#supported-versions)

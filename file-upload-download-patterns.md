@@ -2,7 +2,6 @@
 
 > **Navigation:** [📖 Main Documentation](./README.md#documentation-navigation) | [🔄 Operations & Responses](./operations-and-responses.md) | [📋 Global Rules](./global-rules.md) | [✅ Validation](./validation-consolidated.md)
 
-
 ## Table of Contents
 
 - [Purpose](#purpose)
@@ -50,6 +49,7 @@ This document defines comprehensive patterns for handling file uploads and downl
 ### Upload Endpoint Design
 
 #### Single File Upload
+
 ```http
 POST /api/files
 Content-Type: multipart/form-data
@@ -63,6 +63,7 @@ Content-Type: application/pdf
 ```
 
 #### Multiple File Upload
+
 ```http
 POST /api/files/batch
 Content-Type: multipart/form-data
@@ -78,6 +79,7 @@ Content-Type: image/jpeg
 ```
 
 #### Upload with Metadata
+
 ```http
 POST /api/files
 Content-Type: multipart/form-data
@@ -99,6 +101,7 @@ Content-Type: image/jpeg
 ### Upload Response Format
 
 #### Successful Upload Response
+
 ```json
 {
   "data": {
@@ -120,6 +123,7 @@ Content-Type: image/jpeg
 ```
 
 #### Upload Error Response
+
 ```json
 {
   "error": {
@@ -143,6 +147,7 @@ Content-Type: image/jpeg
 ### File Validation Patterns
 
 #### Server-Side Validation
+
 ```javascript
 const multer = require('multer');
 const crypto = require('crypto');
@@ -227,6 +232,7 @@ const fileValidation = {
 ```
 
 #### Content-Based Validation
+
 ```javascript
 const fileType = require('file-type');
 
@@ -258,6 +264,7 @@ const validateFileContent = async (buffer, filename) => {
 ### Storage Strategies
 
 #### Local File Storage
+
 ```javascript
 const multer = require('multer');
 const path = require('path');
@@ -295,6 +302,7 @@ const upload = multer({
 ```
 
 #### Cloud Storage (AWS S3)
+
 ```javascript
 const AWS = require('aws-sdk');
 const multer = require('multer');
@@ -347,6 +355,7 @@ const s3Upload = multer({
 ### Upload Implementation
 
 #### Single File Upload Handler
+
 ```javascript
 app.post('/api/files', upload.single('file'), async (req, res, next) => {
   try {
@@ -398,6 +407,7 @@ app.post('/api/files', upload.single('file'), async (req, res, next) => {
 ```
 
 #### Chunked Upload for Large Files
+
 ```javascript
 // Initialize chunked upload
 app.post('/api/files/chunked/init', async (req, res) => {
@@ -481,6 +491,7 @@ app.post('/api/files/chunked/:sessionId/chunks/:chunkNumber',
 ### Download Endpoint Design
 
 #### Direct File Download
+
 ```http
 GET /api/files/{fileId}/download
 Authorization: Bearer jwt-token-here
@@ -488,12 +499,14 @@ Accept: application/octet-stream
 ```
 
 #### Download with Access Control
+
 ```http
 GET /api/files/{fileId}/download?token=download-token
 Authorization: Bearer jwt-token-here
 ```
 
 #### Streaming Download for Large Files
+
 ```http
 GET /api/files/{fileId}/stream
 Authorization: Bearer jwt-token-here
@@ -503,6 +516,7 @@ Range: bytes=0-1048575
 ### Download Implementation
 
 #### Secure File Download
+
 ```javascript
 app.get('/api/files/:fileId/download', async (req, res, next) => {
   try {
@@ -570,6 +584,7 @@ app.get('/api/files/:fileId/download', async (req, res, next) => {
 ```
 
 #### Range-Based Download (Resumable)
+
 ```javascript
 app.get('/api/files/:fileId/stream', async (req, res, next) => {
   try {
@@ -620,6 +635,7 @@ app.get('/api/files/:fileId/stream', async (req, res, next) => {
 ```
 
 #### Temporary Download URLs
+
 ```javascript
 // Generate temporary download URL
 app.post('/api/files/:fileId/download-url', async (req, res, next) => {
@@ -685,6 +701,7 @@ app.get('/api/files/:fileId/download', async (req, res, next) => {
 ## Security Considerations
 
 ### Upload Security
+
 - **File Type Validation**: Validate both MIME type and file extension
 - **Content Scanning**: Scan uploaded files for malware
 - **Size Limits**: Enforce reasonable file size limits
@@ -692,6 +709,7 @@ app.get('/api/files/:fileId/download', async (req, res, next) => {
 - **Access Control**: Implement proper file access permissions
 
 ### Download Security
+
 - **Authentication**: Require valid authentication for file access
 - **Authorization**: Check user permissions for specific files
 - **Rate Limiting**: Limit download frequency per user
@@ -701,6 +719,7 @@ app.get('/api/files/:fileId/download', async (req, res, next) => {
 ## Best Practices
 
 ### Performance Optimization
+
 - **Streaming**: Use streams for large file uploads/downloads
 - **Chunking**: Implement chunked upload for large files
 - **Caching**: Cache file metadata and thumbnails
@@ -708,6 +727,7 @@ app.get('/api/files/:fileId/download', async (req, res, next) => {
 - **Compression**: Compress files when appropriate
 
 ### Storage Management
+
 - **File Lifecycle**: Implement file expiration and cleanup
 - **Backup Strategy**: Regular backup of uploaded files
 - **Storage Monitoring**: Monitor storage usage and capacity
@@ -715,6 +735,7 @@ app.get('/api/files/:fileId/download', async (req, res, next) => {
 - **Cost Optimization**: Use appropriate storage tiers
 
 ### Error Handling
+
 - **Graceful Failures**: Handle upload/download failures gracefully
 - **Retry Logic**: Implement retry mechanisms for failed uploads
 - **Progress Tracking**: Provide upload/download progress feedback

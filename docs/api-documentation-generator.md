@@ -242,6 +242,7 @@ Retrieves a paginated list of all users in the system
 ### HTML Output
 
 The HTML output provides a beautiful, responsive documentation page with:
+
 - Syntax highlighting
 - Collapsible sections
 - Search functionality

@@ -21,7 +21,8 @@
       "Bash(npx markdownlint:*)",
       "Bash(find:*)",
       "Bash(sed:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(git push:*)"
     ]
   },
   "enableAllProjectMcpServers": false

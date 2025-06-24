@@ -30,7 +30,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.11.0%20(LTS)-brightgreen.svg)](https://nodejs.org)
-[![npm version](https://img.shields.io/npm/v/rest-spec.svg)](https://www.npmjs.com/package/rest-spec)
 
 An opinionated standard for RESTful API projects built with Node.js.
 
@@ -156,7 +155,6 @@ npm run setup-standards ../path/to/existing-project
 - [⚙️ **CLI API Documentation**](./CLI-API-DOCUMENTATION.md) - Complete guide to REST-SPEC CLI tools
 - [**Keyboard Shortcuts**](./KEYBOARD-SHORTCUTS.md) - Keyboard navigation and accessibility shortcuts
 - [**CLAUDE.md**](./CLAUDE.md) - Guidelines for AI assistants working with this codebase
-- [🎨 **Visual Design Requirements**](./visual-design-requirements.md) - UI/UX standards and guidelines
 
 ### Project Management
 

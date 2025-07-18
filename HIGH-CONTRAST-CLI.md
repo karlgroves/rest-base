@@ -15,17 +15,17 @@ terminal environments.
 The CLI automatically detects when high contrast mode should be enabled based on:
 
 1. **Environment Variables**
-   - `HIGH_CONTRAST=true` - Enables high contrast mode
-   - `FORCE_HIGH_CONTRAST=true` - Forces high contrast mode regardless of other settings
-   - `NO_COLOR=1` - Disables all colors (monochrome mode)
+   * `HIGH_CONTRAST=true` - Enables high contrast mode
+   * `FORCE_HIGH_CONTRAST=true` - Forces high contrast mode regardless of other settings
+   * `NO_COLOR=1` - Disables all colors (monochrome mode)
 
 2. **Terminal Type Detection**
-   - Automatically detects terminal types that typically use high contrast
-   - Checks for monochrome terminals (xterm-mono, linux-m, dumb, etc.)
+   * Automatically detects terminal types that typically use high contrast
+   * Checks for monochrome terminals (xterm-mono, linux-m, dumb, etc.)
 
 3. **Platform-Specific Detection**
-   - On macOS: Checks `ACCESSIBILITY_DISPLAY_SHOULD_INCREASE_CONTRAST`
-   - Respects system accessibility settings
+   * On macOS: Checks `ACCESSIBILITY_DISPLAY_SHOULD_INCREASE_CONTRAST`
+   * Respects system accessibility settings
 
 ### Color Themes
 
@@ -39,10 +39,10 @@ Three color themes are available:
 
 In high contrast mode:
 
-- Text is displayed in bold for better visibility
-- Important elements use underline for emphasis
-- Status indicators use both color and text symbols
-- Progress bars use ASCII characters for compatibility
+* Text is displayed in bold for better visibility
+* Important elements use underline for emphasis
+* Status indicators use both color and text symbols
+* Progress bars use ASCII characters for compatibility
 
 ## Usage
 
@@ -87,10 +87,10 @@ rest-spec-update theme
 
 This shows:
 
-- Current color support level
-- Active theme
-- Environment variables
-- Terminal information
+* Current color support level
+* Active theme
+* Environment variables
+* Terminal information
 
 ## Implementation Details
 
@@ -98,38 +98,38 @@ This shows:
 
 The logger has been enhanced with:
 
-- Theme-aware color output
-- Additional methods for styled output
-- Dynamic theme refresh capability
+* Theme-aware color output
+* Additional methods for styled output
+* Dynamic theme refresh capability
 
 New methods:
 
-- `heading()` - Display section headings
-- `subheading()` - Display subsection headings
-- `labelValue()` - Format label-value pairs
-- `highlight()` - Highlight important text
-- `muted()` - Display secondary/muted text
-- `refreshTheme()` - Refresh color theme
+* `heading()` - Display section headings
+* `subheading()` - Display subsection headings
+* `labelValue()` - Format label-value pairs
+* `highlight()` - Highlight important text
+* `muted()` - Display secondary/muted text
+* `refreshTheme()` - Refresh color theme
 
 ### Color Themes Module (`shared/color-themes.js`)
 
 Provides:
 
-- Theme definitions (standard, high contrast, monochrome)
-- Automatic theme detection
-- Helper functions for styled output
-- Theme information for debugging
+* Theme definitions (standard, high contrast, monochrome)
+* Automatic theme detection
+* Helper functions for styled output
+* Theme information for debugging
 
 ### CLI Utilities Module (`shared/cli-utils.js`)
 
 Offers high-level formatting functions:
 
-- `createSpinner()` - Theme-aware loading spinners
-- `formatSection()` - Section headers with underlines
-- `formatStatus()` - Status indicators with icons
-- `formatProgress()` - Accessible progress bars
-- `createBox()` - Bordered content boxes
-- `formatListItem()` - Styled list items
+* `createSpinner()` - Theme-aware loading spinners
+* `formatSection()` - Section headers with underlines
+* `formatStatus()` - Status indicators with icons
+* `formatProgress()` - Accessible progress bars
+* `createBox()` - Bordered content boxes
+* `formatListItem()` - Styled list items
 
 ## Accessibility Best Practices
 
@@ -169,19 +169,19 @@ Offers high-level formatting functions:
 
 The high contrast support is compatible with:
 
-- All major terminal emulators
-- Screen readers
-- SSH sessions
-- CI/CD environments
-- Docker containers
-- Windows Terminal, iTerm2, Terminal.app, etc.
+* All major terminal emulators
+* Screen readers
+* SSH sessions
+* CI/CD environments
+* Docker containers
+* Windows Terminal, iTerm2, Terminal.app, etc.
 
 ## Future Enhancements
 
 Potential improvements:
 
-- User-configurable color themes
-- Persistent theme preferences
-- Additional accessibility features
-- Integration with system dark/light mode
-- Custom color palette support
+* User-configurable color themes
+* Persistent theme preferences
+* Additional accessibility features
+* Integration with system dark/light mode
+* Custom color palette support

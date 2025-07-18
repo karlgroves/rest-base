@@ -5,16 +5,16 @@ applications using WebSockets, Server-Sent Events, and other real-time technolog
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Communication Protocols](#communication-protocols)
-- [WebSocket Implementation](#websocket-implementation)
-- [Server-Sent Events (SSE)](#server-sent-events-sse)
-- [Real-time Architecture Patterns](#real-time-architecture-patterns)
-- [Authentication and Authorization](#authentication-and-authorization)
-- [Message Patterns](#message-patterns)
-- [Scaling and Performance](#scaling-and-performance)
-- [Security Considerations](#security-considerations)
-- [Testing Strategies](#testing-strategies)
+* [Overview](#overview)
+* [Communication Protocols](#communication-protocols)
+* [WebSocket Implementation](#websocket-implementation)
+* [Server-Sent Events (SSE)](#server-sent-events-sse)
+* [Real-time Architecture Patterns](#real-time-architecture-patterns)
+* [Authentication and Authorization](#authentication-and-authorization)
+* [Message Patterns](#message-patterns)
+* [Scaling and Performance](#scaling-and-performance)
+* [Security Considerations](#security-considerations)
+* [Testing Strategies](#testing-strategies)
 
 ## Overview
 

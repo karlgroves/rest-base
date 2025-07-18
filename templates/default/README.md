@@ -9,23 +9,23 @@ Node.js, Express, and MySQL.
 
 ## Features
 
-- **Express.js**: Fast, unopinionated, minimalist web framework
-- **MySQL with Sequelize**: Robust database ORM with migrations and validations
-- **Security**: Built-in security middleware (helmet, cors, rate limiting)
-- **Authentication**: JWT-based authentication ready to implement
-- **Logging**: Bunyan logger with file and console outputs
-- **Error Handling**: Comprehensive error handling with custom error classes
-- **Validation**: Input validation middleware
-- **Testing**: Jest testing framework setup
-- **Code Quality**: ESLint and Prettier configuration
-- **API Documentation**: Swagger/OpenAPI documentation
-- **Environment Configuration**: Multiple environment support
+* **Express.js**: Fast, unopinionated, minimalist web framework
+* **MySQL with Sequelize**: Robust database ORM with migrations and validations
+* **Security**: Built-in security middleware (helmet, cors, rate limiting)
+* **Authentication**: JWT-based authentication ready to implement
+* **Logging**: Bunyan logger with file and console outputs
+* **Error Handling**: Comprehensive error handling with custom error classes
+* **Validation**: Input validation middleware
+* **Testing**: Jest testing framework setup
+* **Code Quality**: ESLint and Prettier configuration
+* **API Documentation**: Swagger/OpenAPI documentation
+* **Environment Configuration**: Multiple environment support
 
 ## Prerequisites
 
-- Node.js >= 22.11.0
-- MySQL 8.0+
-- npm or yarn
+* Node.js >= 22.11.0
+* MySQL 8.0+
+* npm or yarn
 
 ## Installation
 
@@ -147,8 +147,8 @@ npm run format
 
 Once the server is running, API documentation is available at:
 
-- Development: <http://localhost:3000/api-docs>
-- Production: <https://your-domain.com/api-docs>
+* Development: <http://localhost:3000/api-docs>
+* Production: <https://your-domain.com/api-docs>
 
 ## Environment Variables
 

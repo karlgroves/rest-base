@@ -390,37 +390,37 @@ class HealthChecker {
 
   /**
    * Database health check factory
-   * @param {Object} database - Database connection object
-   * @param {string} type - Database type (postgres, mysql, mongodb, etc.)
+   * @param {Object} database - Database connection object (Sequelize instance or MySQL connection)
+   * @param {string} type - Database type (mysql, mariadb, redis)
    * @returns {Function} Database health check function
    */
-  static createDatabaseCheck(database, type = "generic") {
+  static createDatabaseCheck(database, type = "mysql") {
     return async () => {
       try {
         const startTime = performance.now();
 
         // Different checks based on database type
         switch (type.toLowerCase()) {
-          case "postgres":
-          case "postgresql":
-            await database.query("SELECT 1");
-            break;
           case "mysql":
-            await database.execute("SELECT 1");
-            break;
-          case "mongodb":
-            await database.db().admin().ping();
+          case "mariadb":
+            // For Sequelize ORM
+            if (database.authenticate) {
+              await database.authenticate();
+            }
+            // For raw MySQL connection
+            else if (database.execute) {
+              await database.execute("SELECT 1");
+            }
+            // For mysql2 promise connection
+            else if (database.query) {
+              await database.query("SELECT 1");
+            }
             break;
           case "redis":
             await database.ping();
             break;
           default:
-            // Generic check - assume it has a query method
-            if (typeof database.query === "function") {
-              await database.query("SELECT 1");
-            } else {
-              throw new Error("Unsupported database type or interface");
-            }
+            throw new Error(`Unsupported database type: ${type}. Use 'mysql', 'mariadb', or 'redis'`);
         }
 
         const duration = performance.now() - startTime;

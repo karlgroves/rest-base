@@ -6,41 +6,41 @@
 
 ## Table of Contents
 
-- [Purpose](#purpose)
-- [TypeScript Configuration](#typescript-configuration)
-  - [Compiler Options](#compiler-options)
-    - [Target and Module Settings](#target-and-module-settings)
-    - [Strict Type Checking](#strict-type-checking)
-    - [Path Mapping](#path-mapping)
-- [Type Definition Standards](#type-definition-standards)
-  - [Interface Naming](#interface-naming)
-  - [Type Aliases](#type-aliases)
-  - [Generic Type Parameters](#generic-type-parameters)
-- [Function and Method Standards](#function-and-method-standards)
-  - [Function Signatures](#function-signatures)
-  - [Optional vs Required Parameters](#optional-vs-required-parameters)
-- [Error Handling Standards](#error-handling-standards)
-  - [Custom Error Types](#custom-error-types)
-- [Utility Types and Patterns](#utility-types-and-patterns)
-  - [Common Utility Types](#common-utility-types)
-  - [Configuration and Constants](#configuration-and-constants)
-- [Module and Import Standards](#module-and-import-standards)
-  - [Import Organization](#import-organization)
-  - [Export Patterns](#export-patterns)
-- [Testing with TypeScript](#testing-with-typescript)
-  - [Test Type Safety](#test-type-safety)
-- [Integration with Node.js Standards](#integration-with-nodejs-standards)
-  - [Express.js Integration](#expressjs-integration)
-- [Performance Considerations](#performance-considerations)
-  - [Type-Only Imports](#type-only-imports)
-  - [Lazy Loading Types](#lazy-loading-types)
-- [Migration Strategy](#migration-strategy)
-  - [From JavaScript to TypeScript](#from-javascript-to-typescript)
-- [Tools Integration](#tools-integration)
-  - [ESLint Configuration](#eslint-configuration)
-  - [Jest Configuration](#jest-configuration)
-- [Best Practices Summary](#best-practices-summary)
-- [Resources](#resources)
+* [Purpose](#purpose)
+* [TypeScript Configuration](#typescript-configuration)
+  * [Compiler Options](#compiler-options)
+    * [Target and Module Settings](#target-and-module-settings)
+    * [Strict Type Checking](#strict-type-checking)
+    * [Path Mapping](#path-mapping)
+* [Type Definition Standards](#type-definition-standards)
+  * [Interface Naming](#interface-naming)
+  * [Type Aliases](#type-aliases)
+  * [Generic Type Parameters](#generic-type-parameters)
+* [Function and Method Standards](#function-and-method-standards)
+  * [Function Signatures](#function-signatures)
+  * [Optional vs Required Parameters](#optional-vs-required-parameters)
+* [Error Handling Standards](#error-handling-standards)
+  * [Custom Error Types](#custom-error-types)
+* [Utility Types and Patterns](#utility-types-and-patterns)
+  * [Common Utility Types](#common-utility-types)
+  * [Configuration and Constants](#configuration-and-constants)
+* [Module and Import Standards](#module-and-import-standards)
+  * [Import Organization](#import-organization)
+  * [Export Patterns](#export-patterns)
+* [Testing with TypeScript](#testing-with-typescript)
+  * [Test Type Safety](#test-type-safety)
+* [Integration with Node.js Standards](#integration-with-nodejs-standards)
+  * [Express.js Integration](#expressjs-integration)
+* [Performance Considerations](#performance-considerations)
+  * [Type-Only Imports](#type-only-imports)
+  * [Lazy Loading Types](#lazy-loading-types)
+* [Migration Strategy](#migration-strategy)
+  * [From JavaScript to TypeScript](#from-javascript-to-typescript)
+* [Tools Integration](#tools-integration)
+  * [ESLint Configuration](#eslint-configuration)
+  * [Jest Configuration](#jest-configuration)
+* [Best Practices Summary](#best-practices-summary)
+* [Resources](#resources)
 
 ## Purpose
 
@@ -101,9 +101,9 @@ projects. These standards ensure type safety, maintainability, and consistency a
 
 ### Interface Naming
 
-- Use PascalCase for interface names
-- Prefix interfaces with `I` only when necessary to avoid naming conflicts
-- Use descriptive, domain-specific names
+* Use PascalCase for interface names
+* Prefix interfaces with `I` only when necessary to avoid naming conflicts
+* Use descriptive, domain-specific names
 
 ```typescript
 // ✅ Good
@@ -127,14 +127,14 @@ interface IUser {  // Unnecessary I prefix
 
 ### Type Aliases
 
-- Use PascalCase for type aliases
-- Prefer union types over enums when possible
-- Use descriptive names that indicate the domain
+* Use PascalCase for type aliases
+* Prefer union types over enums when possible
+* Use descriptive names that indicate the domain
 
 ```typescript
 // ✅ Good
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-type DatabaseProvider = 'mysql' | 'postgresql' | 'sqlite';
+type DatabaseProvider = 'mysql' | 'mariadb';
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 // ✅ Complex types
@@ -151,9 +151,9 @@ type DB = any;          // No type safety
 
 ### Generic Type Parameters
 
-- Use single uppercase letters starting with `T`
-- Use descriptive names for complex generics
-- Provide default types when appropriate
+* Use single uppercase letters starting with `T`
+* Use descriptive names for complex generics
+* Provide default types when appropriate
 
 ```typescript
 // ✅ Good
@@ -178,9 +178,9 @@ interface Repository<Type, KeyType> {  // Too verbose for simple cases
 
 ### Function Signatures
 
-- Always specify return types explicitly
-- Use readonly for parameters that shouldn't be modified
-- Prefer specific types over `any` or `unknown`
+* Always specify return types explicitly
+* Use readonly for parameters that shouldn't be modified
+* Prefer specific types over `any` or `unknown`
 
 ```typescript
 // ✅ Good
@@ -219,9 +219,9 @@ async function getStuff(id) {  // Missing types
 
 ### Optional vs Required Parameters
 
-- Use optional parameters judiciously
-- Prefer required parameters with default values
-- Use object parameters for functions with many arguments
+* Use optional parameters judiciously
+* Prefer required parameters with default values
+* Use object parameters for functions with many arguments
 
 ```typescript
 // ✅ Good
@@ -268,9 +268,9 @@ function createUser(
 
 ### Custom Error Types
 
-- Extend built-in Error class
-- Provide structured error information
-- Use discriminated unions for error types
+* Extend built-in Error class
+* Provide structured error information
+* Use discriminated unions for error types
 
 ```typescript
 // ✅ Good
@@ -560,18 +560,18 @@ async function getDatabaseConnection(): Promise<DatabaseConnection> {
 ### From JavaScript to TypeScript
 
 1. **Gradual Migration**
-   - Start with `.ts` extension on new files
-   - Add `// @ts-check` to JavaScript files
-   - Convert one module at a time
+   * Start with `.ts` extension on new files
+   * Add `// @ts-check` to JavaScript files
+   * Convert one module at a time
 
 2. **Type Declaration Files**
-   - Create `.d.ts` files for existing JavaScript modules
-   - Gradually replace with TypeScript implementations
+   * Create `.d.ts` files for existing JavaScript modules
+   * Gradually replace with TypeScript implementations
 
 3. **Configuration Updates**
-   - Update build scripts to handle TypeScript
-   - Configure Jest for TypeScript testing
-   - Update linting rules for TypeScript
+   * Update build scripts to handle TypeScript
+   * Configure Jest for TypeScript testing
+   * Update linting rules for TypeScript
 
 ## Tools Integration
 
@@ -622,7 +622,7 @@ async function getDatabaseConnection(): Promise<DatabaseConnection> {
 
 ## Resources
 
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [TypeScript Deep Dive](https://basarat.gitbook.io/typescript/)
-- [Effective TypeScript](https://effectivetypescript.com/)
-- [TypeScript ESLint Rules](https://typescript-eslint.io/rules/)
+* [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+* [TypeScript Deep Dive](https://basarat.gitbook.io/typescript/)
+* [Effective TypeScript](https://effectivetypescript.com/)
+* [TypeScript ESLint Rules](https://typescript-eslint.io/rules/)

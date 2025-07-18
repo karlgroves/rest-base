@@ -46,10 +46,10 @@ rest-base-create-enhanced my-project --dry-run
 
 **Features:**
 
-- Shows all operations that would be performed
-- Displays file/directory changes
-- Lists dependencies that would be installed
-- Safe to run multiple times
+* Shows all operations that would be performed
+* Displays file/directory changes
+* Lists dependencies that would be installed
+* Safe to run multiple times
 
 ### Interactive Mode
 
@@ -61,10 +61,10 @@ rest-base-create-enhanced --interactive
 
 **Features:**
 
-- Prompts for project name if not provided
-- Template selection menu
-- Confirmation prompts for each operation
-- User-friendly error messages
+* Prompts for project name if not provided
+* Template selection menu
+* Confirmation prompts for each operation
+* User-friendly error messages
 
 ### Template System
 
@@ -93,10 +93,10 @@ rest-base-setup-enhanced --backup
 
 **Features:**
 
-- Creates backup before operations
-- Automatic rollback on failure
-- Manual rollback capability
-- Timestamped backup naming
+* Creates backup before operations
+* Automatic rollback on failure
+* Manual rollback capability
+* Timestamped backup naming
 
 ### Config File Support
 
@@ -153,10 +153,10 @@ rest-base-create-enhanced --config=./config.json
 
 The enhanced CLI provides improved error handling:
 
-- **Validation**: Input validation with clear error messages
-- **Rollback**: Automatic rollback on critical failures
-- **Recovery**: Suggestions for resolving common issues
-- **Logging**: Detailed error logs for troubleshooting
+* **Validation**: Input validation with clear error messages
+* **Rollback**: Automatic rollback on critical failures
+* **Recovery**: Suggestions for resolving common issues
+* **Logging**: Detailed error logs for troubleshooting
 
 ## Examples
 

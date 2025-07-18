@@ -6,26 +6,26 @@
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Terminal Navigation Shortcuts](#terminal-navigation-shortcuts)
-  - [Universal Terminal Shortcuts](#universal-terminal-shortcuts)
-  - [Platform-Specific Shortcuts](#platform-specific-shortcuts)
-- [CLI Tool Shortcuts](#cli-tool-shortcuts)
-  - [Interactive Mode Navigation](#interactive-mode-navigation)
-  - [Selection and Multi-Select](#selection-and-multi-select)
-  - [Text Input](#text-input)
-- [Auto-Completion](#auto-completion)
-  - [Tab Completion](#tab-completion)
-  - [Shell-Specific Completion](#shell-specific-completion)
-- [Accessibility Shortcuts](#accessibility-shortcuts)
-  - [Screen Reader Support](#screen-reader-support)
-  - [High Contrast Mode](#high-contrast-mode)
-  - [Accessibility Mode](#accessibility-mode)
-- [Command History and Search](#command-history-and-search)
-  - [History Navigation](#history-navigation)
-  - [Reverse Search](#reverse-search)
-- [Quick Command Reference](#quick-command-reference)
-- [Tips and Best Practices](#tips-and-best-practices)
+* [Overview](#overview)
+* [Terminal Navigation Shortcuts](#terminal-navigation-shortcuts)
+  * [Universal Terminal Shortcuts](#universal-terminal-shortcuts)
+  * [Platform-Specific Shortcuts](#platform-specific-shortcuts)
+* [CLI Tool Shortcuts](#cli-tool-shortcuts)
+  * [Interactive Mode Navigation](#interactive-mode-navigation)
+  * [Selection and Multi-Select](#selection-and-multi-select)
+  * [Text Input](#text-input)
+* [Auto-Completion](#auto-completion)
+  * [Tab Completion](#tab-completion)
+  * [Shell-Specific Completion](#shell-specific-completion)
+* [Accessibility Shortcuts](#accessibility-shortcuts)
+  * [Screen Reader Support](#screen-reader-support)
+  * [High Contrast Mode](#high-contrast-mode)
+  * [Accessibility Mode](#accessibility-mode)
+* [Command History and Search](#command-history-and-search)
+  * [History Navigation](#history-navigation)
+  * [Reverse Search](#reverse-search)
+* [Quick Command Reference](#quick-command-reference)
+* [Tips and Best Practices](#tips-and-best-practices)
 
 ## Overview
 
@@ -206,10 +206,10 @@ export REST_SPEC_THEME=monochrome
 
 When accessibility mode is enabled:
 
-- Progress indicators announce at regular intervals
-- All visual elements have text alternatives
-- Status messages include descriptive prefixes
-- No information is conveyed only through color
+* Progress indicators announce at regular intervals
+* All visual elements have text alternatives
+* Status messages include descriptive prefixes
+* No information is conveyed only through color
 
 ## Command History and Search
 
@@ -339,10 +339,10 @@ export REST_SPEC_THEME=high-contrast
 
 Efficient line editing saves time:
 
-- `Ctrl+A` then type to prepend
-- `Ctrl+E` then type to append
-- `Ctrl+W` to quickly delete mistakes
-- `Alt+B/F` or `Ctrl+←/→` to jump words
+* `Ctrl+A` then type to prepend
+* `Ctrl+E` then type to append
+* `Ctrl+W` to quickly delete mistakes
+* `Alt+B/F` or `Ctrl+←/→` to jump words
 
 ### 7. Use Dry Run for Learning
 

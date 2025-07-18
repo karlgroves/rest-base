@@ -10,38 +10,38 @@ The REST-SPEC error reporting system provides comprehensive error tracking, cate
 
 Errors are automatically categorized into the following types:
 
-- **USER_ERROR**: User input or usage errors
-- **SYSTEM_ERROR**: System or environment errors
-- **NETWORK_ERROR**: Network related errors
-- **FILE_ERROR**: File system errors
-- **PERMISSION_ERROR**: Permission related errors
-- **DEPENDENCY_ERROR**: Missing or failed dependencies
-- **UNEXPECTED_ERROR**: Unhandled or unknown errors
-- **VALIDATION_ERROR**: Input validation errors
-- **CONFIGURATION_ERROR**: Configuration errors
+* **USER_ERROR**: User input or usage errors
+* **SYSTEM_ERROR**: System or environment errors
+* **NETWORK_ERROR**: Network related errors
+* **FILE_ERROR**: File system errors
+* **PERMISSION_ERROR**: Permission related errors
+* **DEPENDENCY_ERROR**: Missing or failed dependencies
+* **UNEXPECTED_ERROR**: Unhandled or unknown errors
+* **VALIDATION_ERROR**: Input validation errors
+* **CONFIGURATION_ERROR**: Configuration errors
 
 ### Error Severity Levels
 
 Each error is assigned a severity level:
 
-- **LOW**: Minor issues that don't prevent operation
-- **MEDIUM**: Issues that may affect functionality
-- **HIGH**: Critical issues that prevent operation
-- **CRITICAL**: System-wide failures
+* **LOW**: Minor issues that don't prevent operation
+* **MEDIUM**: Issues that may affect functionality
+* **HIGH**: Critical issues that prevent operation
+* **CRITICAL**: System-wide failures
 
 ### Privacy Protection
 
 The error reporter automatically sanitizes sensitive information:
 
-- API keys and tokens
-- Passwords and secrets
-- Email addresses
-- IP addresses
-- File paths containing usernames
-- Database connection strings
-- Credit card numbers
-- Social Security Numbers
-- JWT tokens
+* API keys and tokens
+* Passwords and secrets
+* Email addresses
+* IP addresses
+* File paths containing usernames
+* Database connection strings
+* Credit card numbers
+* Social Security Numbers
+* JWT tokens
 
 ## Usage
 
@@ -118,8 +118,8 @@ node scripts/error-dashboard.js analyze
 
 ### Options
 
-- `--verbose`: Show detailed error information
-- `--help`: Show help message
+* `--verbose`: Show detailed error information
+* `--help`: Show help message
 
 ## Integration Examples
 
@@ -161,17 +161,17 @@ await errorReporter.report(error, {
 
 ## Environment Variables
 
-- `REST_SPEC_ERROR_REPORTING`: Set to `false` to disable error reporting
-- `NODE_ENV`: Set to `development` for detailed error information
-- `VERBOSE`: Set to `true` for verbose logging
+* `REST_SPEC_ERROR_REPORTING`: Set to `false` to disable error reporting
+* `NODE_ENV`: Set to `development` for detailed error information
+* `VERBOSE`: Set to `true` for verbose logging
 
 ## Error Storage
 
 Error reports are stored in the system's temporary directory:
 
-- Location: `$TMPDIR/rest-spec-errors/`
-- Format: `error-{id}-{timestamp}.json`
-- Retention: Last 100 error reports are kept
+* Location: `$TMPDIR/rest-spec-errors/`
+* Format: `error-{id}-{timestamp}.json`
+* Retention: Last 100 error reports are kept
 
 ## Best Practices
 
@@ -310,11 +310,11 @@ When adding new CLI tools or commands:
 
 ## Security Considerations
 
-- Error reports never contain raw sensitive data
-- Reports are stored in user-specific temp directories
-- Old reports are automatically cleaned up
-- Error reporting can be completely disabled
-- No data is sent to external services
+* Error reports never contain raw sensitive data
+* Reports are stored in user-specific temp directories
+* Old reports are automatically cleaned up
+* Error reporting can be completely disabled
+* No data is sent to external services
 
 ## Future Enhancements
 

@@ -10,7 +10,7 @@ services:
       - "${PORT:-3000}:3000"
     environment:
       - NODE_ENV=development
-      - DATABASE_URL=postgresql://postgres:password@postgres:5432/{{projectName}}_db
+      - DATABASE_URL=mysql://app_user:password@mysql:3306/{{projectName}}_db
       - REDIS_URL=redis://redis:6379
       - JWT_SECRET=your-secret-key-change-in-production
       - LOG_LEVEL=debug
@@ -19,7 +19,7 @@ services:
       - /app/node_modules
       - ./logs:/app/logs
     depends_on:
-      postgres:
+      mysql:
         condition: service_healthy
       redis:
         condition: service_healthy
@@ -27,20 +27,21 @@ services:
       - app-network
     restart: unless-stopped
 
-  # PostgreSQL database
-  postgres:
-    image: postgres:15-alpine
+  # MySQL database
+  mysql:
+    image: mysql:8.0
     environment:
-      - POSTGRES_DB={{projectName}}_db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - MYSQL_DATABASE={{projectName}}_db
+      - MYSQL_USER=app_user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=root_password
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mysql_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -70,9 +71,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - ADMINER_DEFAULT_SERVER=postgres
+      - ADMINER_DEFAULT_SERVER=mysql
     depends_on:
-      - postgres
+      - mysql
     networks:
       - app-network
     profiles:
@@ -93,7 +94,7 @@ services:
       - tools
 
 volumes:
-  postgres_data:
+  mysql_data:
     driver: local
   redis_data:
     driver: local

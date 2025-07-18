@@ -5,19 +5,19 @@ ensuring automated, reliable, and secure software delivery processes.
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Pipeline Architecture](#pipeline-architecture)
-- [Build Requirements](#build-requirements)
-- [Testing Requirements](#testing-requirements)
-- [Security Requirements](#security-requirements)
-- [Deployment Requirements](#deployment-requirements)
-- [Environment Management](#environment-management)
-- [Monitoring and Alerting](#monitoring-and-alerting)
-- [Implementation Examples](#implementation-examples)
-- [Best Practices](#best-practices)
-- [Quality Gates](#quality-gates)
-- [Performance Requirements](#performance-requirements)
-- [Troubleshooting](#troubleshooting)
+* [Overview](#overview)
+* [Pipeline Architecture](#pipeline-architecture)
+* [Build Requirements](#build-requirements)
+* [Testing Requirements](#testing-requirements)
+* [Security Requirements](#security-requirements)
+* [Deployment Requirements](#deployment-requirements)
+* [Environment Management](#environment-management)
+* [Monitoring and Alerting](#monitoring-and-alerting)
+* [Implementation Examples](#implementation-examples)
+* [Best Practices](#best-practices)
+* [Quality Gates](#quality-gates)
+* [Performance Requirements](#performance-requirements)
+* [Troubleshooting](#troubleshooting)
 
 ## Overview
 
@@ -32,11 +32,11 @@ ensuring automated, reliable, and secure software delivery processes.
 
 ### Pipeline Principles
 
-- **Fail Fast** - Detect issues as early as possible in the pipeline
-- **Immutable Artifacts** - Build once, deploy many times
-- **Infrastructure as Code** - Version-controlled infrastructure definitions
-- **Security by Design** - Security checks integrated throughout the pipeline
-- **Parallel Execution** - Maximize pipeline efficiency through parallelization
+* **Fail Fast** - Detect issues as early as possible in the pipeline
+* **Immutable Artifacts** - Build once, deploy many times
+* **Infrastructure as Code** - Version-controlled infrastructure definitions
+* **Security by Design** - Security checks integrated throughout the pipeline
+* **Parallel Execution** - Maximize pipeline efficiency through parallelization
 
 ## Pipeline Architecture
 
@@ -122,19 +122,19 @@ jobs:
         node-version: [22.x]
         
     steps:
-    - name: Checkout code
+    * name: Checkout code
       uses: actions/checkout@v4
       with:
         fetch-depth: 0  # Full history for analysis
         
-    - name: Setup Node.js
+    * name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: package-lock.json
         
-    - name: Cache dependencies
+    * name: Cache dependencies
       uses: actions/cache@v3
       with:
         path: ~/.npm
@@ -142,17 +142,17 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-${{ env.CACHE_VERSION }}-
           
-    - name: Install dependencies
+    * name: Install dependencies
       run: npm ci --prefer-offline --no-audit
       
-    - name: Build application
+    * name: Build application
       run: npm run build
       
-    - name: Generate build artifacts
+    * name: Generate build artifacts
       run: |
         tar -czf build-${{ github.sha }}.tar.gz dist/
         
-    - name: Upload build artifacts
+    * name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: build-artifacts
@@ -162,11 +162,11 @@ jobs:
 
 ### 2. Build Validation Requirements
 
-- **Reproducible Builds** - Same source produces identical artifacts
-- **Dependency Locking** - Use exact dependency versions (package-lock.json)
-- **Build Caching** - Cache dependencies and build outputs
-- **Artifact Storage** - Store build artifacts for deployment
-- **Version Tagging** - Tag builds with semantic versions
+* **Reproducible Builds** - Same source produces identical artifacts
+* **Dependency Locking** - Use exact dependency versions (package-lock.json)
+* **Build Caching** - Cache dependencies and build outputs
+* **Artifact Storage** - Store build artifacts for deployment
+* **Version Tagging** - Tag builds with semantic versions
 
 ```javascript
 // scripts/build-validation.js
@@ -297,19 +297,19 @@ jobs:
   unit-tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    * uses: actions/checkout@v4
+    * uses: actions/setup-node@v4
       with:
         node-version: '22.x'
         cache: 'npm'
         
-    - name: Install dependencies
+    * name: Install dependencies
       run: npm ci
       
-    - name: Run unit tests
+    * name: Run unit tests
       run: npm run test:unit -- --coverage
       
-    - name: Upload coverage reports
+    * name: Upload coverage reports
       uses: codecov/codecov-action@v3
       with:
         file: ./coverage/lcov.info
@@ -339,21 +339,21 @@ jobs:
           --health-retries 5
           
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    * uses: actions/checkout@v4
+    * uses: actions/setup-node@v4
       with:
         node-version: '22.x'
         cache: 'npm'
         
-    - name: Install dependencies
+    * name: Install dependencies
       run: npm ci
       
-    - name: Run database migrations
+    * name: Run database migrations
       run: npm run migrate:test
       env:
         DATABASE_URL: postgres://postgres:postgres@localhost:5432/testdb
         
-    - name: Run integration tests
+    * name: Run integration tests
       run: npm run test:integration
       env:
         DATABASE_URL: postgres://postgres:postgres@localhost:5432/testdb
@@ -364,30 +364,30 @@ jobs:
     needs: integration-tests
     
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    * uses: actions/checkout@v4
+    * uses: actions/setup-node@v4
       with:
         node-version: '22.x'
         cache: 'npm'
         
-    - name: Install dependencies
+    * name: Install dependencies
       run: npm ci
       
-    - name: Build application
+    * name: Build application
       run: npm run build
       
-    - name: Start application
+    * name: Start application
       run: npm start &
       env:
         NODE_ENV: test
         
-    - name: Wait for application
+    * name: Wait for application
       run: npx wait-on http://localhost:3000
       
-    - name: Run E2E tests
+    * name: Run E2E tests
       run: npm run test:e2e
       
-    - name: Upload test artifacts
+    * name: Upload test artifacts
       if: failure()
       uses: actions/upload-artifact@v3
       with:
@@ -484,18 +484,18 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: '0 2 * * 1'  # Weekly on Monday
+    * cron: '0 2 * * 1'  # Weekly on Monday
 
 jobs:
   dependency-scan:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    * uses: actions/checkout@v4
     
-    - name: Run npm audit
+    * name: Run npm audit
       run: npm audit --audit-level moderate
       
-    - name: Run Snyk to check for vulnerabilities
+    * name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -505,22 +505,22 @@ jobs:
   sast-scan:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    * uses: actions/checkout@v4
       with:
         fetch-depth: 0
         
-    - name: Run CodeQL Analysis
+    * name: Run CodeQL Analysis
       uses: github/codeql-action/init@v2
       with:
         languages: javascript
         
-    - name: Autobuild
+    * name: Autobuild
       uses: github/codeql-action/autobuild@v2
       
-    - name: Perform CodeQL Analysis
+    * name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
       
-    - name: Run Semgrep
+    * name: Run Semgrep
       uses: returntocorp/semgrep-action@v1
       with:
         config: >-
@@ -532,19 +532,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: [dependency-scan]
     steps:
-    - uses: actions/checkout@v4
+    * uses: actions/checkout@v4
     
-    - name: Build Docker image
+    * name: Build Docker image
       run: docker build -t app:latest .
       
-    - name: Run Trivy vulnerability scanner
+    * name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: 'app:latest'
         format: 'sarif'
         output: 'trivy-results.sarif'
         
-    - name: Upload Trivy scan results
+    * name: Upload Trivy scan results
       uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: 'trivy-results.sarif'
@@ -556,10 +556,10 @@ jobs:
 # Secret management configuration
 secrets:
   required:
-    - DATABASE_URL
-    - JWT_SECRET
-    - API_KEYS
-    - ENCRYPTION_KEYS
+    * DATABASE_URL
+    * JWT_SECRET
+    * API_KEYS
+    * ENCRYPTION_KEYS
     
   rotation:
     frequency: 90_days
@@ -710,25 +710,25 @@ jobs:
     environment: staging
     
     steps:
-    - uses: actions/checkout@v4
+    * uses: actions/checkout@v4
     
-    - name: Download build artifacts
+    * name: Download build artifacts
       uses: actions/download-artifact@v3
       with:
         name: build-artifacts
         
-    - name: Deploy to staging
+    * name: Deploy to staging
       run: |
         ./scripts/deploy.sh staging
       env:
         KUBECONFIG: ${{ secrets.STAGING_KUBECONFIG }}
         
-    - name: Run smoke tests
+    * name: Run smoke tests
       run: npm run test:smoke
       env:
         API_URL: https://staging.api.example.com
         
-    - name: Notify deployment
+    * name: Notify deployment
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
@@ -743,25 +743,25 @@ jobs:
     needs: [deploy-staging]
     
     steps:
-    - uses: actions/checkout@v4
+    * uses: actions/checkout@v4
     
-    - name: Download build artifacts
+    * name: Download build artifacts
       uses: actions/download-artifact@v3
       with:
         name: build-artifacts
         
-    - name: Deploy to production
+    * name: Deploy to production
       run: |
         ./scripts/deploy.sh production
       env:
         KUBECONFIG: ${{ secrets.PRODUCTION_KUBECONFIG }}
         
-    - name: Run health checks
+    * name: Run health checks
       run: ./scripts/health-check.sh
       env:
         API_URL: https://api.example.com
         
-    - name: Monitor deployment
+    * name: Monitor deployment
       run: ./scripts/monitor-deployment.sh
       timeout-minutes: 30
 ```
@@ -937,13 +937,13 @@ monitoring:
       
   alerts:
     channels:
-      - slack: '#devops'
-      - email: 'devops@company.com'
+      * slack: '#devops'
+      * email: 'devops@company.com'
       
     escalation:
-      - level: 1
+      * level: 1
         delay: 5_minutes
-      - level: 2
+      * level: 2
         delay: 15_minutes
 ```
 
@@ -1052,22 +1052,22 @@ approvals:
   staging_to_production:
     required_approvers: 2
     approver_groups:
-      - tech_leads
-      - product_managers
+      * tech_leads
+      * product_managers
     timeout: 24_hours
     
   security_release:
     required_approvers: 1
     approver_groups:
-      - security_team
+      * security_team
     timeout: 4_hours
     
   breaking_changes:
     required_approvers: 3
     approver_groups:
-      - tech_leads
-      - product_managers
-      - engineering_managers
+      * tech_leads
+      * product_managers
+      * engineering_managers
     timeout: 48_hours
 ```
 
@@ -1120,11 +1120,11 @@ resources:
 
 ### 1. Pipeline Design Principles
 
-- **Single Responsibility** - Each job should have a single, clear purpose
-- **Idempotent Operations** - Pipeline steps should be repeatable
-- **Fast Feedback** - Critical checks should run early
-- **Immutable Infrastructure** - Use infrastructure as code
-- **Security First** - Integrate security throughout the pipeline
+* **Single Responsibility** - Each job should have a single, clear purpose
+* **Idempotent Operations** - Pipeline steps should be repeatable
+* **Fast Feedback** - Critical checks should run early
+* **Immutable Infrastructure** - Use infrastructure as code
+* **Security First** - Integrate security throughout the pipeline
 
 ### 2. Branch Strategy
 

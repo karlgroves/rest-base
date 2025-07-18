@@ -6,26 +6,26 @@ A production-ready WebSocket server built with Socket.IO, Express.js, and Node.j
 
 ## Features
 
-- **Real-time Communication**: WebSocket connections with Socket.IO
-- **Chat System**: Join/leave chat rooms, send messages, typing indicators
-- **Room Management**: Create/join/leave rooms with participant limits
-- **Push Notifications**: Subscribe to topics and receive real-time notifications
-- **Authentication**: JWT-based authentication for WebSocket connections
-- **Rate Limiting**: Per-socket event rate limiting to prevent abuse
-- **Health Checks**: Kubernetes-compatible health check endpoints
-- **Structured Logging**: Bunyan-based structured logging with rotation
-- **Security**: Helmet, CORS, input validation, and sanitization
-- **Docker Support**: Multi-stage Dockerfile and Docker Compose setup
-- **Production Ready**: Error handling, graceful shutdown, monitoring
+* **Real-time Communication**: WebSocket connections with Socket.IO
+* **Chat System**: Join/leave chat rooms, send messages, typing indicators
+* **Room Management**: Create/join/leave rooms with participant limits
+* **Push Notifications**: Subscribe to topics and receive real-time notifications
+* **Authentication**: JWT-based authentication for WebSocket connections
+* **Rate Limiting**: Per-socket event rate limiting to prevent abuse
+* **Health Checks**: Kubernetes-compatible health check endpoints
+* **Structured Logging**: Bunyan-based structured logging with rotation
+* **Security**: Helmet, CORS, input validation, and sanitization
+* **Docker Support**: Multi-stage Dockerfile and Docker Compose setup
+* **Production Ready**: Error handling, graceful shutdown, monitoring
 
 ## Quick Start
 
 ### Prerequisites
 
-- Node.js >= 22.11.0
-- npm >= 9.0.0
-- Redis (optional, for scaling)
-- PostgreSQL (optional, for persistence)
+* Node.js >= 22.11.0
+* npm >= 9.0.0
+* Redis (optional, for scaling)
+* PostgreSQL (optional, for persistence)
 
 ### Installation
 
@@ -50,51 +50,51 @@ A production-ready WebSocket server built with Socket.IO, Express.js, and Node.j
    ```
 
 5. **Access the server**:
-   - WebSocket endpoint: `ws://localhost:3000`
-   - HTTP API: `http://localhost:3000`
-   - Health checks: `http://localhost:3000/health`
+   * WebSocket endpoint: `ws://localhost:3000`
+   * HTTP API: `http://localhost:3000`
+   * Health checks: `http://localhost:3000/health`
 
 ## API Endpoints
 
 ### HTTP Endpoints
 
-- `GET /` - Service information
-- `GET /health` - Health status
-- `GET /health/detailed` - Detailed health information
-- `GET /health/live` - Liveness probe (Kubernetes)
-- `GET /health/ready` - Readiness probe (Kubernetes)
-- `GET /health/startup` - Startup probe (Kubernetes)
-- `GET /stats` - WebSocket connection statistics
+* `GET /` - Service information
+* `GET /health` - Health status
+* `GET /health/detailed` - Detailed health information
+* `GET /health/live` - Liveness probe (Kubernetes)
+* `GET /health/ready` - Readiness probe (Kubernetes)
+* `GET /health/startup` - Startup probe (Kubernetes)
+* `GET /stats` - WebSocket connection statistics
 
 ### WebSocket Events
 
 #### Chat Events
 
-- `chat:join` - Join a chat room
-- `chat:leave` - Leave a chat room
-- `chat:message` - Send a chat message
-- `chat:typing` - Send typing indicator
-- `chat:history` - Get chat history
+* `chat:join` - Join a chat room
+* `chat:leave` - Leave a chat room
+* `chat:message` - Send a chat message
+* `chat:typing` - Send typing indicator
+* `chat:history` - Get chat history
 
 #### Room Events
 
-- `room:create` - Create a new room
-- `room:join` - Join an existing room
-- `room:leave` - Leave a room
-- `room:list` - List available rooms
-- `room:info` - Get room information
+* `room:create` - Create a new room
+* `room:join` - Join an existing room
+* `room:leave` - Leave a room
+* `room:list` - List available rooms
+* `room:info` - Get room information
 
 #### Notification Events
 
-- `notification:subscribe` - Subscribe to notification topics
-- `notification:unsubscribe` - Unsubscribe from topics
-- `notification:mark_read` - Mark notifications as read
+* `notification:subscribe` - Subscribe to notification topics
+* `notification:unsubscribe` - Unsubscribe from topics
+* `notification:mark_read` - Mark notifications as read
 
 #### General Events
 
-- `ping` - Ping/pong for connection testing
-- `user:status` - Update user status (online, away, busy, offline)
-- `heartbeat` - Heartbeat/keepalive
+* `ping` - Ping/pong for connection testing
+* `user:status` - Update user status (online, away, busy, offline)
+* `heartbeat` - Heartbeat/keepalive
 
 ## Usage Examples
 
@@ -166,10 +166,10 @@ const socket = io('ws://localhost:3000', {
 
 Your JWT token should include:
 
-- `userId` or `id` or `sub` - User identifier
-- `email` - User email (optional)
-- `role` - User role (user, moderator, admin)
-- `exp` - Token expiration time
+* `userId` or `id` or `sub` - User identifier
+* `email` - User email (optional)
+* `role` - User role (user, moderator, admin)
+* `exp` - Token expiration time
 
 ## Configuration
 
@@ -189,14 +189,14 @@ Your JWT token should include:
 
 ### Scripts
 
-- `npm start` - Start production server
-- `npm run dev` - Start development server with hot reload
-- `npm test` - Run test suite
-- `npm run test:watch` - Run tests in watch mode
-- `npm run test:coverage` - Generate test coverage report
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint issues
-- `npm run format` - Format code with Prettier
+* `npm start` - Start production server
+* `npm run dev` - Start development server with hot reload
+* `npm test` - Run test suite
+* `npm run test:watch` - Run tests in watch mode
+* `npm run test:coverage` - Generate test coverage report
+* `npm run lint` - Run ESLint
+* `npm run lint:fix` - Fix ESLint issues
+* `npm run format` - Format code with Prettier
 
 ### Testing
 
@@ -278,13 +278,13 @@ startupProbe:
 
 ### Components
 
-- **WebSocket Server**: Socket.IO server with authentication and rate limiting
-- **Chat System**: Real-time chat with rooms and message history
-- **Room Management**: Create and manage chat rooms with participant limits
-- **Notification System**: Topic-based push notifications
-- **Authentication**: JWT-based auth with role-based authorization
-- **Health Checks**: Kubernetes-compatible health monitoring
-- **Logging**: Structured logging with Bunyan
+* **WebSocket Server**: Socket.IO server with authentication and rate limiting
+* **Chat System**: Real-time chat with rooms and message history
+* **Room Management**: Create and manage chat rooms with participant limits
+* **Notification System**: Topic-based push notifications
+* **Authentication**: JWT-based auth with role-based authorization
+* **Health Checks**: Kubernetes-compatible health monitoring
+* **Logging**: Structured logging with Bunyan
 
 ### Data Flow
 
@@ -297,13 +297,13 @@ startupProbe:
 
 ## Security
 
-- JWT token authentication
-- Rate limiting per socket
-- Input validation and sanitization
-- CORS configuration
-- Helmet security headers
-- Environment-based secrets
-- Role-based authorization
+* JWT token authentication
+* Rate limiting per socket
+* Input validation and sanitization
+* CORS configuration
+* Helmet security headers
+* Environment-based secrets
+* Role-based authorization
 
 ## Monitoring
 
@@ -311,31 +311,31 @@ startupProbe:
 
 Logs are written to:
 
-- `logs/app.log` - Application logs (rotated daily)
-- `logs/error.log` - Error logs (rotated daily)
-- Console output in development
+* `logs/app.log` - Application logs (rotated daily)
+* `logs/error.log` - Error logs (rotated daily)
+* Console output in development
 
 ### Metrics
 
-- Connection statistics at `/stats`
-- Health checks at `/health/*`
-- Structured logging for monitoring
+* Connection statistics at `/stats`
+* Health checks at `/health/*`
+* Structured logging for monitoring
 
 ## Troubleshooting
 
 ### Common Issues
 
 1. **Authentication Failed**
-   - Check JWT token format and expiration
-   - Verify JWT_SECRET environment variable
+   * Check JWT token format and expiration
+   * Verify JWT_SECRET environment variable
 
 2. **Connection Issues**
-   - Check CORS configuration
-   - Verify allowed origins
+   * Check CORS configuration
+   * Verify allowed origins
 
 3. **Rate Limiting**
-   - Check rate limit configuration
-   - Monitor client request patterns
+   * Check rate limit configuration
+   * Monitor client request patterns
 
 ### Debug Mode
 

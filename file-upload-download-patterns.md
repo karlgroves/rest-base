@@ -6,41 +6,41 @@
 
 ## Table of Contents
 
-- [Purpose](#purpose)
-- [File Upload Patterns](#file-upload-patterns)
-  - [Upload Endpoint Design](#upload-endpoint-design)
-    - [Single File Upload](#single-file-upload)
-    - [Multiple File Upload](#multiple-file-upload)
-    - [Upload with Metadata](#upload-with-metadata)
-  - [Upload Response Format](#upload-response-format)
-    - [Successful Upload Response](#successful-upload-response)
-    - [Upload Error Response](#upload-error-response)
-  - [File Validation Patterns](#file-validation-patterns)
-    - [Server-Side Validation](#server-side-validation)
-    - [Content-Based Validation](#content-based-validation)
-  - [Storage Strategies](#storage-strategies)
-    - [Local File Storage](#local-file-storage)
-    - [Cloud Storage (AWS S3)](#cloud-storage-aws-s3)
-  - [Upload Implementation](#upload-implementation)
-    - [Single File Upload Handler](#single-file-upload-handler)
-    - [Chunked Upload for Large Files](#chunked-upload-for-large-files)
-- [File Download Patterns](#file-download-patterns)
-  - [Download Endpoint Design](#download-endpoint-design)
-    - [Direct File Download](#direct-file-download)
-    - [Download with Access Control](#download-with-access-control)
-    - [Streaming Download for Large Files](#streaming-download-for-large-files)
-  - [Download Implementation](#download-implementation)
-    - [Secure File Download](#secure-file-download)
-    - [Range-Based Download (Resumable)](#range-based-download-resumable)
-    - [Temporary Download URLs](#temporary-download-urls)
-- [Security Considerations](#security-considerations)
-  - [Upload Security](#upload-security)
-  - [Download Security](#download-security)
-- [Best Practices](#best-practices)
-  - [Performance Optimization](#performance-optimization)
-  - [Storage Management](#storage-management)
-  - [Error Handling](#error-handling)
-- [Resources](#resources)
+* [Purpose](#purpose)
+* [File Upload Patterns](#file-upload-patterns)
+  * [Upload Endpoint Design](#upload-endpoint-design)
+    * [Single File Upload](#single-file-upload)
+    * [Multiple File Upload](#multiple-file-upload)
+    * [Upload with Metadata](#upload-with-metadata)
+  * [Upload Response Format](#upload-response-format)
+    * [Successful Upload Response](#successful-upload-response)
+    * [Upload Error Response](#upload-error-response)
+  * [File Validation Patterns](#file-validation-patterns)
+    * [Server-Side Validation](#server-side-validation)
+    * [Content-Based Validation](#content-based-validation)
+  * [Storage Strategies](#storage-strategies)
+    * [Local File Storage](#local-file-storage)
+    * [Cloud Storage (AWS S3)](#cloud-storage-aws-s3)
+  * [Upload Implementation](#upload-implementation)
+    * [Single File Upload Handler](#single-file-upload-handler)
+    * [Chunked Upload for Large Files](#chunked-upload-for-large-files)
+* [File Download Patterns](#file-download-patterns)
+  * [Download Endpoint Design](#download-endpoint-design)
+    * [Direct File Download](#direct-file-download)
+    * [Download with Access Control](#download-with-access-control)
+    * [Streaming Download for Large Files](#streaming-download-for-large-files)
+  * [Download Implementation](#download-implementation)
+    * [Secure File Download](#secure-file-download)
+    * [Range-Based Download (Resumable)](#range-based-download-resumable)
+    * [Temporary Download URLs](#temporary-download-urls)
+* [Security Considerations](#security-considerations)
+  * [Upload Security](#upload-security)
+  * [Download Security](#download-security)
+* [Best Practices](#best-practices)
+  * [Performance Optimization](#performance-optimization)
+  * [Storage Management](#storage-management)
+  * [Error Handling](#error-handling)
+* [Resources](#resources)
 
 ## Purpose
 
@@ -708,52 +708,52 @@ app.get('/api/files/:fileId/download', async (req, res, next) => {
 
 ### Upload Security
 
-- **File Type Validation**: Validate both MIME type and file extension
-- **Content Scanning**: Scan uploaded files for malware
-- **Size Limits**: Enforce reasonable file size limits
-- **Storage Isolation**: Store uploads outside web root
-- **Access Control**: Implement proper file access permissions
+* **File Type Validation**: Validate both MIME type and file extension
+* **Content Scanning**: Scan uploaded files for malware
+* **Size Limits**: Enforce reasonable file size limits
+* **Storage Isolation**: Store uploads outside web root
+* **Access Control**: Implement proper file access permissions
 
 ### Download Security
 
-- **Authentication**: Require valid authentication for file access
-- **Authorization**: Check user permissions for specific files
-- **Rate Limiting**: Limit download frequency per user
-- **Audit Logging**: Log all file access attempts
-- **Content Security**: Set appropriate headers to prevent XSS
+* **Authentication**: Require valid authentication for file access
+* **Authorization**: Check user permissions for specific files
+* **Rate Limiting**: Limit download frequency per user
+* **Audit Logging**: Log all file access attempts
+* **Content Security**: Set appropriate headers to prevent XSS
 
 ## Best Practices
 
 ### Performance Optimization
 
-- **Streaming**: Use streams for large file uploads/downloads
-- **Chunking**: Implement chunked upload for large files
-- **Caching**: Cache file metadata and thumbnails
-- **CDN Integration**: Use CDN for public file distribution
-- **Compression**: Compress files when appropriate
+* **Streaming**: Use streams for large file uploads/downloads
+* **Chunking**: Implement chunked upload for large files
+* **Caching**: Cache file metadata and thumbnails
+* **CDN Integration**: Use CDN for public file distribution
+* **Compression**: Compress files when appropriate
 
 ### Storage Management
 
-- **File Lifecycle**: Implement file expiration and cleanup
-- **Backup Strategy**: Regular backup of uploaded files
-- **Storage Monitoring**: Monitor storage usage and capacity
-- **Redundancy**: Implement file redundancy for critical files
-- **Cost Optimization**: Use appropriate storage tiers
+* **File Lifecycle**: Implement file expiration and cleanup
+* **Backup Strategy**: Regular backup of uploaded files
+* **Storage Monitoring**: Monitor storage usage and capacity
+* **Redundancy**: Implement file redundancy for critical files
+* **Cost Optimization**: Use appropriate storage tiers
 
 ### Error Handling
 
-- **Graceful Failures**: Handle upload/download failures gracefully
-- **Retry Logic**: Implement retry mechanisms for failed uploads
-- **Progress Tracking**: Provide upload/download progress feedback
-- **Cleanup**: Clean up partial uploads on failure
-- **User Feedback**: Provide clear error messages to users
+* **Graceful Failures**: Handle upload/download failures gracefully
+* **Retry Logic**: Implement retry mechanisms for failed uploads
+* **Progress Tracking**: Provide upload/download progress feedback
+* **Cleanup**: Clean up partial uploads on failure
+* **User Feedback**: Provide clear error messages to users
 
 ## Resources
 
-- [Multer Documentation](https://github.com/expressjs/multer)
-- [AWS S3 Upload Guide](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/
+* [Multer Documentation](https://github.com/expressjs/multer)
+* [AWS S3 Upload Guide](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/
   s3-example-photo-album.html)
-- [File Upload Security Best Practices](https://owasp.org/www-community/vulnerabilities/
+* [File Upload Security Best Practices](https://owasp.org/www-community/vulnerabilities/
   Unrestricted_File_Upload)
-- [HTTP Range Requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests)
-- [JWT for Download Tokens](https://auth0.com/blog/a-look-at-the-latest-draft-for-jwt-bcp/)
+* [HTTP Range Requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests)
+* [JWT for Download Tokens](https://auth0.com/blog/a-look-at-the-latest-draft-for-jwt-bcp/)

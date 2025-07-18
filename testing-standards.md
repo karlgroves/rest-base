@@ -6,41 +6,41 @@
 
 ## Table of Contents
 
-- [Purpose](#purpose)
-- [Testing Philosophy](#testing-philosophy)
-  - [Core Principles](#core-principles)
-  - [Testing Pyramid](#testing-pyramid)
-- [Test Framework Configuration](#test-framework-configuration)
-  - [Jest Configuration](#jest-configuration)
-  - [Test Setup File](#test-setup-file)
-- [Unit Testing Standards](#unit-testing-standards)
-  - [Test Structure and Naming](#test-structure-and-naming)
-  - [Testing Async Operations](#testing-async-operations)
-  - [Mocking Best Practices](#mocking-best-practices)
-- [Integration Testing Standards](#integration-testing-standards)
-  - [Database Integration Tests](#database-integration-tests)
-  - [API Testing with Authentication](#api-testing-with-authentication)
-- [End-to-End Testing Standards](#end-to-end-testing-standards)
-  - [E2E Test Setup](#e2e-test-setup)
-- [Testing Database Operations](#testing-database-operations)
-  - [Repository Testing](#repository-testing)
-  - [Transaction Testing](#transaction-testing)
-- [Testing Middleware](#testing-middleware)
-  - [Authentication Middleware Testing](#authentication-middleware-testing)
-  - [Error Handling Middleware Testing](#error-handling-middleware-testing)
-- [Performance Testing](#performance-testing)
-  - [Load Testing with Jest](#load-testing-with-jest)
-- [Test Data Management](#test-data-management)
-  - [Fixtures and Factories](#fixtures-and-factories)
-  - [Database Seeding for Tests](#database-seeding-for-tests)
-- [Continuous Integration Testing](#continuous-integration-testing)
-  - [GitHub Actions Configuration](#github-actions-configuration)
-- [Test Scripts Configuration](#test-scripts-configuration)
-  - [Package.json Test Scripts](#packagejson-test-scripts)
-- [Testing Best Practices Summary](#testing-best-practices-summary)
-  - [DO](#do)
-  - [DON'T](#dont)
-- [Resources](#resources)
+* [Purpose](#purpose)
+* [Testing Philosophy](#testing-philosophy)
+  * [Core Principles](#core-principles)
+  * [Testing Pyramid](#testing-pyramid)
+* [Test Framework Configuration](#test-framework-configuration)
+  * [Jest Configuration](#jest-configuration)
+  * [Test Setup File](#test-setup-file)
+* [Unit Testing Standards](#unit-testing-standards)
+  * [Test Structure and Naming](#test-structure-and-naming)
+  * [Testing Async Operations](#testing-async-operations)
+  * [Mocking Best Practices](#mocking-best-practices)
+* [Integration Testing Standards](#integration-testing-standards)
+  * [Database Integration Tests](#database-integration-tests)
+  * [API Testing with Authentication](#api-testing-with-authentication)
+* [End-to-End Testing Standards](#end-to-end-testing-standards)
+  * [E2E Test Setup](#e2e-test-setup)
+* [Testing Database Operations](#testing-database-operations)
+  * [Repository Testing](#repository-testing)
+  * [Transaction Testing](#transaction-testing)
+* [Testing Middleware](#testing-middleware)
+  * [Authentication Middleware Testing](#authentication-middleware-testing)
+  * [Error Handling Middleware Testing](#error-handling-middleware-testing)
+* [Performance Testing](#performance-testing)
+  * [Load Testing with Jest](#load-testing-with-jest)
+* [Test Data Management](#test-data-management)
+  * [Fixtures and Factories](#fixtures-and-factories)
+  * [Database Seeding for Tests](#database-seeding-for-tests)
+* [Continuous Integration Testing](#continuous-integration-testing)
+  * [GitHub Actions Configuration](#github-actions-configuration)
+* [Test Scripts Configuration](#test-scripts-configuration)
+  * [Package.json Test Scripts](#packagejson-test-scripts)
+* [Testing Best Practices Summary](#testing-best-practices-summary)
+  * [DO](#do)
+  * [DON'T](#dont)
+* [Resources](#resources)
 
 ## Purpose
 
@@ -52,14 +52,14 @@ applications.
 
 ### Core Principles
 
-- **Test-Driven Development (TDD)**: Always apply Test-Driven Development - write tests before or alongside code to define expected behavior
-- **Behavior-Driven Development (BDD)**: Favor BDD where appropriate - tests should describe observable behavior rather than internal implementation details
-- **No Placeholder Tests**: Do not generate placeholder, empty, or fake tests (e.g., tests that contain `expect(true).toBe(true)` or meaningless assertions) simply to increase code coverage
-- **Real Browser Testing**: Front-end tests must run in a real browser environment (e.g. via Puppeteer, Playwright) instead of jsdom or simulated DOM unless explicitly justified
-- **Comprehensive Coverage**: Aim for 90%+ code coverage with meaningful tests
-- **Fast Feedback**: Unit tests should run in milliseconds, integration tests in seconds
-- **Isolated Testing**: Each test should be independent and repeatable
-- **Clear Intent**: Tests should serve as living documentation of expected behavior
+* **Test-Driven Development (TDD)**: Always apply Test-Driven Development - write tests before or alongside code to define expected behavior
+* **Behavior-Driven Development (BDD)**: Favor BDD where appropriate - tests should describe observable behavior rather than internal implementation details
+* **No Placeholder Tests**: Do not generate placeholder, empty, or fake tests (e.g., tests that contain `expect(true).toBe(true)` or meaningless assertions) simply to increase code coverage
+* **Real Browser Testing**: Front-end tests must run in a real browser environment (e.g. via Puppeteer, Playwright) instead of jsdom or simulated DOM unless explicitly justified
+* **Comprehensive Coverage**: Aim for 90%+ code coverage with meaningful tests
+* **Fast Feedback**: Unit tests should run in milliseconds, integration tests in seconds
+* **Isolated Testing**: Each test should be independent and repeatable
+* **Clear Intent**: Tests should serve as living documentation of expected behavior
 
 ### Testing Pyramid
 
@@ -137,29 +137,29 @@ global.testHelpers = {
 
 ### Test Structure and Naming
 
-- **Descriptive Names**: Have descriptive, human-readable names that clearly state the intent (e.g., "renders login form with empty fields by default" rather than "test1")
-- **AAA Pattern**: Follow the AAA pattern: Arrange, Act, Assert
-- **Test Organization**: Group related tests using `describe` blocks
-- **Test Cases**: Use `it` or `test` for individual test cases
-- **Coverage Requirements**: All tests must cover:
-  - Happy paths
-  - Common edge cases
-  - Error and failure conditions
-- **Avoid Brittle Selectors**: Avoid brittle selectors or overly tight coupling to non-essential implementation details (e.g., prefer testing via user-visible elements over internal class names)
+* **Descriptive Names**: Have descriptive, human-readable names that clearly state the intent (e.g., "renders login form with empty fields by default" rather than "test1")
+* **AAA Pattern**: Follow the AAA pattern: Arrange, Act, Assert
+* **Test Organization**: Group related tests using `describe` blocks
+* **Test Cases**: Use `it` or `test` for individual test cases
+* **Coverage Requirements**: All tests must cover:
+  * Happy paths
+  * Common edge cases
+  * Error and failure conditions
+* **Avoid Brittle Selectors**: Avoid brittle selectors or overly tight coupling to non-essential implementation details (e.g., prefer testing via user-visible elements over internal class names)
 
 ### Test Quality Standards
 
-- **Meaningful Assertions**: Never generate tests that pass without meaningful assertions or fabricate behavior the code does not provide
-- **Runnable Tests**: Tests must be runnable as-is with the specified tooling (no fictional libraries or APIs)
-- **Integration Over Unit**: Prefer integration-level tests for user interfaces that simulate real user interaction rather than isolated unit tests where feasible
-- **API Testing Requirements**:
-  - Validate request/response structure, including headers, status codes, and body content
-  - Include tests for invalid inputs, authorization failures, and rate limiting or similar controls
-- **Test Documentation**: Include code examples of running tests (e.g., npm test, pytest) if generating documentation alongside tests
-- **Mocking Guidelines**:
-  - Use realistic data structures — never make up object shapes or API fields that don't exist
-  - Note assumptions or boundaries clearly in comments
-  - If uncertain about exact behavior of external APIs or systems, generate TODO comments or request clarifications rather than inventing responses or mocks
+* **Meaningful Assertions**: Never generate tests that pass without meaningful assertions or fabricate behavior the code does not provide
+* **Runnable Tests**: Tests must be runnable as-is with the specified tooling (no fictional libraries or APIs)
+* **Integration Over Unit**: Prefer integration-level tests for user interfaces that simulate real user interaction rather than isolated unit tests where feasible
+* **API Testing Requirements**:
+  * Validate request/response structure, including headers, status codes, and body content
+  * Include tests for invalid inputs, authorization failures, and rate limiting or similar controls
+* **Test Documentation**: Include code examples of running tests (e.g., npm test, pytest) if generating documentation alongside tests
+* **Mocking Guidelines**:
+  * Use realistic data structures — never make up object shapes or API fields that don't exist
+  * Note assumptions or boundaries clearly in comments
+  * If uncertain about exact behavior of external APIs or systems, generate TODO comments or request clarifications rather than inventing responses or mocks
 
 ```javascript
 // ✅ Good test structure
@@ -820,7 +820,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: test_db
         ports:
-          - 3306:3306
+          * 3306:3306
         options: >-
           --health-cmd="mysqladmin ping"
           --health-interval=10s
@@ -828,24 +828,24 @@ jobs:
           --health-retries=3
 
     steps:
-      - uses: actions/checkout@v3
+      * uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      * name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
           cache: 'npm'
 
-      - name: Install dependencies
+      * name: Install dependencies
         run: npm ci
 
-      - name: Run linting
+      * name: Run linting
         run: npm run lint
 
-      - name: Run unit tests
+      * name: Run unit tests
         run: npm run test:unit
 
-      - name: Run integration tests
+      * name: Run integration tests
         run: npm run test:integration
         env:
           NODE_ENV: test
@@ -855,13 +855,13 @@ jobs:
           DB_USER: root
           DB_PASS: password
 
-      - name: Run E2E tests
+      * name: Run E2E tests
         run: npm run test:e2e
 
-      - name: Generate coverage report
+      * name: Generate coverage report
         run: npm run coverage
 
-      - name: Upload coverage to Codecov
+      * name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
 ```
 
@@ -909,8 +909,8 @@ jobs:
 
 ## Resources
 
-- [Jest Documentation](https://jestjs.io/docs/getting-started)
-- [Supertest Documentation](https://github.com/visionmedia/supertest)
-- [Testing Node.js Applications](https://nodejs.org/en/docs/guides/testing/)
-- [Test-Driven Development](https://martinfowler.com/bliki/TestDrivenDevelopment.html)
-- [JavaScript Testing Best Practices](https://github.com/goldbergyoni/javascript-testing-best-practices)
+* [Jest Documentation](https://jestjs.io/docs/getting-started)
+* [Supertest Documentation](https://github.com/visionmedia/supertest)
+* [Testing Node.js Applications](https://nodejs.org/en/docs/guides/testing/)
+* [Test-Driven Development](https://martinfowler.com/bliki/TestDrivenDevelopment.html)
+* [JavaScript Testing Best Practices](https://github.com/goldbergyoni/javascript-testing-best-practices)

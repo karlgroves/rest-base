@@ -4,13 +4,13 @@ Comprehensive performance monitoring and profiling tools for Node.js/Express app
 
 ## Features
 
-- **Real-time Performance Monitoring**: Track CPU, memory, and request performance in real-time
-- **CPU Profiling**: Detailed CPU usage analysis with sampling
-- **Memory Leak Detection**: Automatic detection of potential memory leaks
-- **Request Performance Analysis**: Monitor and analyze HTTP request performance
-- **Express Middleware Integration**: Drop-in middleware for automatic monitoring
-- **Comprehensive Reporting**: Generate detailed performance reports in multiple formats
-- **Benchmarking Tools**: Built-in benchmarks for performance testing
+* **Real-time Performance Monitoring**: Track CPU, memory, and request performance in real-time
+* **CPU Profiling**: Detailed CPU usage analysis with sampling
+* **Memory Leak Detection**: Automatic detection of potential memory leaks
+* **Request Performance Analysis**: Monitor and analyze HTTP request performance
+* **Express Middleware Integration**: Drop-in middleware for automatic monitoring
+* **Comprehensive Reporting**: Generate detailed performance reports in multiple formats
+* **Benchmarking Tools**: Built-in benchmarks for performance testing
 
 ## Installation
 
@@ -68,9 +68,9 @@ npx rest-spec-profiler monitor [options]
 
 **Options:**
 
-- `-i, --interval <ms>` - Sample interval in milliseconds (default: 1000)
-- `-o, --output <file>` - Output file for report
-- `--gc` - Enable garbage collection monitoring
+* `-i, --interval <ms>` - Sample interval in milliseconds (default: 1000)
+* `-o, --output <file>` - Output file for report
+* `--gc` - Enable garbage collection monitoring
 
 **Example:**
 
@@ -92,9 +92,9 @@ npx rest-spec-profiler profile <target> [options]
 
 **Options:**
 
-- `-d, --duration <ms>` - Profile duration in milliseconds (default: 10000)
-- `-i, --interval <ms>` - Sample interval in milliseconds (default: 100)
-- `-o, --output <file>` - Output file for report
+* `-d, --duration <ms>` - Profile duration in milliseconds (default: 10000)
+* `-i, --interval <ms>` - Sample interval in milliseconds (default: 100)
+* `-o, --output <file>` - Output file for report
 
 **Example:**
 
@@ -113,8 +113,8 @@ npx rest-spec-profiler benchmark [options]
 
 **Options:**
 
-- `-n, --iterations <count>` - Number of iterations (default: 100)
-- `-o, --output <file>` - Output file for results
+* `-n, --iterations <count>` - Number of iterations (default: 100)
+* `-o, --output <file>` - Output file for results
 
 **Example:**
 
@@ -133,7 +133,7 @@ npx rest-spec-profiler analyze <file> [options]
 
 **Options:**
 
-- `-f, --format <type>` - Output format: console, html (default: console)
+* `-f, --format <type>` - Output format: console, html (default: console)
 
 **Example:**
 
@@ -301,23 +301,23 @@ app.use(performanceMiddleware);
 
 ### Memory Metrics
 
-- **RSS**: Resident Set Size - total memory allocated
-- **Heap Used**: Memory used by JavaScript objects
-- **Heap Total**: Total heap memory allocated
-- **External**: Memory used by C++ objects bound to JavaScript
+* **RSS**: Resident Set Size - total memory allocated
+* **Heap Used**: Memory used by JavaScript objects
+* **Heap Total**: Total heap memory allocated
+* **External**: Memory used by C++ objects bound to JavaScript
 
 ### CPU Metrics
 
-- **User CPU**: Time spent executing user code
-- **System CPU**: Time spent executing system calls
-- **CPU Usage**: Percentage of CPU time used
+* **User CPU**: Time spent executing user code
+* **System CPU**: Time spent executing system calls
+* **CPU Usage**: Percentage of CPU time used
 
 ### Request Metrics
 
-- **Response Time**: Time from request start to response end
-- **Memory Usage**: Memory consumed during request processing
-- **Status Code Distribution**: Breakdown of HTTP status codes
-- **Request Method Distribution**: Breakdown by HTTP method
+* **Response Time**: Time from request start to response end
+* **Memory Usage**: Memory consumed during request processing
+* **Status Code Distribution**: Breakdown of HTTP status codes
+* **Request Method Distribution**: Breakdown by HTTP method
 
 ## Report Formats
 
@@ -596,15 +596,15 @@ DEBUG=profiler npx rest-spec-profiler monitor
 
 The profiler itself has minimal performance impact:
 
-- Memory overhead: ~1-5MB
-- CPU overhead: <1% with default settings
-- Request overhead: <1ms per request
+* Memory overhead: ~1-5MB
+* CPU overhead: <1% with default settings
+* Request overhead: <1ms per request
 
 ### Memory Considerations
 
-- Default settings use ~10MB for storing samples
-- Adjust `maxSamples` for memory-constrained environments
-- Use `sampleInterval` to reduce memory usage
+* Default settings use ~10MB for storing samples
+* Adjust `maxSamples` for memory-constrained environments
+* Use `sampleInterval` to reduce memory usage
 
 ## License
 

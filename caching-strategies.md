@@ -5,15 +5,15 @@ implementation patterns, and best practices to optimize performance and scalabil
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Caching Layers](#caching-layers)
-- [Cache Types and Patterns](#cache-types-and-patterns)
-- [Implementation Strategies](#implementation-strategies)
-- [Cache Invalidation](#cache-invalidation)
-- [Performance Considerations](#performance-considerations)
-- [Security Considerations](#security-considerations)
-- [Best Practices](#best-practices)
-- [Troubleshooting](#troubleshooting)
+* [Overview](#overview)
+* [Caching Layers](#caching-layers)
+* [Cache Types and Patterns](#cache-types-and-patterns)
+* [Implementation Strategies](#implementation-strategies)
+* [Cache Invalidation](#cache-invalidation)
+* [Performance Considerations](#performance-considerations)
+* [Security Considerations](#security-considerations)
+* [Best Practices](#best-practices)
+* [Troubleshooting](#troubleshooting)
 
 ## Overview
 

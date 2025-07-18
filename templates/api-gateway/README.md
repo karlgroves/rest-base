@@ -8,14 +8,14 @@ This API Gateway provides a centralized entry point for microservices architectu
 
 ## Features
 
-- **🔐 JWT Authentication**: Secure token-based authentication with role-based access control
-- **⚡ Rate Limiting**: Redis-backed rate limiting with customizable rules per endpoint
-- **🔀 Service Proxy**: Dynamic service discovery and intelligent request routing
-- **📊 Health Monitoring**: Comprehensive health checks for gateway and downstream services
-- **Security**: Built-in security headers, CORS support, and request validation
-- **📈 Logging**: Structured logging with Bunyan for monitoring and debugging
-- **🐳 Docker Ready**: Full containerization support with Docker Compose
-- **🧪 Tested**: Comprehensive test suite with Jest and Supertest
+* **🔐 JWT Authentication**: Secure token-based authentication with role-based access control
+* **⚡ Rate Limiting**: Redis-backed rate limiting with customizable rules per endpoint
+* **🔀 Service Proxy**: Dynamic service discovery and intelligent request routing
+* **📊 Health Monitoring**: Comprehensive health checks for gateway and downstream services
+* **Security**: Built-in security headers, CORS support, and request validation
+* **📈 Logging**: Structured logging with Bunyan for monitoring and debugging
+* **🐳 Docker Ready**: Full containerization support with Docker Compose
+* **🧪 Tested**: Comprehensive test suite with Jest and Supertest
 
 ## Architecture
 
@@ -41,9 +41,9 @@ This API Gateway provides a centralized entry point for microservices architectu
 
 ### Prerequisites
 
-- Node.js 22.11.0 or higher
-- Redis server
-- Docker (optional)
+* Node.js 22.11.0 or higher
+* Redis server
+* Docker (optional)
 
 ### Installation
 
@@ -174,10 +174,10 @@ Authorization: Bearer <your-jwt-token>
 
 Default rate limits:
 
-- **General API**: 100 requests per 15 minutes
-- **Authentication**: 5 requests per 15 minutes  
-- **Public endpoints**: 1000 requests per 15 minutes
-- **Admin endpoints**: 50 requests per 15 minutes
+* **General API**: 100 requests per 15 minutes
+* **Authentication**: 5 requests per 15 minutes  
+* **Public endpoints**: 1000 requests per 15 minutes
+* **Admin endpoints**: 50 requests per 15 minutes
 
 ### Service Routing
 
@@ -294,10 +294,10 @@ export async function setupMiddleware(app) {
 
 ### Health Checks
 
-- **Basic**: `GET /health` - Simple health status
-- **Detailed**: `GET /health/detailed` - Comprehensive health with dependencies
-- **Readiness**: `GET /health/ready` - Kubernetes readiness probe
-- **Liveness**: `GET /health/live` - Kubernetes liveness probe
+* **Basic**: `GET /health` - Simple health status
+* **Detailed**: `GET /health/detailed` - Comprehensive health with dependencies
+* **Readiness**: `GET /health/ready` - Kubernetes readiness probe
+* **Liveness**: `GET /health/live` - Kubernetes liveness probe
 
 ### Logging
 
@@ -327,37 +327,37 @@ curl -H "Authorization: Bearer <admin-token>" \
 
 ### Best Practices Implemented
 
-- **Helmet**: Security headers protection
-- **CORS**: Configurable cross-origin resource sharing
-- **Rate Limiting**: Redis-backed request limiting
-- **Input Validation**: Request body and parameter validation
-- **JWT Authentication**: Secure token-based auth
-- **Role-Based Access**: Fine-grained permission control
-- **No Sensitive Data Exposure**: Sanitized error responses
+* **Helmet**: Security headers protection
+* **CORS**: Configurable cross-origin resource sharing
+* **Rate Limiting**: Redis-backed request limiting
+* **Input Validation**: Request body and parameter validation
+* **JWT Authentication**: Secure token-based auth
+* **Role-Based Access**: Fine-grained permission control
+* **No Sensitive Data Exposure**: Sanitized error responses
 
 ### Security Headers
 
 The gateway automatically adds security headers:
 
-- `X-Content-Type-Options: nosniff`
-- `X-Frame-Options: DENY`
-- `X-XSS-Protection: 1; mode=block`
-- `Referrer-Policy: strict-origin-when-cross-origin`
+* `X-Content-Type-Options: nosniff`
+* `X-Frame-Options: DENY`
+* `X-XSS-Protection: 1; mode=block`
+* `Referrer-Policy: strict-origin-when-cross-origin`
 
 ## Deployment
 
 ### Production Checklist
 
-- [ ] Set `NODE_ENV=production`
-- [ ] Configure proper JWT secrets
-- [ ] Set up Redis cluster for high availability
-- [ ] Configure CORS origins for production domains
-- [ ] Set up proper logging infrastructure
-- [ ] Configure health check endpoints for load balancer
-- [ ] Set up monitoring and alerting
-- [ ] Configure SSL/TLS termination
-- [ ] Review rate limiting settings
-- [ ] Set up backup and disaster recovery
+* [ ] Set `NODE_ENV=production`
+* [ ] Configure proper JWT secrets
+* [ ] Set up Redis cluster for high availability
+* [ ] Configure CORS origins for production domains
+* [ ] Set up proper logging infrastructure
+* [ ] Configure health check endpoints for load balancer
+* [ ] Set up monitoring and alerting
+* [ ] Configure SSL/TLS termination
+* [ ] Review rate limiting settings
+* [ ] Set up backup and disaster recovery
 
 ### Kubernetes Deployment
 
@@ -379,14 +379,14 @@ spec:
         app: api-gateway
     spec:
       containers:
-      - name: api-gateway
+      * name: api-gateway
         image: {{projectName}}:latest
         ports:
-        - containerPort: 8080
+        * containerPort: 8080
         env:
-        - name: NODE_ENV
+        * name: NODE_ENV
           value: "production"
-        - name: REDIS_URL
+        * name: REDIS_URL
           value: "redis://redis-service:6379"
         livenessProbe:
           httpGet:
@@ -460,9 +460,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- **Documentation**: Check this README and inline code comments
-- **Issues**: Report bugs and request features via GitHub Issues
-- **Discussions**: Join discussions in GitHub Discussions
+* **Documentation**: Check this README and inline code comments
+* **Issues**: Report bugs and request features via GitHub Issues
+* **Discussions**: Join discussions in GitHub Discussions
 
 ---
 

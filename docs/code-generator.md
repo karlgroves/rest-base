@@ -4,13 +4,13 @@ Automatically generate boilerplate code for common Node.js/Express patterns foll
 
 ## Features
 
-- **Complete CRUD Generation**: Generate full CRUD setup with one command
-- **Multiple Templates**: Choose from pre-built templates for different patterns
-- **Smart Naming**: Automatic case conversion (camelCase, PascalCase, kebab-case, etc.)
-- **REST-SPEC Compliant**: Follows all REST-SPEC naming and structure conventions
-- **Comprehensive Coverage**: Routes, controllers, models, middleware, tests, and validation
-- **Configurable Output**: Specify output directories and customization options
-- **JSDoc Ready**: Generated code includes proper JSDoc comments for API documentation
+* **Complete CRUD Generation**: Generate full CRUD setup with one command
+* **Multiple Templates**: Choose from pre-built templates for different patterns
+* **Smart Naming**: Automatic case conversion (camelCase, PascalCase, kebab-case, etc.)
+* **REST-SPEC Compliant**: Follows all REST-SPEC naming and structure conventions
+* **Comprehensive Coverage**: Routes, controllers, models, middleware, tests, and validation
+* **Configurable Output**: Specify output directories and customization options
+* **JSDoc Ready**: Generated code includes proper JSDoc comments for API documentation
 
 ## Installation
 
@@ -47,11 +47,11 @@ npx rest-spec-code-gen crud product --output ./api --author "John Doe"
 
 This generates:
 
-- **Model** (`src/models/User.js`) - Sequelize model with associations
-- **Controller** (`src/controllers/userController.js`) - CRUD operations
-- **Routes** (`src/routes/user.js`) - Express routes with documentation
-- **Validation** (`src/schemas/user.js`) - Joi validation schemas
-- **Tests** (`tests/controllers/user.test.js`) - Comprehensive test suite
+* **Model** (`src/models/User.js`) - Sequelize model with associations
+* **Controller** (`src/controllers/userController.js`) - CRUD operations
+* **Routes** (`src/routes/user.js`) - Express routes with documentation
+* **Validation** (`src/schemas/user.js`) - Joi validation schemas
+* **Tests** (`tests/controllers/user.test.js`) - Comprehensive test suite
 
 ### Individual Generators
 
@@ -105,10 +105,10 @@ npx rest-spec-code-gen test user --template controller
 
 ## Options
 
-- `-o, --output <dir>` - Output directory (default: current directory)
-- `-t, --template <template>` - Template type
-- `-a, --author <author>` - Author name for file headers
-- `--help` - Show help for specific commands
+* `-o, --output <dir>` - Output directory (default: current directory)
+* `-t, --template <template>` - Template type
+* `-a, --author <author>` - Author name for file headers
+* `--help` - Show help for specific commands
 
 ## Templates
 
@@ -118,29 +118,29 @@ npx rest-spec-code-gen test user --template controller
 
 Generates RESTful routes with full CRUD operations:
 
-- `GET /api/entities` - List with pagination and filtering
-- `GET /api/entities/:id` - Get by ID
-- `POST /api/entities` - Create new entity
-- `PUT /api/entities/:id` - Update entity
-- `DELETE /api/entities/:id` - Delete entity
+* `GET /api/entities` - List with pagination and filtering
+* `GET /api/entities/:id` - Get by ID
+* `POST /api/entities` - Create new entity
+* `PUT /api/entities/:id` - Update entity
+* `DELETE /api/entities/:id` - Delete entity
 
 Features:
 
-- Authentication middleware
-- Input validation
-- JSDoc API documentation
-- Consistent error handling
+* Authentication middleware
+* Input validation
+* JSDoc API documentation
+* Consistent error handling
 
 #### Auth Template
 
 Generates authentication routes:
 
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `POST /api/auth/logout` - User logout
-- `POST /api/auth/refresh` - Token refresh
-- `POST /api/auth/reset-password` - Password reset
-- `GET /api/auth/me` - Get current user
+* `POST /api/auth/register` - User registration
+* `POST /api/auth/login` - User login
+* `POST /api/auth/logout` - User logout
+* `POST /api/auth/refresh` - Token refresh
+* `POST /api/auth/reset-password` - Password reset
+* `GET /api/auth/me` - Get current user
 
 ### Controller Templates
 
@@ -148,21 +148,21 @@ Generates authentication routes:
 
 Generates controller with full CRUD operations:
 
-- Pagination and sorting support
-- Input validation
-- Error handling and logging
-- Database operations with Sequelize
-- Proper HTTP status codes
+* Pagination and sorting support
+* Input validation
+* Error handling and logging
+* Database operations with Sequelize
+* Proper HTTP status codes
 
 #### Auth Controller
 
 Generates authentication controller:
 
-- User registration and login
-- JWT token generation and validation
-- Password hashing with bcrypt
-- Email notifications
-- Rate limiting support
+* User registration and login
+* JWT token generation and validation
+* Password hashing with bcrypt
+* Email notifications
+* Rate limiting support
 
 ### Model Templates
 
@@ -170,12 +170,12 @@ Generates authentication controller:
 
 Generates Sequelize model with:
 
-- UUID primary keys
-- Common fields (name, description, status, timestamps)
-- Associations setup
-- Validation rules
-- Instance and static methods
-- Database indexes
+* UUID primary keys
+* Common fields (name, description, status, timestamps)
+* Associations setup
+* Validation rules
+* Instance and static methods
+* Database indexes
 
 ### Middleware Templates
 
@@ -183,20 +183,20 @@ Generates Sequelize model with:
 
 Generates Joi validation schemas:
 
-- Create and update schemas
-- Query parameter validation
-- Custom validation rules
-- Error formatting
+* Create and update schemas
+* Query parameter validation
+* Custom validation rules
+* Error formatting
 
 #### Auth Middleware
 
 Generates authentication middleware:
 
-- JWT token verification
-- Role-based authorization
-- Rate limiting
-- Optional authentication
-- Owner authorization checks
+* JWT token verification
+* Role-based authorization
+* Rate limiting
+* Optional authentication
+* Owner authorization checks
 
 ### Test Templates
 
@@ -204,12 +204,12 @@ Generates authentication middleware:
 
 Generates comprehensive test suite:
 
-- Setup and teardown
-- Authentication tests
-- CRUD operation tests
-- Validation tests
-- Error handling tests
-- Edge cases
+* Setup and teardown
+* Authentication tests
+* CRUD operation tests
+* Validation tests
+* Error handling tests
+* Edge cases
 
 ## Generated Code Structure
 

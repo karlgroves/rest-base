@@ -11,44 +11,44 @@ The extension includes a comprehensive collection of code snippets for rapid dev
 
 #### JavaScript Snippets
 
-- **`rest-controller`** - Complete REST controller with CRUD operations
-- **`rest-route`** - Express route with Swagger documentation
-- **`sequelize-model`** - Sequelize model with associations and methods
-- **`express-middleware`** - Express middleware function template
-- **`jest-test`** - Complete Jest test suite template
-- **`joi-schema`** - Joi validation schemas for CRUD operations
+* **`rest-controller`** - Complete REST controller with CRUD operations
+* **`rest-route`** - Express route with Swagger documentation
+* **`sequelize-model`** - Sequelize model with associations and methods
+* **`express-middleware`** - Express middleware function template
+* **`jest-test`** - Complete Jest test suite template
+* **`joi-schema`** - Joi validation schemas for CRUD operations
 
 #### TypeScript Snippets
 
-- **`ts-rest-controller`** - TypeScript REST controller with proper typing
-- **`ts-interface`** - TypeScript interface definitions for API resources
-- **`ts-service`** - TypeScript service class with business logic
+* **`ts-rest-controller`** - TypeScript REST controller with proper typing
+* **`ts-interface`** - TypeScript interface definitions for API resources
+* **`ts-service`** - TypeScript service class with business logic
 
 #### JSON Configuration Snippets
 
-- **`rest-package`** - Complete package.json for REST-SPEC projects
-- **`eslint-config`** - ESLint configuration
-- **`jest-config`** - Jest configuration
-- **`docker-compose`** - Docker Compose setup
-- **`swagger-def`** - Swagger/OpenAPI 3.0 definition
+* **`rest-package`** - Complete package.json for REST-SPEC projects
+* **`eslint-config`** - ESLint configuration
+* **`jest-config`** - Jest configuration
+* **`docker-compose`** - Docker Compose setup
+* **`swagger-def`** - Swagger/OpenAPI 3.0 definition
 
 ### 🛠️ Code Generation Commands
 
 Access these commands via the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`):
 
-- **REST-SPEC: Create Controller** - Generate a complete REST controller
-- **REST-SPEC: Create Middleware** - Create Express middleware
-- **REST-SPEC: Create Model** - Generate Sequelize model
-- **REST-SPEC: Create Route** - Create Express routes with Swagger docs
-- **REST-SPEC: Create Test** - Generate test files (unit/integration/e2e)
+* **REST-SPEC: Create Controller** - Generate a complete REST controller
+* **REST-SPEC: Create Middleware** - Create Express middleware
+* **REST-SPEC: Create Model** - Generate Sequelize model
+* **REST-SPEC: Create Route** - Create Express routes with Swagger docs
+* **REST-SPEC: Create Test** - Generate test files (unit/integration/e2e)
 
 ### 📁 Context Menu Integration
 
 Right-click in the Explorer to access REST-SPEC generators:
 
-- Quick access to all generation commands
-- Automatic file placement in appropriate directories
-- Intelligent naming and structure
+* Quick access to all generation commands
+* Automatic file placement in appropriate directories
+* Intelligent naming and structure
 
 ## Installation
 
@@ -94,18 +94,18 @@ Configure the extension via VS Code settings:
 2. Type "REST-SPEC: Create Controller"
 3. Enter "User" as the model name
 4. The extension will generate a complete controller with:
-   - CRUD operations (GET, POST, PUT, DELETE)
-   - Proper error handling
-   - Pagination support
-   - JSDoc documentation
+   * CRUD operations (GET, POST, PUT, DELETE)
+   * Proper error handling
+   * Pagination support
+   * JSDoc documentation
 
 ### Using Snippets
 
 1. Create a new JavaScript file
 2. Type `rest-controller` and press Tab
 3. Fill in the placeholders:
-   - Model name (e.g., "Product")
-   - Author name
+   * Model name (e.g., "Product")
+   * Author name
 4. The snippet expands to a complete controller implementation
 
 ### Generated File Structure
@@ -225,16 +225,16 @@ module.exports = router;
 
 ## Requirements
 
-- VS Code 1.74.0 or higher
-- Node.js project structure
-- REST-SPEC standards compliance
+* VS Code 1.74.0 or higher
+* Node.js project structure
+* REST-SPEC standards compliance
 
 ## Supported File Types
 
-- JavaScript (`.js`)
-- TypeScript (`.ts`)
-- JSON (`.json`)
-- Markdown (`.md`)
+* JavaScript (`.js`)
+* TypeScript (`.ts`)
+* JSON (`.json`)
+* Markdown (`.md`)
 
 ## Extension Development
 
@@ -277,17 +277,17 @@ code --extensionDevelopmentPath=/path/to/extension
 
 ### 1.0.0
 
-- Initial release
-- Complete snippet library for JavaScript and TypeScript
-- Code generation commands
-- Context menu integration
-- Configuration support
+* Initial release
+* Complete snippet library for JavaScript and TypeScript
+* Code generation commands
+* Context menu integration
+* Configuration support
 
 ## Support
 
-- [Documentation](https://github.com/rest-spec/rest-spec)
-- 🐛 [Issue Tracker](https://github.com/rest-spec/rest-spec/issues)
-- 💬 [Discussions](https://github.com/rest-spec/rest-spec/discussions)
+* [Documentation](https://github.com/rest-spec/rest-spec)
+* 🐛 [Issue Tracker](https://github.com/rest-spec/rest-spec/issues)
+* 💬 [Discussions](https://github.com/rest-spec/rest-spec/discussions)
 
 ## License
 

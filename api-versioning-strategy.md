@@ -6,41 +6,41 @@
 
 ## Table of Contents
 
-- [Purpose](#purpose)
-- [Versioning Philosophy](#versioning-philosophy)
-  - [Core Principles](#core-principles)
-  - [Version Significance](#version-significance)
-- [Versioning Methods](#versioning-methods)
-  - [1. URL Path Versioning (Recommended)](#1-url-path-versioning-recommended)
-  - [2. Header Versioning (Alternative)](#2-header-versioning-alternative)
-  - [3. Content Negotiation (Specialized Use Cases)](#3-content-negotiation-specialized-use-cases)
-- [Version Lifecycle Management](#version-lifecycle-management)
-  - [Version States](#version-states)
-  - [Lifecycle Timeline](#lifecycle-timeline)
-  - [Version Support Policy](#version-support-policy)
-- [Breaking Changes Management](#breaking-changes-management)
-  - [What Constitutes a Breaking Change](#what-constitutes-a-breaking-change)
-  - [Non-Breaking Changes](#non-breaking-changes)
-  - [Breaking Change Process](#breaking-change-process)
-- [Versioning Implementation Patterns](#versioning-implementation-patterns)
-  - [Route Organization](#route-organization)
-  - [Shared Logic Management](#shared-logic-management)
-  - [Database Schema Evolution](#database-schema-evolution)
-- [Deprecation Strategy](#deprecation-strategy)
-  - [Deprecation Headers](#deprecation-headers)
-  - [Deprecation Response Format](#deprecation-response-format)
-  - [Communication Timeline](#communication-timeline)
-- [Client Communication Strategy](#client-communication-strategy)
-  - [Version Discovery](#version-discovery)
-  - [Migration Guides](#migration-guides)
-  - [Testing Version Compatibility](#testing-version-compatibility)
-- [Monitoring and Analytics](#monitoring-and-analytics)
-  - [Version Usage Tracking](#version-usage-tracking)
-  - [Deprecation Metrics](#deprecation-metrics)
-- [Best Practices Summary](#best-practices-summary)
-  - [DO](#do)
-  - [DON'T](#dont)
-- [Resources](#resources)
+* [Purpose](#purpose)
+* [Versioning Philosophy](#versioning-philosophy)
+  * [Core Principles](#core-principles)
+  * [Version Significance](#version-significance)
+* [Versioning Methods](#versioning-methods)
+  * [1. URL Path Versioning (Recommended)](#1-url-path-versioning-recommended)
+  * [2. Header Versioning (Alternative)](#2-header-versioning-alternative)
+  * [3. Content Negotiation (Specialized Use Cases)](#3-content-negotiation-specialized-use-cases)
+* [Version Lifecycle Management](#version-lifecycle-management)
+  * [Version States](#version-states)
+  * [Lifecycle Timeline](#lifecycle-timeline)
+  * [Version Support Policy](#version-support-policy)
+* [Breaking Changes Management](#breaking-changes-management)
+  * [What Constitutes a Breaking Change](#what-constitutes-a-breaking-change)
+  * [Non-Breaking Changes](#non-breaking-changes)
+  * [Breaking Change Process](#breaking-change-process)
+* [Versioning Implementation Patterns](#versioning-implementation-patterns)
+  * [Route Organization](#route-organization)
+  * [Shared Logic Management](#shared-logic-management)
+  * [Database Schema Evolution](#database-schema-evolution)
+* [Deprecation Strategy](#deprecation-strategy)
+  * [Deprecation Headers](#deprecation-headers)
+  * [Deprecation Response Format](#deprecation-response-format)
+  * [Communication Timeline](#communication-timeline)
+* [Client Communication Strategy](#client-communication-strategy)
+  * [Version Discovery](#version-discovery)
+  * [Migration Guides](#migration-guides)
+  * [Testing Version Compatibility](#testing-version-compatibility)
+* [Monitoring and Analytics](#monitoring-and-analytics)
+  * [Version Usage Tracking](#version-usage-tracking)
+  * [Deprecation Metrics](#deprecation-metrics)
+* [Best Practices Summary](#best-practices-summary)
+  * [DO](#do)
+  * [DON'T](#dont)
+* [Resources](#resources)
 
 ## Purpose
 
@@ -52,17 +52,17 @@ maintainable APIs.
 
 ### Core Principles
 
-- **Semantic Versioning**: Follow semver principles for API versions
-- **Backward Compatibility**: Maintain compatibility within major versions
-- **Graceful Deprecation**: Provide clear deprecation timelines and migration paths
-- **Consumer-Focused**: Minimize breaking changes and disruption to API consumers
-- **Documentation-Driven**: Maintain comprehensive version documentation
+* **Semantic Versioning**: Follow semver principles for API versions
+* **Backward Compatibility**: Maintain compatibility within major versions
+* **Graceful Deprecation**: Provide clear deprecation timelines and migration paths
+* **Consumer-Focused**: Minimize breaking changes and disruption to API consumers
+* **Documentation-Driven**: Maintain comprehensive version documentation
 
 ### Version Significance
 
-- **Major Version (v1, v2, v3)**: Breaking changes that require consumer updates
-- **Minor Version (v1.1, v1.2)**: New features that are backward compatible
-- **Patch Version (v1.1.1, v1.1.2)**: Bug fixes and security updates
+* **Major Version (v1, v2, v3)**: Breaking changes that require consumer updates
+* **Minor Version (v1.1, v1.2)**: New features that are backward compatible
+* **Patch Version (v1.1.1, v1.1.2)**: Bug fixes and security updates
 
 ## Versioning Methods
 
@@ -78,10 +78,10 @@ GET /api/v1.2/users
 
 **Advantages:**
 
-- Clear and explicit
-- Easy to implement
-- Cacheable
-- RESTful
+* Clear and explicit
+* Easy to implement
+* Cacheable
+* RESTful
 
 **Implementation:**
 
@@ -168,30 +168,30 @@ Development → Active (6-12 months) → Maintenance (12-18 months) → Deprecat
 
 ### Version Support Policy
 
-- **Active Versions**: 1-2 major versions maximum
-- **Maintenance Period**: Minimum 12 months for major versions
-- **Deprecation Notice**: Minimum 6 months before retirement
-- **Security Updates**: Provided for all non-retired versions
+* **Active Versions**: 1-2 major versions maximum
+* **Maintenance Period**: Minimum 12 months for major versions
+* **Deprecation Notice**: Minimum 6 months before retirement
+* **Security Updates**: Provided for all non-retired versions
 
 ## Breaking Changes Management
 
 ### What Constitutes a Breaking Change
 
-- Removing endpoints or fields
-- Changing data types
-- Modifying authentication requirements
-- Altering error response formats
-- Changing required parameters
-- Modifying URL structures
+* Removing endpoints or fields
+* Changing data types
+* Modifying authentication requirements
+* Altering error response formats
+* Changing required parameters
+* Modifying URL structures
 
 ### Non-Breaking Changes
 
-- Adding new endpoints
-- Adding optional parameters
-- Adding new response fields
-- Improving error messages
-- Performance optimizations
-- Bug fixes
+* Adding new endpoints
+* Adding optional parameters
+* Adding new response fields
+* Improving error messages
+* Performance optimizations
+* Bug fixes
 
 ### Breaking Change Process
 
@@ -418,10 +418,10 @@ v1Router.use(deprecationMiddleware('v1', 'Wed, 11 Nov 2024 07:28:00 GMT'));
 
 ### Communication Timeline
 
-- **T-6 months**: Initial deprecation announcement
-- **T-4 months**: Add deprecation headers to responses
-- **T-2 months**: Final migration reminder
-- **T-0**: Version retirement
+* **T-6 months**: Initial deprecation announcement
+* **T-4 months**: Add deprecation headers to responses
+* **T-2 months**: Final migration reminder
+* **T-0**: Version retirement
 
 ## Client Communication Strategy
 
@@ -611,8 +611,8 @@ const deprecationMetrics = (req, res, next) => {
 
 ## Resources
 
-- [Semantic Versioning Specification](https://semver.org/)
-- [RFC 8594 - Sunset Header](https://tools.ietf.org/html/rfc8594)
-- [API Versioning Best Practices](https://restfulapi.net/versioning/)
-- [Breaking Changes in APIs](https://nordicapis.com/what-are-breaking-changes-and-how-do-you-avoid-them/)
-- [API Deprecation Best Practices](https://zapier.com/engineering/api-geriatrics/)
+* [Semantic Versioning Specification](https://semver.org/)
+* [RFC 8594 - Sunset Header](https://tools.ietf.org/html/rfc8594)
+* [API Versioning Best Practices](https://restfulapi.net/versioning/)
+* [Breaking Changes in APIs](https://nordicapis.com/what-are-breaking-changes-and-how-do-you-avoid-them/)
+* [API Deprecation Best Practices](https://zapier.com/engineering/api-geriatrics/)

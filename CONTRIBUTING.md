@@ -2,60 +2,60 @@
 
 ## Table of Contents
 
-- [Development Process](#development-process)
-  - [Code Changes Happen Through Pull Requests](#code-changes-happen-through-pull-requests)
-- [Development Setup](#development-setup)
-  - [Prerequisites](#prerequisites)
-  - [Local Development](#local-development)
-  - [Project Structure](#project-structure)
-- [Development Guidelines](#development-guidelines)
-  - [Code Style](#code-style)
-  - [Naming Conventions](#naming-conventions)
-  - [Commit Messages](#commit-messages)
-    - [Types](#types)
-    - [Examples](#examples)
-- [Testing](#testing)
-  - [Test Types](#test-types)
-  - [Writing Tests](#writing-tests)
-  - [Running Tests](#running-tests)
-- [Documentation](#documentation)
-  - [Code Documentation](#code-documentation)
-  - [README Updates](#readme-updates)
-- [Security](#security)
-  - [Security Guidelines](#security-guidelines)
-  - [Reporting Security Issues](#reporting-security-issues)
-- [Performance](#performance)
-  - [Performance Considerations](#performance-considerations)
-  - [Benchmarking](#benchmarking)
-- [Pull Request Process](#pull-request-process)
-  - [Before Submitting](#before-submitting)
-  - [PR Description Template](#pr-description-template)
-  - [Review Process](#review-process)
-- [Issue Reporting](#issue-reporting)
-  - [Bug Reports](#bug-reports)
-  - [Feature Requests](#feature-requests)
-  - [Question or Discussion](#question-or-discussion)
-- [Code of Conduct](#code-of-conduct)
-  - [Our Standards](#our-standards)
-  - [Unacceptable Behavior](#unacceptable-behavior)
-  - [Enforcement](#enforcement)
-- [Recognition](#recognition)
-- [Getting Help](#getting-help)
-  - [Communication Channels](#communication-channels)
-  - [Mentorship](#mentorship)
-- [Release Process](#release-process)
-  - [Versioning](#versioning)
-  - [Release Cycle](#release-cycle)
-- [License](#license)
-- [Additional Resources](#additional-resources)
+* [Development Process](#development-process)
+  * [Code Changes Happen Through Pull Requests](#code-changes-happen-through-pull-requests)
+* [Development Setup](#development-setup)
+  * [Prerequisites](#prerequisites)
+  * [Local Development](#local-development)
+  * [Project Structure](#project-structure)
+* [Development Guidelines](#development-guidelines)
+  * [Code Style](#code-style)
+  * [Naming Conventions](#naming-conventions)
+  * [Commit Messages](#commit-messages)
+    * [Types](#types)
+    * [Examples](#examples)
+* [Testing](#testing)
+  * [Test Types](#test-types)
+  * [Writing Tests](#writing-tests)
+  * [Running Tests](#running-tests)
+* [Documentation](#documentation)
+  * [Code Documentation](#code-documentation)
+  * [README Updates](#readme-updates)
+* [Security](#security)
+  * [Security Guidelines](#security-guidelines)
+  * [Reporting Security Issues](#reporting-security-issues)
+* [Performance](#performance)
+  * [Performance Considerations](#performance-considerations)
+  * [Benchmarking](#benchmarking)
+* [Pull Request Process](#pull-request-process)
+  * [Before Submitting](#before-submitting)
+  * [PR Description Template](#pr-description-template)
+  * [Review Process](#review-process)
+* [Issue Reporting](#issue-reporting)
+  * [Bug Reports](#bug-reports)
+  * [Feature Requests](#feature-requests)
+  * [Question or Discussion](#question-or-discussion)
+* [Code of Conduct](#code-of-conduct)
+  * [Our Standards](#our-standards)
+  * [Unacceptable Behavior](#unacceptable-behavior)
+  * [Enforcement](#enforcement)
+* [Recognition](#recognition)
+* [Getting Help](#getting-help)
+  * [Communication Channels](#communication-channels)
+  * [Mentorship](#mentorship)
+* [Release Process](#release-process)
+  * [Versioning](#versioning)
+  * [Release Cycle](#release-cycle)
+* [License](#license)
+* [Additional Resources](#additional-resources)
 
 We love your input! We want to make contributing to REST-SPEC as easy and transparent as possible, whether it's:
 
-- Reporting a bug
-- Discussing the current state of the code
-- Submitting a fix
-- Proposing new features
-- Becoming a maintainer
+* Reporting a bug
+* Discussing the current state of the code
+* Submitting a fix
+* Proposing new features
+* Becoming a maintainer
 
 ## Development Process
 
@@ -76,9 +76,9 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 
 ### Prerequisites
 
-- Node.js ≥22.11.0 (LTS)
-- npm (comes with Node.js)
-- Git
+* Node.js ≥22.11.0 (LTS)
+* npm (comes with Node.js)
+* Git
 
 ### Local Development
 
@@ -138,19 +138,19 @@ REST-SPEC/
 
 We use ESLint and Prettier to maintain consistent code style:
 
-- **Indentation**: 2 spaces
-- **Line Length**: 100 characters max
-- **Quotes**: Single quotes for JavaScript, double quotes for JSON
-- **Semicolons**: Required
-- **Trailing Commas**: Required for multiline structures
+* **Indentation**: 2 spaces
+* **Line Length**: 100 characters max
+* **Quotes**: Single quotes for JavaScript, double quotes for JSON
+* **Semicolons**: Required
+* **Trailing Commas**: Required for multiline structures
 
 ### Naming Conventions
 
-- **Variables/Functions**: camelCase (`getUserData`)
-- **Classes**: PascalCase (`ConfigManager`)
-- **Constants**: UPPER_SNAKE_CASE (`MAX_RETRY_COUNT`)
-- **Files**: kebab-case (`user-service.js`)
-- **Directories**: kebab-case (`user-management`)
+* **Variables/Functions**: camelCase (`getUserData`)
+* **Classes**: PascalCase (`ConfigManager`)
+* **Constants**: UPPER_SNAKE_CASE (`MAX_RETRY_COUNT`)
+* **Files**: kebab-case (`user-service.js`)
+* **Directories**: kebab-case (`user-management`)
 
 ### Commit Messages
 
@@ -166,14 +166,14 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) speci
 
 #### Types
 
-- `feat`: A new feature
-- `fix`: A bug fix
-- `docs`: Documentation only changes
-- `style`: Changes that do not affect the meaning of the code
-- `refactor`: A code change that neither fixes a bug nor adds a feature
-- `perf`: A code change that improves performance
-- `test`: Adding missing tests or correcting existing tests
-- `chore`: Changes to the build process or auxiliary tools
+* `feat`: A new feature
+* `fix`: A bug fix
+* `docs`: Documentation only changes
+* `style`: Changes that do not affect the meaning of the code
+* `refactor`: A code change that neither fixes a bug nor adds a feature
+* `perf`: A code change that improves performance
+* `test`: Adding missing tests or correcting existing tests
+* `chore`: Changes to the build process or auxiliary tools
 
 #### Examples
 
@@ -199,11 +199,11 @@ chore: update dependencies to latest versions
 
 ### Writing Tests
 
-- Use Jest as the testing framework
-- Place tests in the `tests/` directory
-- Follow the naming pattern: `*.test.js`
-- Aim for at least 70% code coverage
-- Write descriptive test names
+* Use Jest as the testing framework
+* Place tests in the `tests/` directory
+* Follow the naming pattern: `*.test.js`
+* Aim for at least 70% code coverage
+* Write descriptive test names
 
 ### Running Tests
 
@@ -225,9 +225,9 @@ npm run test:watch
 
 ### Code Documentation
 
-- Use JSDoc comments for all functions and classes
-- Include parameter types and return types
-- Provide examples for complex functions
+* Use JSDoc comments for all functions and classes
+* Include parameter types and return types
+* Provide examples for complex functions
 
 ```javascript
 /**
@@ -249,18 +249,18 @@ function sanitizeProjectName(projectName, options = {}) {
 
 When adding new features, update the relevant documentation:
 
-- Main README.md for user-facing changes
-- Technical documentation for internal changes
-- CLI documentation for new commands or options
+* Main README.md for user-facing changes
+* Technical documentation for internal changes
+* CLI documentation for new commands or options
 
 ## Security
 
 ### Security Guidelines
 
-- Never commit secrets or API keys
-- Validate all user inputs
-- Use the provided security utilities in `/shared/`
-- Follow the security checklist in `docs/security-checklist.md`
+* Never commit secrets or API keys
+* Validate all user inputs
+* Use the provided security utilities in `/shared/`
+* Follow the security checklist in `docs/security-checklist.md`
 
 ### Reporting Security Issues
 
@@ -270,10 +270,10 @@ Please report security vulnerabilities to <security@rest-spec.org>. Do not open 
 
 ### Performance Considerations
 
-- Prefer asynchronous operations for I/O
-- Use streaming for large file operations
-- Cache frequently accessed data
-- Minimize dependencies
+* Prefer asynchronous operations for I/O
+* Use streaming for large file operations
+* Cache frequently accessed data
+* Minimize dependencies
 
 ### Benchmarking
 
@@ -302,26 +302,26 @@ Brief description of changes
 
 ## Type of Change
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Documentation update
+* [ ] Bug fix (non-breaking change which fixes an issue)
+* [ ] New feature (non-breaking change which adds functionality)
+* [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+* [ ] Documentation update
 
 ## Testing
 
-- [ ] Tests pass locally with my changes
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] Any dependent changes have been merged and published
+* [ ] Tests pass locally with my changes
+* [ ] I have added tests that prove my fix is effective or that my feature works
+* [ ] Any dependent changes have been merged and published
 
 ## Checklist
 
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
+* [ ] My code follows the style guidelines of this project
+* [ ] I have performed a self-review of my own code
+* [ ] I have commented my code, particularly in hard-to-understand areas
+* [ ] I have made corresponding changes to the documentation
+* [ ] My changes generate no new warnings
+* [ ] I have added tests that prove my fix is effective or that my feature works
+* [ ] New and existing unit tests pass locally with my changes
 ```
 
 ### Review Process
@@ -337,30 +337,30 @@ Brief description of changes
 
 Use the bug report template and include:
 
-- **Environment**: Node.js version, OS, etc.
-- **Steps to Reproduce**: Clear, numbered steps
-- **Expected Behavior**: What should happen
-- **Actual Behavior**: What actually happens
-- **Screenshots**: If applicable
-- **Additional Context**: Any relevant information
+* **Environment**: Node.js version, OS, etc.
+* **Steps to Reproduce**: Clear, numbered steps
+* **Expected Behavior**: What should happen
+* **Actual Behavior**: What actually happens
+* **Screenshots**: If applicable
+* **Additional Context**: Any relevant information
 
 ### Feature Requests
 
 Use the feature request template and include:
 
-- **Use Case**: Why is this feature needed?
-- **Proposed Solution**: How should it work?
-- **Alternatives Considered**: Other approaches you've considered
-- **Additional Context**: Any relevant information
+* **Use Case**: Why is this feature needed?
+* **Proposed Solution**: How should it work?
+* **Alternatives Considered**: Other approaches you've considered
+* **Additional Context**: Any relevant information
 
 ### Question or Discussion
 
 For general questions:
 
-- Check existing documentation first
-- Search existing issues
-- Use GitHub Discussions for broader conversations
-- Be specific about what you're trying to accomplish
+* Check existing documentation first
+* Search existing issues
+* Use GitHub Discussions for broader conversations
+* Be specific about what you're trying to accomplish
 
 ## Code of Conduct
 
@@ -368,21 +368,21 @@ For general questions:
 
 Examples of behavior that contributes to creating a positive environment include:
 
-- Using welcoming and inclusive language
-- Being respectful of differing viewpoints and experiences
-- Gracefully accepting constructive criticism
-- Focusing on what is best for the community
-- Showing empathy towards other community members
+* Using welcoming and inclusive language
+* Being respectful of differing viewpoints and experiences
+* Gracefully accepting constructive criticism
+* Focusing on what is best for the community
+* Showing empathy towards other community members
 
 ### Unacceptable Behavior
 
 Examples of unacceptable behavior include:
 
-- The use of sexualized language or imagery
-- Trolling, insulting/derogatory comments, and personal or political attacks
-- Public or private harassment
-- Publishing others' private information without explicit permission
-- Other conduct which could reasonably be considered inappropriate
+* The use of sexualized language or imagery
+* Trolling, insulting/derogatory comments, and personal or political attacks
+* Public or private harassment
+* Publishing others' private information without explicit permission
+* Other conduct which could reasonably be considered inappropriate
 
 ### Enforcement
 
@@ -393,17 +393,17 @@ appropriate action in response to unacceptable behavior.
 
 Contributors who make significant improvements will be:
 
-- Added to the contributors list
-- Mentioned in release notes
-- Invited to become maintainers (for consistent contributors)
+* Added to the contributors list
+* Mentioned in release notes
+* Invited to become maintainers (for consistent contributors)
 
 ## Getting Help
 
 ### Communication Channels
 
-- **GitHub Issues**: Bug reports and feature requests
-- **GitHub Discussions**: General questions and community discussion
-- **Email**: <security@rest-spec.org> for security issues
+* **GitHub Issues**: Bug reports and feature requests
+* **GitHub Discussions**: General questions and community discussion
+* **Email**: <security@rest-spec.org> for security issues
 
 ### Mentorship
 
@@ -419,15 +419,15 @@ New contributors can request mentorship by:
 
 We use [Semantic Versioning](https://semver.org/):
 
-- **MAJOR**: Breaking changes
-- **MINOR**: New features (backward compatible)
-- **PATCH**: Bug fixes (backward compatible)
+* **MAJOR**: Breaking changes
+* **MINOR**: New features (backward compatible)
+* **PATCH**: Bug fixes (backward compatible)
 
 ### Release Cycle
 
-- **Regular Releases**: Monthly minor releases
-- **Patch Releases**: As needed for critical bug fixes
-- **Major Releases**: Annually or for significant breaking changes
+* **Regular Releases**: Monthly minor releases
+* **Patch Releases**: As needed for critical bug fixes
+* **Major Releases**: Annually or for significant breaking changes
 
 ## License
 
@@ -435,10 +435,10 @@ By contributing, you agree that your contributions will be licensed under the pr
 
 ## Additional Resources
 
-- [Node.js Security Best Practices](https://nodejs.org/en/docs/guides/security/)
-- [JavaScript Style Guide](https://standardjs.com/)
-- [Git Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
-- [REST API Design Guidelines](https://restfulapi.net/)
+* [Node.js Security Best Practices](https://nodejs.org/en/docs/guides/security/)
+* [JavaScript Style Guide](https://standardjs.com/)
+* [Git Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+* [REST API Design Guidelines](https://restfulapi.net/)
 
 ---
 

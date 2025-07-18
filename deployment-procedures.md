@@ -5,18 +5,18 @@ various environments and deployment strategies.
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Pre-Deployment Checklist](#pre-deployment-checklist)
-- [Environment Configuration](#environment-configuration)
-- [Deployment Strategies](#deployment-strategies)
-- [Platform-Specific Deployments](#platform-specific-deployments)
-- [Container Deployments](#container-deployments)
-- [Database Migrations](#database-migrations)
-- [Monitoring and Health Checks](#monitoring-and-health-checks)
-- [Rollback Procedures](#rollback-procedures)
-- [Security Considerations](#security-considerations)
-- [Performance Optimization](#performance-optimization)
-- [Troubleshooting](#troubleshooting)
+* [Overview](#overview)
+* [Pre-Deployment Checklist](#pre-deployment-checklist)
+* [Environment Configuration](#environment-configuration)
+* [Deployment Strategies](#deployment-strategies)
+* [Platform-Specific Deployments](#platform-specific-deployments)
+* [Container Deployments](#container-deployments)
+* [Database Migrations](#database-migrations)
+* [Monitoring and Health Checks](#monitoring-and-health-checks)
+* [Rollback Procedures](#rollback-procedures)
+* [Security Considerations](#security-considerations)
+* [Performance Optimization](#performance-optimization)
+* [Troubleshooting](#troubleshooting)
 
 ## Overview
 
@@ -42,27 +42,27 @@ Code Commit → CI/CD Pipeline → Testing → Staging → Production
 
 ### Code Quality Verification
 
-- [ ] All tests pass (`npm test`)
-- [ ] Linting passes (`npm run lint`)
-- [ ] Type checking passes (`npm run typecheck`)
-- [ ] Security scan passes (`npm audit`)
-- [ ] Code coverage meets minimum threshold (80%)
+* [ ] All tests pass (`npm test`)
+* [ ] Linting passes (`npm run lint`)
+* [ ] Type checking passes (`npm run typecheck`)
+* [ ] Security scan passes (`npm audit`)
+* [ ] Code coverage meets minimum threshold (80%)
 
 ### Dependencies and Configuration
 
-- [ ] Dependencies are up to date and audited
-- [ ] Environment variables are configured
-- [ ] Configuration files are validated
-- [ ] Secrets are properly managed
-- [ ] Database migrations are ready
+* [ ] Dependencies are up to date and audited
+* [ ] Environment variables are configured
+* [ ] Configuration files are validated
+* [ ] Secrets are properly managed
+* [ ] Database migrations are ready
 
 ### Documentation and Validation
 
-- [ ] API documentation is updated
-- [ ] Changelog is updated
-- [ ] Version number is bumped
-- [ ] README is current
-- [ ] Deployment notes are prepared
+* [ ] API documentation is updated
+* [ ] Changelog is updated
+* [ ] Version number is bumped
+* [ ] README is current
+* [ ] Deployment notes are prepared
 
 ## Environment Configuration
 
@@ -75,7 +75,7 @@ Create environment-specific `.env` files:
 NODE_ENV=production
 PORT=3000
 DB_HOST=prod-db.example.com
-DB_PORT=5432
+DB_PORT=3306
 DB_NAME=myapp_prod
 DB_USER=app_user
 DB_PASSWORD=${SECRET_DB_PASSWORD}
@@ -93,7 +93,7 @@ RATE_LIMIT_MAX_REQUESTS=100
 NODE_ENV=staging
 PORT=3000
 DB_HOST=staging-db.example.com
-DB_PORT=5432
+DB_PORT=3306
 DB_NAME=myapp_staging
 DB_USER=app_user
 DB_PASSWORD=${SECRET_DB_PASSWORD_STAGING}
@@ -114,7 +114,7 @@ const config = {
     port: 3000,
     database: {
       host: 'localhost',
-      port: 5432,
+      port: 3306,
       name: 'myapp_dev'
     }
   },
@@ -259,7 +259,7 @@ eb logs
 # .do/app.yaml
 name: myapp
 services:
-- name: api
+* name: api
   source_dir: /
   github:
     repo: myorg/myapp
@@ -269,9 +269,9 @@ services:
   instance_count: 2
   instance_size_slug: basic-xxs
   envs:
-  - key: NODE_ENV
+  * key: NODE_ENV
     value: production
-  - key: DB_CONNECTION
+  * key: DB_CONNECTION
     type: SECRET
     value: ${DATABASE_URL}
   health_check:
@@ -351,52 +351,53 @@ services:
   app:
     image: myapp:latest
     ports:
-      - "3000:3000"
+      * "3000:3000"
     environment:
-      - NODE_ENV=production
-      - DB_HOST=db
-      - REDIS_URL=redis://redis:6379
+      * NODE_ENV=production
+      * DB_HOST=db
+      * REDIS_URL=redis://redis:6379
     depends_on:
-      - db
-      - redis
+      * db
+      * redis
     restart: unless-stopped
     networks:
-      - app-network
+      * app-network
 
   db:
-    image: postgres:15-alpine
+    image: mysql:8.0
     environment:
-      - POSTGRES_DB=myapp_prod
-      - POSTGRES_USER=app_user
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      * MYSQL_DATABASE=myapp_prod
+      * MYSQL_USER=app_user
+      * MYSQL_PASSWORD=${DB_PASSWORD}
+      * MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      * mysql_data:/var/lib/mysql
     restart: unless-stopped
     networks:
-      - app-network
+      * app-network
 
   redis:
     image: redis:7-alpine
     restart: unless-stopped
     networks:
-      - app-network
+      * app-network
 
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
-      - "443:443"
+      * "80:80"
+      * "443:443"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./ssl:/etc/nginx/ssl
+      * ./nginx.conf:/etc/nginx/nginx.conf
+      * ./ssl:/etc/nginx/ssl
     depends_on:
-      - app
+      * app
     restart: unless-stopped
     networks:
-      - app-network
+      * app-network
 
 volumes:
-  postgres_data:
+  mysql_data:
 
 networks:
   app-network:
@@ -424,14 +425,14 @@ spec:
         app: myapp
     spec:
       containers:
-      - name: app
+      * name: app
         image: myapp:latest
         ports:
-        - containerPort: 3000
+        * containerPort: 3000
         env:
-        - name: NODE_ENV
+        * name: NODE_ENV
           value: "production"
-        - name: DB_HOST
+        * name: DB_HOST
           valueFrom:
             secretKeyRef:
               name: app-secrets
@@ -464,7 +465,7 @@ spec:
   selector:
     app: myapp
   ports:
-  - protocol: TCP
+  * protocol: TCP
     port: 80
     targetPort: 3000
   type: LoadBalancer
@@ -476,17 +477,37 @@ spec:
 
 ```javascript
 // migrations/001_initial_schema.js
-exports.up = async function(knex) {
-  await knex.schema.createTable('users', (table) => {
-    table.increments('id').primary();
-    table.string('email').unique().notNullable();
-    table.string('password_hash').notNullable();
-    table.timestamps(true, true);
-  });
-};
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('users', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      email: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+      },
+      password_hash: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      }
+    });
+  },
 
-exports.down = async function(knex) {
-  await knex.schema.dropTable('users');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('users');
+  }
 };
 ```
 
@@ -501,7 +522,7 @@ set -e
 echo "Starting database migration..."
 
 # Backup current database
-pg_dump $DATABASE_URL > backup_$(date +%Y%m%d_%H%M%S).sql
+mysqldump --host=$DB_HOST --user=$DB_USER --password=$DB_PASSWORD $DB_NAME > backup_$(date +%Y%m%d_%H%M%S).sql
 
 # Run migrations
 npm run migrate:latest
@@ -522,22 +543,34 @@ echo "Migration completed successfully"
 
 ```javascript
 // Safe migration example
-exports.up = async function(knex) {
-  // Use transaction for multiple operations
-  await knex.transaction(async (trx) => {
-    // Add column with default value first
-    await trx.schema.table('users', (table) => {
-      table.string('status').defaultTo('active');
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    // Use transaction for multiple operations
+    await queryInterface.sequelize.transaction(async (t) => {
+      // Add column with default value first
+      await queryInterface.addColumn('users', 'status', {
+        type: Sequelize.STRING,
+        defaultValue: 'active'
+      }, { transaction: t });
+      
+      // Populate new column
+      await queryInterface.sequelize.query(
+        "UPDATE users SET status = 'active'",
+        { transaction: t }
+      );
+      
+      // Make column non-nullable
+      await queryInterface.changeColumn('users', 'status', {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'active'
+      }, { transaction: t });
     });
-    
-    // Populate new column
-    await trx('users').update({ status: 'active' });
-    
-    // Make column non-nullable
-    await trx.schema.alterTable('users', (table) => {
-      table.string('status').notNullable().alter();
-    });
-  });
+  },
+  
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.removeColumn('users', 'status');
+  }
 };
 ```
 
@@ -589,8 +622,8 @@ router.get('/health/detailed', async (req, res) => {
 });
 
 async function checkDatabase() {
-  const result = await db.raw('SELECT 1');
-  return result.rowCount === 1;
+  const result = await db.query('SELECT 1 as result');
+  return result[0][0].result === 1;
 }
 
 async function checkRedis() {
@@ -690,7 +723,7 @@ echo "Rolling back database from $BACKUP_FILE..."
 kubectl scale deployment myapp-deployment --replicas=0
 
 # Restore database
-psql $DATABASE_URL < $BACKUP_FILE
+mysql --host=$DB_HOST --user=$DB_USER --password=$DB_PASSWORD $DB_NAME < $BACKUP_FILE
 
 # Start application
 kubectl scale deployment myapp-deployment --replicas=3
@@ -702,14 +735,14 @@ echo "Database rollback completed"
 
 ### Deployment Security Checklist
 
-- [ ] Use HTTPS/TLS encryption
-- [ ] Implement proper authentication
-- [ ] Secure environment variables
-- [ ] Regular security updates
-- [ ] Network security (VPC, firewalls)
-- [ ] Container security scanning
-- [ ] Secrets management
-- [ ] Access logging and monitoring
+* [ ] Use HTTPS/TLS encryption
+* [ ] Implement proper authentication
+* [ ] Secure environment variables
+* [ ] Regular security updates
+* [ ] Network security (VPC, firewalls)
+* [ ] Container security scanning
+* [ ] Secrets management
+* [ ] Access logging and monitoring
 
 ### Secrets Management
 
@@ -798,14 +831,14 @@ metadata:
     nginx.ingress.kubernetes.io/rate-limit: "100"
 spec:
   tls:
-  - hosts:
-    - myapp.com
+  * hosts:
+    * myapp.com
     secretName: myapp-tls
   rules:
-  - host: myapp.com
+  * host: myapp.com
     http:
       paths:
-      - path: /
+      * path: /
         pathType: Prefix
         backend:
           service:
@@ -838,7 +871,7 @@ kubectl exec -it <pod-name> -- /bin/sh
 
 ```bash
 # Test database connectivity
-kubectl run db-test --image=postgres:15 --rm -it -- psql $DATABASE_URL
+kubectl run db-test --image=mysql:8.0 --rm -it -- mysql -h$DB_HOST -u$DB_USER -p$DB_PASSWORD $DB_NAME
 
 # Check network policies
 kubectl get networkpolicy
@@ -858,7 +891,7 @@ kubectl top pods
 curl https://myapp.com/metrics
 
 # Analyze slow queries
-tail -f /var/log/postgresql/postgresql.log | grep "slow query"
+tail -f /var/log/mysql/slow-query.log
 ```
 
 ### Deployment Verification Script
@@ -898,8 +931,8 @@ echo "Deployment verification successful"
 
 ## Additional Resources
 
-- [Node.js Production Best Practices](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/)
-- [Kubernetes Deployment Strategies](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
-- [Docker Multi-stage Builds](https://docs.docker.com/develop/dev-best-practices/)
-- [PostgreSQL Backup and Recovery](https://www.postgresql.org/docs/current/backup.html)
-- [Application Security Guidelines](https://owasp.org/www-project-top-ten/)
+* [Node.js Production Best Practices](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/)
+* [Kubernetes Deployment Strategies](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+* [Docker Multi-stage Builds](https://docs.docker.com/develop/dev-best-practices/)
+* [MySQL Backup and Recovery](https://dev.mysql.com/doc/refman/8.0/en/backup-and-recovery.html)
+* [Application Security Guidelines](https://owasp.org/www-project-top-ten/)

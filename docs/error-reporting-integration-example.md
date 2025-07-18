@@ -179,6 +179,6 @@ rest-spec-errors analyze --verbose
 
 ## Environment Variables
 
-- `REST_SPEC_ERROR_REPORTING=false` - Disable error reporting
-- `NODE_ENV=development` - Enable detailed error information
-- `VERBOSE=true` - Show verbose error details
+* `REST_SPEC_ERROR_REPORTING=false` - Disable error reporting
+* `NODE_ENV=development` - Enable detailed error information
+* `VERBOSE=true` - Show verbose error details

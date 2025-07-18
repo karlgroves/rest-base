@@ -5,21 +5,21 @@ ensuring proper observability, performance tracking, and incident response.
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Monitoring Philosophy](#monitoring-philosophy)
-- [Key Performance Indicators (KPIs)](#key-performance-indicators-kpis)
-- [Application Metrics](#application-metrics)
-- [Infrastructure Metrics](#infrastructure-metrics)
-- [Log Management](#log-management)
-- [Alerting Rules](#alerting-rules)
-- [Dashboards](#dashboards)
-- [Error Tracking](#error-tracking)
-- [Performance Monitoring](#performance-monitoring)
-- [Security Monitoring](#security-monitoring)
-- [Health Checks](#health-checks)
-- [Implementation Examples](#implementation-examples)
-- [Tools and Technologies](#tools-and-technologies)
-- [Incident Response](#incident-response)
+* [Overview](#overview)
+* [Monitoring Philosophy](#monitoring-philosophy)
+* [Key Performance Indicators (KPIs)](#key-performance-indicators-kpis)
+* [Application Metrics](#application-metrics)
+* [Infrastructure Metrics](#infrastructure-metrics)
+* [Log Management](#log-management)
+* [Alerting Rules](#alerting-rules)
+* [Dashboards](#dashboards)
+* [Error Tracking](#error-tracking)
+* [Performance Monitoring](#performance-monitoring)
+* [Security Monitoring](#security-monitoring)
+* [Health Checks](#health-checks)
+* [Implementation Examples](#implementation-examples)
+* [Tools and Technologies](#tools-and-technologies)
+* [Incident Response](#incident-response)
 
 ## Overview
 
@@ -63,18 +63,18 @@ ensuring proper observability, performance tracking, and incident response.
 
 #### Service Level Indicators (SLIs)
 
-- Specific metrics that measure service performance
-- Must be measurable and meaningful to users
+* Specific metrics that measure service performance
+* Must be measurable and meaningful to users
 
 #### Service Level Objectives (SLOs)
 
-- Target values or ranges for SLIs
-- Internal goals for service reliability
+* Target values or ranges for SLIs
+* Internal goals for service reliability
 
 #### Service Level Agreements (SLAs)
 
-- External commitments to customers
-- Often based on SLOs with stricter requirements
+* External commitments to customers
+* Often based on SLOs with stricter requirements
 
 ```yaml
 # Example SLI/SLO definitions
@@ -250,28 +250,28 @@ global:
   evaluation_interval: 15s
 
 rule_files:
-  - "alert_rules.yml"
+  * "alert_rules.yml"
 
 scrape_configs:
-  - job_name: 'node-exporter'
+  * job_name: 'node-exporter'
     static_configs:
-      - targets: ['localhost:9100']
+      * targets: ['localhost:9100']
     scrape_interval: 5s
     metrics_path: /metrics
 
-  - job_name: 'application'
+  * job_name: 'application'
     static_configs:
-      - targets: ['app:3000']
+      * targets: ['app:3000']
     scrape_interval: 15s
     metrics_path: /metrics
 
-  - job_name: 'postgres-exporter'
+  * job_name: 'postgres-exporter'
     static_configs:
-      - targets: ['postgres-exporter:9187']
+      * targets: ['postgres-exporter:9187']
 
-  - job_name: 'redis-exporter'
+  * job_name: 'redis-exporter'
     static_configs:
-      - targets: ['redis-exporter:9121']
+      * targets: ['redis-exporter:9121']
 ```
 
 ### Container Metrics
@@ -283,32 +283,32 @@ services:
   prometheus:
     image: prom/prometheus:latest
     ports:
-      - "9090:9090"
+      * "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./alert_rules.yml:/etc/prometheus/alert_rules.yml
+      * ./prometheus.yml:/etc/prometheus/prometheus.yml
+      * ./alert_rules.yml:/etc/prometheus/alert_rules.yml
 
   grafana:
     image: grafana/grafana:latest
     ports:
-      - "3001:3000"
+      * "3001:3000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      * GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
-      - grafana-storage:/var/lib/grafana
+      * grafana-storage:/var/lib/grafana
 
   node-exporter:
     image: prom/node-exporter:latest
     ports:
-      - "9100:9100"
+      * "9100:9100"
     volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
+      * /proc:/host/proc:ro
+      * /sys:/host/sys:ro
+      * /:/rootfs:ro
     command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+      * '--path.procfs=/host/proc'
+      * '--path.sysfs=/host/sys'
+      * '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
 
 volumes:
   grafana-storage:
@@ -430,9 +430,9 @@ module.exports = logSecurityEvent;
 ```yaml
 # alert_rules.yml
 groups:
-  - name: application_alerts
+  * name: application_alerts
     rules:
-      - alert: HighErrorRate
+      * alert: HighErrorRate
         expr: (rate(http_requests_total{status_code=~"5.."}[5m]) / rate(http_requests_total[5m])) > 0.01
         for: 2m
         labels:
@@ -441,7 +441,7 @@ groups:
           summary: "High error rate detected"
           description: "Error rate is {{ $value | humanizePercentage }} for the last 5 minutes"
 
-      - alert: HighLatency
+      * alert: HighLatency
         expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 0.5
         for: 5m
         labels:
@@ -450,7 +450,7 @@ groups:
           summary: "High latency detected"
           description: "95th percentile latency is {{ $value }}s"
 
-      - alert: DatabaseConnectionFailure
+      * alert: DatabaseConnectionFailure
         expr: db_connection_pool_used / db_connection_pool_size > 0.9
         for: 1m
         labels:
@@ -459,9 +459,9 @@ groups:
           summary: "Database connection pool nearly exhausted"
           description: "Connection pool usage is {{ $value | humanizePercentage }}"
 
-  - name: infrastructure_alerts
+  * name: infrastructure_alerts
     rules:
-      - alert: HighCPUUsage
+      * alert: HighCPUUsage
         expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
         for: 5m
         labels:
@@ -470,7 +470,7 @@ groups:
           summary: "High CPU usage"
           description: "CPU usage is {{ $value }}% on {{ $labels.instance }}"
 
-      - alert: HighMemoryUsage
+      * alert: HighMemoryUsage
         expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 95
         for: 2m
         labels:
@@ -479,7 +479,7 @@ groups:
           summary: "High memory usage"
           description: "Memory usage is {{ $value }}% on {{ $labels.instance }}"
 
-      - alert: DiskSpaceLow
+      * alert: DiskSpaceLow
         expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100 > 95
         for: 1m
         labels:
@@ -488,9 +488,9 @@ groups:
           summary: "Disk space low"
           description: "Disk usage is {{ $value }}% on {{ $labels.instance }}"
 
-  - name: business_alerts
+  * name: business_alerts
     rules:
-      - alert: LowConversionRate
+      * alert: LowConversionRate
         expr: rate(user_registrations_total[1h]) < 10
         for: 30m
         labels:
@@ -1032,21 +1032,21 @@ module.exports = app;
 
 **AWS**
 
-- CloudWatch for metrics and logs
-- X-Ray for distributed tracing
-- CloudTrail for audit logs
+* CloudWatch for metrics and logs
+* X-Ray for distributed tracing
+* CloudTrail for audit logs
 
 **Google Cloud Platform**
 
-- Cloud Monitoring (Stackdriver)
-- Cloud Logging
-- Cloud Trace
+* Cloud Monitoring (Stackdriver)
+* Cloud Logging
+* Cloud Trace
 
 **Azure**
 
-- Azure Monitor
-- Application Insights
-- Log Analytics
+* Azure Monitor
+* Application Insights
+* Log Analytics
 
 ## Incident Response
 
@@ -1074,8 +1074,8 @@ module.exports = app;
 # High Error Rate Runbook
 
 ## Symptoms
-- Error rate > 1% for more than 2 minutes
-- 5xx HTTP status codes increasing
+* Error rate > 1% for more than 2 minutes
+* 5xx HTTP status codes increasing
 
 ## Investigation Steps
 1. Check application logs for error patterns
@@ -1090,9 +1090,9 @@ module.exports = app;
 4. If third-party issue: enable circuit breaker
 
 ## Communication
-- Update status page
-- Notify affected customers
-- Post in #incidents Slack channel
+* Update status page
+* Notify affected customers
+* Post in #incidents Slack channel
 ```
 
 This comprehensive monitoring and alerting standards document provides the foundation for maintaining

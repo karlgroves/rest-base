@@ -2,31 +2,31 @@
 
 ## Table of Contents
 
-- [Purpose](#purpose)
-- [Prerequisites](#prerequisites)
-- [Quick Start](#quick-start)
-- [Contents](#contents)
-- [Using These Standards in Your Projects](#using-these-standards-in-your-projects)
-  - [Option 1: Use the NPM Package (Recommended)](#option-1-use-the-npm-package-recommended)
-  - [Option 2: Clone and Copy](#option-2-clone-and-copy)
-  - [Option 3: Use as a Template Repository](#option-3-use-as-a-template-repository)
-- [Running the Scripts Locally](#running-the-scripts-locally)
-- [Documentation Navigation](#documentation-navigation)
-  - [Standards and Guidelines](#standards-and-guidelines)
-  - [API Design](#api-design)
-  - [Development Tools](#development-tools)
-  - [Project Management](#project-management)
-- [API Documentation Generator](#api-documentation-generator)
-- [Keyboard Shortcuts and Accessibility](#keyboard-shortcuts-and-accessibility)
-- [Troubleshooting](#troubleshooting)
-  - [Common Issues](#common-issues)
-    - [Node.js version error](#nodejs-version-error)
-    - [Permission denied when installing globally](#permission-denied-when-installing-globally)
-    - [Git not initialized](#git-not-initialized)
-    - [ESLint errors after project creation](#eslint-errors-after-project-creation)
-  - [Getting Help](#getting-help)
-- [Contributing](#contributing)
-- [License](#license)
+* [Purpose](#purpose)
+* [Prerequisites](#prerequisites)
+* [Quick Start](#quick-start)
+* [Contents](#contents)
+* [Using These Standards in Your Projects](#using-these-standards-in-your-projects)
+  * [Option 1: Use the NPM Package (Recommended)](#option-1-use-the-npm-package-recommended)
+  * [Option 2: Clone and Copy](#option-2-clone-and-copy)
+  * [Option 3: Use as a Template Repository](#option-3-use-as-a-template-repository)
+* [Running the Scripts Locally](#running-the-scripts-locally)
+* [Documentation Navigation](#documentation-navigation)
+  * [Standards and Guidelines](#standards-and-guidelines)
+  * [API Design](#api-design)
+  * [Development Tools](#development-tools)
+  * [Project Management](#project-management)
+* [API Documentation Generator](#api-documentation-generator)
+* [Keyboard Shortcuts and Accessibility](#keyboard-shortcuts-and-accessibility)
+* [Troubleshooting](#troubleshooting)
+  * [Common Issues](#common-issues)
+    * [Node.js version error](#nodejs-version-error)
+    * [Permission denied when installing globally](#permission-denied-when-installing-globally)
+    * [Git not initialized](#git-not-initialized)
+    * [ESLint errors after project creation](#eslint-errors-after-project-creation)
+  * [Getting Help](#getting-help)
+* [Contributing](#contributing)
+* [License](#license)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.11.0%20(LTS)-brightgreen.svg)](https://nodejs.org)
@@ -42,10 +42,10 @@ It serves as a starting point and reference for teams wanting to establish consi
 
 Before using REST Base, ensure you have the following installed:
 
-- **Node.js**: Version 22.11.0 or higher (Current LTS) ([Download here](https://nodejs.org))
-- **npm**: Comes bundled with Node.js
-- **Git**: For version control ([Download here](https://git-scm.com))
-- **MySQL/MariaDB**: If using database features (optional)
+* **Node.js**: Version 22.11.0 or higher (Current LTS) ([Download here](https://nodejs.org))
+* **npm**: Comes bundled with Node.js
+* **Git**: For version control ([Download here](https://git-scm.com))
+* **MySQL/MariaDB**: If using database features (optional)
 
 ## Quick Start
 
@@ -72,11 +72,11 @@ Your API will be running at `http://localhost:3000` with a health check endpoint
 
 ## Contents
 
-- **Architecture & Structure**: Guidelines for project structure, module organization, and code organization
-- **Coding Standards**: Detailed style guides for JavaScript/Node.js development
-- **API Design**: Conventions for endpoint design, request/response formats, and error handling
-- **Database**: SQL design patterns and best practices
-- **Security**: Guidelines for implementing secure APIs
+* **Architecture & Structure**: Guidelines for project structure, module organization, and code organization
+* **Coding Standards**: Detailed style guides for JavaScript/Node.js development
+* **API Design**: Conventions for endpoint design, request/response formats, and error handling
+* **Database**: SQL design patterns and best practices
+* **Security**: Guidelines for implementing secure APIs
 
 ## Using These Standards in Your Projects
 
@@ -139,26 +139,26 @@ npm run setup-standards ../path/to/existing-project
 
 ### Standards and Guidelines
 
-- [**Global Rules**](./global-rules.md) - Project-wide standards and conventions
-- [**Node.js Structure & Naming**](./node_structure_and_naming_conventions.md) - Code organization and naming conventions
-- [**Technologies**](./technologies.md) - Approved technologies, frameworks, and dependencies
-- [📊 **SQL Standards**](./sql-standards-and-patterns.md) - Database design patterns and SQL conventions
+* [**Global Rules**](./global-rules.md) - Project-wide standards and conventions
+* [**Node.js Structure & Naming**](./node_structure_and_naming_conventions.md) - Code organization and naming conventions
+* [**Technologies**](./technologies.md) - Approved technologies, frameworks, and dependencies
+* [📊 **SQL Standards**](./sql-standards-and-patterns.md) - Database design patterns and SQL conventions
 
 ### API Design
 
-- [**Operations & Responses**](./operations-and-responses.md) - REST API response formats and patterns
-- [**Request Patterns**](./request.md) - API request structure and conventions
-- [✅ **Validation**](./validation.md) - Input validation requirements and patterns
+* [**Operations & Responses**](./operations-and-responses.md) - REST API response formats and patterns
+* [**Request Patterns**](./request.md) - API request structure and conventions
+* [✅ **Validation**](./validation.md) - Input validation requirements and patterns
 
 ### Development Tools
 
-- [⚙️ **CLI API Documentation**](./CLI-API-DOCUMENTATION.md) - Complete guide to REST-SPEC CLI tools
-- [**Keyboard Shortcuts**](./KEYBOARD-SHORTCUTS.md) - Keyboard navigation and accessibility shortcuts
-- [**CLAUDE.md**](./CLAUDE.md) - Guidelines for AI assistants working with this codebase
+* [⚙️ **CLI API Documentation**](./CLI-API-DOCUMENTATION.md) - Complete guide to REST-SPEC CLI tools
+* [**Keyboard Shortcuts**](./KEYBOARD-SHORTCUTS.md) - Keyboard navigation and accessibility shortcuts
+* [**CLAUDE.md**](./CLAUDE.md) - Guidelines for AI assistants working with this codebase
 
 ### Project Management
 
-- [📝 **TODO List**](./todo.md) - Current development tasks and improvements
+* [📝 **TODO List**](./todo.md) - Current development tasks and improvements
 
 ## API Documentation Generator
 
@@ -167,11 +167,11 @@ your Express.js routes.
 
 ### Features
 
-- **🔍 Automatic Route Discovery**: Scans your project for Express route definitions
-- **📄 Multiple Output Formats**: OpenAPI 3.0 (JSON/YAML), Markdown, and HTML
-- **💬 JSDoc Support**: Extracts documentation from JSDoc comments
-- **🎯 Smart Parameter Detection**: Automatically identifies path and query parameters
-- **🏷️ Tag-based Organization**: Group endpoints by tags for better organization
+* **🔍 Automatic Route Discovery**: Scans your project for Express route definitions
+* **📄 Multiple Output Formats**: OpenAPI 3.0 (JSON/YAML), Markdown, and HTML
+* **💬 JSDoc Support**: Extracts documentation from JSDoc comments
+* **🎯 Smart Parameter Detection**: Automatically identifies path and query parameters
+* **🏷️ Tag-based Organization**: Group endpoints by tags for better organization
 
 ### Documentation Generator Quick Start
 
@@ -211,17 +211,17 @@ For complete documentation, see the [API Documentation Generator Guide](./docs/a
 
 The REST-SPEC CLI tools are designed with accessibility in mind and support extensive keyboard navigation:
 
-- **Full Keyboard Navigation**: All CLI features are accessible via keyboard shortcuts
-- **♿ Screen Reader Support**: Built-in accessibility mode for screen reader users
-- **🎨 High Contrast Mode**: Multiple color themes including high contrast and colorblind-friendly options
-- **⚡ Auto-completion**: Shell completion support for bash, zsh, and fish
+* **Full Keyboard Navigation**: All CLI features are accessible via keyboard shortcuts
+* **♿ Screen Reader Support**: Built-in accessibility mode for screen reader users
+* **🎨 High Contrast Mode**: Multiple color themes including high contrast and colorblind-friendly options
+* **⚡ Auto-completion**: Shell completion support for bash, zsh, and fish
 
 ### Key Features
 
-- **Interactive Mode**: Navigate menus with arrow keys, select with Space, confirm with Enter
-- **Tab Completion**: Auto-complete commands, options, and file paths
-- **Accessibility Mode**: Set `A11Y_MODE=1` for optimal screen reader experience
-- **Command History**: Use Ctrl+R for reverse search through command history
+* **Interactive Mode**: Navigate menus with arrow keys, select with Space, confirm with Enter
+* **Tab Completion**: Auto-complete commands, options, and file paths
+* **Accessibility Mode**: Set `A11Y_MODE=1` for optimal screen reader experience
+* **Command History**: Use Ctrl+R for reverse search through command history
 
 For a complete guide to keyboard shortcuts and accessibility features, see the [Keyboard Shortcuts Documentation](./KEYBOARD-SHORTCUTS.md).
 
@@ -273,9 +273,9 @@ npm run lint:js -- --fix
 
 ### Getting Help
 
-- Check the [documentation files](#standards-and-guidelines) for detailed guidelines
-- Review the generated project structure and example code
-- Submit issues on [GitHub](https://github.com/karlgroves/rest-base/issues)
+* Check the [documentation files](#standards-and-guidelines) for detailed guidelines
+* Review the generated project structure and example code
+* Submit issues on [GitHub](https://github.com/karlgroves/rest-base/issues)
 
 ## Contributing
 

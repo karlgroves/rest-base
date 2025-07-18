@@ -12,29 +12,29 @@ All CLI scripts have been updated to ensure output is descriptive and screen rea
 
 All status messages now include explicit text prefixes instead of relying on symbols:
 
-- ✅ → "Success:"
-- ❌ → "Error:"
-- ⚠️ → "Warning:"
-- ℹ️ → "Information:"
-- 🎉 → "Success:"
+* ✅ → "Success:"
+* ❌ → "Error:"
+* ⚠️ → "Warning:"
+* ℹ️ → "Information:"
+* 🎉 → "Success:"
 
 ### 2. Progress Indicators
 
-- Replaced checkmarks (✓) with "Success:" prefix
-- Added descriptive text to phase completion messages
-- Made progress steps more verbose with clear descriptions
+* Replaced checkmarks (✓) with "Success:" prefix
+* Added descriptive text to phase completion messages
+* Made progress steps more verbose with clear descriptions
 
 ### 3. Visual Decorations
 
-- Removed emoji icons from output messages
-- Replaced ASCII art boxes with simple text separators
-- Changed decorative separators (===) to descriptive text
+* Removed emoji icons from output messages
+* Replaced ASCII art boxes with simple text separators
+* Changed decorative separators (===) to descriptive text
 
 ### 4. Command Instructions
 
-- Numbered steps in "Next steps" sections for clarity
-- Added descriptive prefixes to commands (e.g., "Change to project directory:")
-- Made all instructions explicit rather than implicit
+* Numbered steps in "Next steps" sections for clarity
+* Added descriptive prefixes to commands (e.g., "Change to project directory:")
+* Made all instructions explicit rather than implicit
 
 ### 5. Update Notifications
 
@@ -56,32 +56,32 @@ UPDATE AVAILABLE: REST-SPEC
 
 The shared logger now uses text labels instead of symbols:
 
-- [INFO] instead of ℹ
-- [SUCCESS] instead of ✓
-- [WARNING] instead of ⚠
-- [ERROR] instead of ✗
-- [DEBUG] instead of ●
+* [INFO] instead of ℹ
+* [SUCCESS] instead of ✓
+* [WARNING] instead of ⚠
+* [ERROR] instead of ✗
+* [DEBUG] instead of ●
 
 ### 7. CLI Enhancement Icons
 
 In the dry-run and operation tracking, icons have been replaced:
 
-- 📁 → [CREATE]
-- ✏️ → [MODIFY]
-- 🗑️ → [DELETE]
-- → [COPY]
-- ⚡ → [EXECUTE]
-- 💾 → [BACKUP]
+* 📁 → [CREATE]
+* ✏️ → [MODIFY]
+* 🗑️ → [DELETE]
+* → [COPY]
+* ⚡ → [EXECUTE]
+* 💾 → [BACKUP]
 
 ## New Accessibility Utilities
 
 A new utility module has been created at `shared/accessibility-utils.js` that provides:
 
-- `AccessibleProgress`: Screen reader friendly progress tracking
-- `AccessibleSpinner`: Announces progress at intervals
-- `formatAccessibleList`: Formats lists with item counts
-- `formatAccessibleTable`: Converts tables to screen reader friendly format
-- `formatStatusMessage`: Consistent status message formatting
+* `AccessibleProgress`: Screen reader friendly progress tracking
+* `AccessibleSpinner`: Announces progress at intervals
+* `formatAccessibleList`: Formats lists with item counts
+* `formatAccessibleTable`: Converts tables to screen reader friendly format
+* `formatStatusMessage`: Consistent status message formatting
 
 ## Usage Guidelines
 
@@ -116,13 +116,13 @@ To test screen reader compatibility:
 
 The following CLI scripts have been updated:
 
-- `scripts/create-project.js`
-- `scripts/setup-standards.js`
-- `scripts/update-manager.js`
-- `scripts/create-project-template.js`
-- `scripts/cli-enhancements.js`
-- `shared/logger.js`
-- `shared/update-checker.js`
+* `scripts/create-project.js`
+* `scripts/setup-standards.js`
+* `scripts/update-manager.js`
+* `scripts/create-project-template.js`
+* `scripts/cli-enhancements.js`
+* `shared/logger.js`
+* `shared/update-checker.js`
 
 ## Future Improvements
 

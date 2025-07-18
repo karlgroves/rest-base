@@ -6,25 +6,25 @@ A production-ready microservice built with Node.js and Express, following REST-S
 
 ## Features
 
-- **RESTful API**: Clean REST API design with proper HTTP methods and status codes
-- **Health Checks**: Kubernetes-ready health endpoints (liveness, readiness, startup)
-- **Security**: Helmet.js, CORS, rate limiting, input validation
-- **Logging**: Structured logging with Bunyan
-- **Documentation**: Auto-generated Swagger/OpenAPI documentation
-- **Testing**: Comprehensive test suite with Jest
-- **Docker**: Multi-stage Dockerfile with security best practices
-- **Performance**: Built-in performance monitoring and benchmarking
-- **Database**: PostgreSQL integration with connection pooling
-- **Caching**: Redis integration for performance optimization
+* **RESTful API**: Clean REST API design with proper HTTP methods and status codes
+* **Health Checks**: Kubernetes-ready health endpoints (liveness, readiness, startup)
+* **Security**: Helmet.js, CORS, rate limiting, input validation
+* **Logging**: Structured logging with Bunyan
+* **Documentation**: Auto-generated Swagger/OpenAPI documentation
+* **Testing**: Comprehensive test suite with Jest
+* **Docker**: Multi-stage Dockerfile with security best practices
+* **Performance**: Built-in performance monitoring and benchmarking
+* **Database**: PostgreSQL integration with connection pooling
+* **Caching**: Redis integration for performance optimization
 
 ## Quick Start
 
 ### Prerequisites
 
-- Node.js 22.11.0 or higher
-- PostgreSQL 15+
-- Redis 7+
-- Docker (optional)
+* Node.js 22.11.0 or higher
+* PostgreSQL 15+
+* Redis 7+
+* Docker (optional)
 
 ### Local Development
 
@@ -48,9 +48,9 @@ A production-ready microservice built with Node.js and Express, following REST-S
    ```
 
 4. **Access the application:**
-   - API: <http://localhost:3000/api>
-   - Health: <http://localhost:3000/health>
-   - Documentation: <http://localhost:3000/api-docs>
+   * API: <http://localhost:3000/api>
+   * Health: <http://localhost:3000/health>
+   * Documentation: <http://localhost:3000/api-docs>
 
 ### Docker Development
 
@@ -67,33 +67,33 @@ A production-ready microservice built with Node.js and Express, following REST-S
    ```
 
 3. **Access services:**
-   - API: <http://localhost:3000>
-   - Adminer (DB): <http://localhost:8080>
-   - Redis Commander: <http://localhost:8081>
+   * API: <http://localhost:3000>
+   * Adminer (DB): <http://localhost:8080>
+   * Redis Commander: <http://localhost:8081>
 
 ## API Endpoints
 
 ### Core Endpoints
 
-- `GET /` - Service information
-- `GET /api` - API information and available endpoints
-- `GET /api-docs` - Interactive API documentation
+* `GET /` - Service information
+* `GET /api` - API information and available endpoints
+* `GET /api-docs` - Interactive API documentation
 
 ### Health Endpoints
 
-- `GET /health` - Basic health status
-- `GET /health/detailed` - Detailed health information
-- `GET /health/live` - Kubernetes liveness probe
-- `GET /health/ready` - Kubernetes readiness probe
-- `GET /health/startup` - Kubernetes startup probe
+* `GET /health` - Basic health status
+* `GET /health/detailed` - Detailed health information
+* `GET /health/live` - Kubernetes liveness probe
+* `GET /health/ready` - Kubernetes readiness probe
+* `GET /health/startup` - Kubernetes startup probe
 
 ### Business Endpoints
 
-- `GET /api/items` - List items with pagination and search
-- `GET /api/items/:id` - Get specific item
-- `POST /api/items` - Create new item
-- `PUT /api/items/:id` - Update item
-- `DELETE /api/items/:id` - Delete item
+* `GET /api/items` - List items with pagination and search
+* `GET /api/items/:id` - Get specific item
+* `POST /api/items` - Create new item
+* `PUT /api/items/:id` - Update item
+* `DELETE /api/items/:id` - Delete item
 
 ## Configuration
 
@@ -101,25 +101,25 @@ The microservice uses environment variables for configuration. See `.env.example
 
 ### Key Configuration Areas
 
-- **Server**: Port, host, environment
-- **Database**: PostgreSQL connection settings
-- **Redis**: Cache configuration
-- **Security**: JWT secrets, CORS origins
-- **Features**: Feature flags for optional functionality
+* **Server**: Port, host, environment
+* **Database**: PostgreSQL connection settings
+* **Redis**: Cache configuration
+* **Security**: JWT secrets, CORS origins
+* **Features**: Feature flags for optional functionality
 
 ## Development
 
 ### Available Scripts
 
-- `npm start` - Start production server
-- `npm run dev` - Start development server with hot reload
-- `npm test` - Run test suite
-- `npm run test:watch` - Run tests in watch mode
-- `npm run test:coverage` - Generate test coverage report
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix linting issues
-- `npm run format` - Format code with Prettier
-- `npm run benchmark` - Run performance benchmarks
+* `npm start` - Start production server
+* `npm run dev` - Start development server with hot reload
+* `npm test` - Run test suite
+* `npm run test:watch` - Run tests in watch mode
+* `npm run test:coverage` - Generate test coverage report
+* `npm run lint` - Run ESLint
+* `npm run lint:fix` - Fix linting issues
+* `npm run format` - Format code with Prettier
+* `npm run benchmark` - Run performance benchmarks
 
 ### Testing
 
@@ -141,10 +141,10 @@ npm run test:watch
 
 The project includes:
 
-- **ESLint**: Code linting with Airbnb configuration
-- **Prettier**: Code formatting
-- **Jest**: Testing framework with coverage reporting
-- **Husky**: Git hooks for quality checks
+* **ESLint**: Code linting with Airbnb configuration
+* **Prettier**: Code formatting
+* **Jest**: Testing framework with coverage reporting
+* **Husky**: Git hooks for quality checks
 
 ## Deployment
 
@@ -199,38 +199,38 @@ startupProbe:
 
 The microservice provides comprehensive health monitoring:
 
-- **System**: CPU, memory, disk usage
-- **Database**: PostgreSQL connection health
-- **Cache**: Redis connection health
-- **External Services**: Upstream service health
+* **System**: CPU, memory, disk usage
+* **Database**: PostgreSQL connection health
+* **Cache**: Redis connection health
+* **External Services**: Upstream service health
 
 ### Logging
 
 Structured logging with Bunyan provides:
 
-- JSON-formatted logs for easy parsing
-- Log rotation to prevent disk space issues
-- Different log levels for different environments
-- Request/response logging for debugging
-- Error tracking with stack traces
+* JSON-formatted logs for easy parsing
+* Log rotation to prevent disk space issues
+* Different log levels for different environments
+* Request/response logging for debugging
+* Error tracking with stack traces
 
 ### Performance
 
-- Built-in performance benchmarking
-- Response time monitoring
-- Memory usage tracking
-- Database operation timing
+* Built-in performance benchmarking
+* Response time monitoring
+* Memory usage tracking
+* Database operation timing
 
 ## Security
 
 The microservice implements multiple security layers:
 
-- **Helmet.js**: Security headers
-- **CORS**: Cross-origin request protection
-- **Rate Limiting**: Prevent abuse
-- **Input Validation**: Sanitize user input
-- **JWT Authentication**: Secure API access
-- **Environment Variables**: Secure configuration
+* **Helmet.js**: Security headers
+* **CORS**: Cross-origin request protection
+* **Rate Limiting**: Prevent abuse
+* **Input Validation**: Sanitize user input
+* **JWT Authentication**: Secure API access
+* **Environment Variables**: Secure configuration
 
 ## Contributing
 
@@ -249,6 +249,6 @@ MIT License - see LICENSE file for details.
 
 For questions and support:
 
-- **Documentation**: /api-docs endpoint
-- **Health Status**: /health endpoint
-- **Issues**: Create an issue in the repository
+* **Documentation**: /api-docs endpoint
+* **Health Status**: /health endpoint
+* **Issues**: Create an issue in the repository

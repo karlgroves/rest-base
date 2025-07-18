@@ -6,64 +6,65 @@
 
 ## Table of Contents
 
-* [Introduction](#introduction)
-  * [MySQL 8.0.40 Compatibility](#mysql-8040-compatibility)
-* [ORM vs Raw SQL Decision Matrix](#orm-vs-raw-sql-decision-matrix)
-  * [When to Use Sequelize ORM](#when-to-use-sequelize-orm)
-  * [When to Use Raw SQL](#when-to-use-raw-sql)
-  * [Hybrid Approach Guidelines](#hybrid-approach-guidelines)
-  * [Performance Considerations](#performance-considerations)
-* [Table Structures](#table-structures)
-* [Table Naming Conventions](#table-naming-conventions)
-* [Column Naming Conventions](#column-naming-conventions)
-* [SQL Keywords and Formatting](#sql-keywords-and-formatting)
-  * [SQL Keywords Must Be Capitalized](#sql-keywords-must-be-capitalized)
-  * [SQL Formatting & Indentation](#sql-formatting--indentation)
-  * [Use Standard SQL Operators](#use-standard-sql-operators)
-* [Database Design Patterns](#database-design-patterns)
-  * [ID Strategies](#id-strategies)
-  * [Relationship Patterns](#relationship-patterns)
-  * [Index Patterns](#index-patterns)
-  * [Index and View Naming Conventions](#index-and-view-naming-conventions)
-  * [Data Types](#data-types)
-  * [Constraints](#constraints)
-* [SQL Query Best Practices](#sql-query-best-practices)
-  * [Limit Results](#limit-results)
-  * [Parameterize Queries](#parameterize-queries)
-  * [Store Queries in Variables](#store-queries-in-variables)
-* [Migration Patterns](#migration-patterns)
-  * [Migration Naming](#migration-naming)
-  * [Migration Types](#migration-types)
-  * [Reversibility](#reversibility)
-* [Database Engine Settings](#database-engine-settings)
-  * [Character Set and Collation](#character-set-and-collation)
-  * [Storage Engine](#storage-engine)
-  * [Time Zone Setting](#time-zone-setting)
-* [Security Considerations](#security-considerations)
-  * [Avoiding SQL Injection](#avoiding-sql-injection)
-  * [Avoid Reserved Words](#avoid-reserved-words)
-* [Role-Based Authorization Design](#role-based-authorization-design)
-  * [Permission Model](#permission-model)
-  * [Role System](#role-system)
-* [Data Integrity Patterns](#data-integrity-patterns)
-  * [Soft Deletion](#soft-deletion)
-  * [Audit Trailing](#audit-trailing)
-  * [Foreign Key Constraints](#foreign-key-constraints)
-* [Node.js Integration](#nodejs-integration)
-  * [ORM Usage](#orm-usage)
-  * [Transaction Management](#transaction-management)
-  * [Connection Pooling](#connection-pooling)
-* [Schema Evolution Patterns](#schema-evolution-patterns)
-* [Conclusion](#conclusion)
+- [Introduction](#introduction)
+  - [MySQL 8.0.40 Compatibility](#mysql-8040-compatibility)
+- [ORM vs Raw SQL Decision Matrix](#orm-vs-raw-sql-decision-matrix)
+  - [When to Use Sequelize ORM](#when-to-use-sequelize-orm)
+  - [When to Use Raw SQL](#when-to-use-raw-sql)
+  - [Hybrid Approach Guidelines](#hybrid-approach-guidelines)
+  - [Performance Considerations](#performance-considerations)
+- [Table Structures](#table-structures)
+- [Table Naming Conventions](#table-naming-conventions)
+- [Column Naming Conventions](#column-naming-conventions)
+- [SQL Keywords and Formatting](#sql-keywords-and-formatting)
+  - [SQL Keywords Must Be Capitalized](#sql-keywords-must-be-capitalized)
+  - [SQL Formatting & Indentation](#sql-formatting--indentation)
+  - [Use Standard SQL Operators](#use-standard-sql-operators)
+- [Database Design Patterns](#database-design-patterns)
+  - [ID Strategies](#id-strategies)
+  - [Relationship Patterns](#relationship-patterns)
+  - [Index Patterns](#index-patterns)
+  - [Index and View Naming Conventions](#index-and-view-naming-conventions)
+  - [Data Types](#data-types)
+  - [Constraints](#constraints)
+- [SQL Query Best Practices](#sql-query-best-practices)
+  - [Limit Results](#limit-results)
+  - [Parameterize Queries](#parameterize-queries)
+  - [Store Queries in Variables](#store-queries-in-variables)
+- [Migration Patterns](#migration-patterns)
+  - [Migration Naming](#migration-naming)
+  - [Migration Types](#migration-types)
+  - [Reversibility](#reversibility)
+- [Database Engine Settings](#database-engine-settings)
+  - [Character Set and Collation](#character-set-and-collation)
+  - [Storage Engine](#storage-engine)
+  - [Time Zone Setting](#time-zone-setting)
+- [Security Considerations](#security-considerations)
+  - [Avoiding SQL Injection](#avoiding-sql-injection)
+  - [Avoid Reserved Words](#avoid-reserved-words)
+- [Role-Based Authorization Design](#role-based-authorization-design)
+  - [Permission Model](#permission-model)
+  - [Role System](#role-system)
+- [Data Integrity Patterns](#data-integrity-patterns)
+  - [Soft Deletion](#soft-deletion)
+  - [Audit Trailing](#audit-trailing)
+  - [Foreign Key Constraints](#foreign-key-constraints)
+- [Node.js Integration](#nodejs-integration)
+  - [ORM Usage](#orm-usage)
+  - [Transaction Management](#transaction-management)
+  - [Connection Pooling](#connection-pooling)
+- [Schema Evolution Patterns](#schema-evolution-patterns)
+- [Conclusion](#conclusion)
 
 ## Introduction
 
-All database development for this system is built for MySQL/MariaDB. SQL used in the application should adhere to 
-standard SQL syntax where possible, using MySQL-specific syntax only when necessary. Where standard SQL is not 
+All database development for this system is built for MySQL/MariaDB. SQL used in the application should adhere to
+standard SQL syntax where possible, using MySQL-specific syntax only when necessary. Where standard SQL is not
 supported, the MySQL-specific approach should be used.
 
 **Primary Database Requirements:**
-* MySQL 8.0.40+ / MariaDB 10.11+
+
+- MySQL 8.0.40+ / MariaDB 10.11+
 
 While other databases are not supported, adhering to SQL standards where practical ensures cleaner, more maintainable code.
 
@@ -73,13 +74,13 @@ This document outlines our SQL design patterns, naming conventions, and best pra
 
 This project requires MySQL 8.0.40 or higher to take advantage of:
 
-* **Common Table Expressions (CTEs)**: For improved query readability and recursive queries
-* **Window Functions**: For advanced analytics and reporting
-* **JSON Functions**: Enhanced JSON data type support and manipulation
-* **Improved Performance**: Better query optimizer and execution engine
-* **Enhanced Security**: Improved authentication plugins and encryption
-* **CHECK Constraints**: Native support for CHECK constraints
-* **Instant DDL**: Faster ALTER TABLE operations for certain changes
+- **Common Table Expressions (CTEs)**: For improved query readability and recursive queries
+- **Window Functions**: For advanced analytics and reporting
+- **JSON Functions**: Enhanced JSON data type support and manipulation
+- **Improved Performance**: Better query optimizer and execution engine
+- **Enhanced Security**: Improved authentication plugins and encryption
+- **CHECK Constraints**: Native support for CHECK constraints
+- **Instant DDL**: Faster ALTER TABLE operations for certain changes
 
 When using MySQL-specific features, ensure they are available in MySQL 8.0.40+.
 
@@ -89,33 +90,33 @@ When using MySQL-specific features, ensure they are available in MySQL 8.0.40+.
 
 **Recommended for:**
 
-* **CRUD Operations**: Standard create, read, update, delete operations
-* **Model Relationships**: Managing associations between tables (hasMany, belongsTo, etc.)
-* **Schema Migrations**: Database schema changes and version control
-* **Data Validation**: Built-in validation rules and type checking
-* **Connection Management**: Automatic connection pooling and transaction handling
-* **Development Speed**: Rapid prototyping and standard business logic
-* **Type Safety**: When using TypeScript with Sequelize models
+- **CRUD Operations**: Standard create, read, update, delete operations
+- **Model Relationships**: Managing associations between tables (hasMany, belongsTo, etc.)
+- **Schema Migrations**: Database schema changes and version control
+- **Data Validation**: Built-in validation rules and type checking
+- **Connection Management**: Automatic connection pooling and transaction handling
+- **Development Speed**: Rapid prototyping and standard business logic
+- **Type Safety**: When using TypeScript with Sequelize models
 
 **Sequelize Example:**
 
 ```javascript
 // User model with associations
-const User = sequelize.define('User', {
+const User = sequelize.define("User", {
   id: { type: DataTypes.UUID, primaryKey: true },
   email: { type: DataTypes.STRING, unique: true, allowNull: false },
-  name: { type: DataTypes.STRING, allowNull: false }
+  name: { type: DataTypes.STRING, allowNull: false },
 });
 
 // Simple CRUD operations
 const user = await User.findByPk(userId, {
-  include: [{ model: Team, through: 'UserTeams' }]
+  include: [{ model: Team, through: "UserTeams" }],
 });
 
 const newUser = await User.create({
   id: uuidv4(),
-  email: 'user@example.com',
-  name: 'John Doe'
+  email: "user@example.com",
+  name: "John Doe",
 });
 ```
 
@@ -123,19 +124,20 @@ const newUser = await User.create({
 
 **Recommended for:**
 
-* **Complex Queries**: Multi-table joins with complex conditions
-* **Performance-Critical Operations**: Optimized queries for high-traffic endpoints
-* **Database-Specific Features**: MySQL-specific functions and optimizations
-* **Reporting and Analytics**: Aggregations, window functions, and complex calculations
-* **Bulk Operations**: Large data imports, exports, or batch processing
-* **Custom Optimization**: Hand-tuned queries for specific performance requirements
-* **Legacy Database Integration**: Working with existing database schemas
+- **Complex Queries**: Multi-table joins with complex conditions
+- **Performance-Critical Operations**: Optimized queries for high-traffic endpoints
+- **Database-Specific Features**: MySQL-specific functions and optimizations
+- **Reporting and Analytics**: Aggregations, window functions, and complex calculations
+- **Bulk Operations**: Large data imports, exports, or batch processing
+- **Custom Optimization**: Hand-tuned queries for specific performance requirements
+- **Legacy Database Integration**: Working with existing database schemas
 
 **Raw SQL Example:**
 
 ```javascript
 // Complex analytics query
-const monthlyStats = await sequelize.query(`
+const monthlyStats = await sequelize.query(
+  `
   SELECT 
     DATE_FORMAT(u.created, '%Y-%m') AS month,
     COUNT(DISTINCT u.userId) AS new_users,
@@ -148,7 +150,9 @@ const monthlyStats = await sequelize.query(`
   WHERE u.created >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
   GROUP BY DATE_FORMAT(u.created, '%Y-%m')
   ORDER BY month DESC
-`, { type: QueryTypes.SELECT });
+`,
+  { type: QueryTypes.SELECT },
+);
 ```
 
 ### Hybrid Approach Guidelines
@@ -157,27 +161,32 @@ const monthlyStats = await sequelize.query(`
 
 ```javascript
 // Use Sequelize for model definition and simple operations
-const User = sequelize.define('User', { /* ... */ });
+const User = sequelize.define("User", {
+  /* ... */
+});
 
 // Use raw SQL for complex queries within the same service
 class UserAnalyticsService {
   async getUserStats(userId) {
     // Simple operation with Sequelize
     const user = await User.findByPk(userId);
-    
+
     // Complex query with raw SQL
-    const stats = await sequelize.query(`
+    const stats = await sequelize.query(
+      `
       SELECT 
         COUNT(*) as total_logins,
         MAX(created) as last_login,
         AVG(TIMESTAMPDIFF(SECOND, login_time, logout_time)) as avg_session_duration
       FROM userSessions 
       WHERE userId = :userId
-    `, {
-      replacements: { userId },
-      type: QueryTypes.SELECT
-    });
-    
+    `,
+      {
+        replacements: { userId },
+        type: QueryTypes.SELECT,
+      },
+    );
+
     return { user, stats: stats[0] };
   }
 }
@@ -187,17 +196,17 @@ class UserAnalyticsService {
 
 **Sequelize Optimization:**
 
-* Use `attributes` to select only needed columns
-* Include associations efficiently with `include`
-* Use `raw: true` for read-only operations
-* Implement proper indexing on frequently queried fields
+- Use `attributes` to select only needed columns
+- Include associations efficiently with `include`
+- Use `raw: true` for read-only operations
+- Implement proper indexing on frequently queried fields
 
 **Raw SQL Optimization:**
 
-* Always use parameterized queries to prevent SQL injection
-* Implement proper error handling and connection management
-* Use database-specific optimizations when appropriate
-* Monitor query performance and execution plans
+- Always use parameterized queries to prevent SQL injection
+- Implement proper error handling and connection management
+- Use database-specific optimizations when appropriate
+- Monitor query performance and execution plans
 
 ## Table Structures
 
@@ -217,13 +226,15 @@ class UserAnalyticsService {
 
 1. **CamelCase for Column Names**: All column names use camelCase (e.g., `userId`, `tokenHash`, `permissionId`).
 2. **Primary Keys**:
-   * `inc`: Used as an auto-incrementing integer primary key in most tables.
-   * Entity-specific IDs: Many tables also include a UUID-based identifier (e.g., `userId`, `teamId`, `logId`).
+
+   - `inc`: Used as an auto-incrementing integer primary key in most tables.
+   - Entity-specific IDs: Many tables also include a UUID-based identifier (e.g., `userId`, `teamId`, `logId`).
 
 3. **Common Columns**:
-   * `created`: Timestamp column with default `CURRENT_TIMESTAMP`.
-   * `updated`: Timestamp column with default `CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`.
-   * Entity-related IDs: Foreign key columns typically named as `entityId` (e.g., `userId`, `teamId`).
+
+   - `created`: Timestamp column with default `CURRENT_TIMESTAMP`.
+   - `updated`: Timestamp column with default `CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`.
+   - Entity-related IDs: Foreign key columns typically named as `entityId` (e.g., `userId`, `teamId`).
 
 4. **Boolean Columns**: Use `ENUM('0', '1')` with default `'0'` rather than MySQL's BOOLEAN type (e.g., `confirmed`, `isBanned`).
 
@@ -247,7 +258,7 @@ FROM
     table2 t2
 WHERE
     some_condition
-    AND 
+    AND
     some_other_condition
 ```
 
@@ -255,9 +266,9 @@ WHERE
 
 Use standard SQL operators for better cross-database compatibility:
 
-* Use `<>` for "not equals" instead of `!=`
-* Avoid MySQL-specific syntax like backticks (`) to enclose identifiers
-* Use standard SQL functions when available
+- Use `<>` for "not equals" instead of `!=`
+- Avoid MySQL-specific syntax like backticks (`) to enclose identifiers
+- Use standard SQL functions when available
 
 ## Database Design Patterns
 
@@ -282,11 +293,11 @@ Use standard SQL operators for better cross-database compatibility:
 
 **Index Naming Standards:**
 
-* **Primary Key Indexes**: Use table name + `_pk` (automatically created, but for reference: `users_pk`)
-* **Unique Indexes**: Use `uq_` prefix + table name + column name(s): `uq_users_email`, `uq_teams_name`
-* **Foreign Key Indexes**: Use `fk_` prefix + table name + referenced table: `fk_userTeams_users`, `fk_userTeams_teams`
-* **Composite Indexes**: Use `idx_` prefix + table name + column names: `idx_users_email_status`, `idx_logs_userId_created`
-* **Performance Indexes**: Use `perf_` prefix + table name + purpose: `perf_users_login_lookup`, `perf_logs_recent_activity`
+- **Primary Key Indexes**: Use table name + `_pk` (automatically created, but for reference: `users_pk`)
+- **Unique Indexes**: Use `uq_` prefix + table name + column name(s): `uq_users_email`, `uq_teams_name`
+- **Foreign Key Indexes**: Use `fk_` prefix + table name + referenced table: `fk_userTeams_users`, `fk_userTeams_teams`
+- **Composite Indexes**: Use `idx_` prefix + table name + column names: `idx_users_email_status`, `idx_logs_userId_created`
+- **Performance Indexes**: Use `perf_` prefix + table name + purpose: `perf_users_login_lookup`, `perf_logs_recent_activity`
 
 **Index Examples:**
 
@@ -306,10 +317,10 @@ CREATE INDEX perf_users_active_lookup ON users (isActive, lastLogin) WHERE delet
 
 **View Naming Standards:**
 
-* **Simple Views**: Use `v_` prefix + descriptive name: `v_activeUsers`, `v_teamSummary`
-* **Aggregate Views**: Use `v_agg_` prefix + purpose: `v_agg_userStatistics`, `v_agg_monthlyMetrics`
-* **Reporting Views**: Use `v_rpt_` prefix + report name: `v_rpt_userActivity`, `v_rpt_teamPerformance`
-* **Security Views**: Use `v_sec_` prefix + purpose: `v_sec_userPermissions`, `v_sec_auditTrail`
+- **Simple Views**: Use `v_` prefix + descriptive name: `v_activeUsers`, `v_teamSummary`
+- **Aggregate Views**: Use `v_agg_` prefix + purpose: `v_agg_userStatistics`, `v_agg_monthlyMetrics`
+- **Reporting Views**: Use `v_rpt_` prefix + report name: `v_rpt_userActivity`, `v_rpt_teamPerformance`
+- **Security Views**: Use `v_sec_` prefix + purpose: `v_sec_userPermissions`, `v_sec_auditTrail`
 
 **View Examples:**
 
@@ -317,21 +328,21 @@ CREATE INDEX perf_users_active_lookup ON users (isActive, lastLogin) WHERE delet
 -- Simple view for active users
 CREATE VIEW v_activeUsers AS
 SELECT userId, email, name, lastLogin
-FROM users 
+FROM users
 WHERE isActive = '1' AND deletedAt IS NULL;
 
 -- Aggregate view for user statistics
 CREATE VIEW v_agg_userStatistics AS
-SELECT 
+SELECT
     COUNT(*) as totalUsers,
     COUNT(CASE WHEN isActive = '1' THEN 1 END) as activeUsers,
     COUNT(CASE WHEN created >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 1 END) as newUsers
-FROM users 
+FROM users
 WHERE deletedAt IS NULL;
 
 -- Reporting view for team performance
 CREATE VIEW v_rpt_teamPerformance AS
-SELECT 
+SELECT
     t.teamId,
     t.name as teamName,
     COUNT(tm.userId) as memberCount,
@@ -345,11 +356,11 @@ GROUP BY t.teamId, t.name;
 
 **Index Maintenance Guidelines:**
 
-* **Monitor Performance**: Regularly analyze slow query logs to identify missing indexes
-* **Avoid Over-Indexing**: Each index adds overhead to `INSERT`/`UPDATE` operations
-* **Composite Index Order**: Place most selective columns first in composite indexes
-* **Partial Indexes**: Use `WHERE` clauses in indexes for filtered queries (MySQL 8.0+)
-* **Index Documentation**: Document the purpose and queries each index serves
+- **Monitor Performance**: Regularly analyze slow query logs to identify missing indexes
+- **Avoid Over-Indexing**: Each index adds overhead to `INSERT`/`UPDATE` operations
+- **Composite Index Order**: Place most selective columns first in composite indexes
+- **Partial Indexes**: Use `WHERE` clauses in indexes for filtered queries (MySQL 8.0+)
+- **Index Documentation**: Document the purpose and queries each index serves
 
 ### Data Types
 
@@ -405,7 +416,7 @@ const query = "SELECT * FROM users WHERE id = ?";
 db.query(query, [req.params.id]);
 ```
 
-With MySQL in Node.js, use the `?` placeholder syntax for parameter substitution, or named parameters with libraries that support them.
+With MySQL in Node.js, use the `?` placeholder syntax for parameter substitution,\nor named parameters with libraries that support them.
 
 ### Store Queries in Variables
 
@@ -430,11 +441,11 @@ const query = `
 
 // Execute the query
 try {
-    const user = await db.query(query, [userId]);
-    // Process results
+  const user = await db.query(query, [userId]);
+  // Process results
 } catch (error) {
-    console.error('Query error:', error);
-    console.log('Failed query:', query); // Helpful for debugging
+  console.error("Query error:", error);
+  console.log("Failed query:", query); // Helpful for debugging
 }
 ```
 
@@ -487,7 +498,7 @@ Example with Sequelize ORM:
 ```javascript
 // Safely querying with Sequelize
 const user = await User.findOne({
-  where: { id: userId }
+  where: { id: userId },
 });
 ```
 
@@ -495,10 +506,9 @@ Example with MySQL2 driver:
 
 ```javascript
 // Safely querying with parameterized query
-const [rows] = await connection.execute(
-  'SELECT * FROM users WHERE id = ?', 
-  [userId]
-);
+const [rows] = await connection.execute("SELECT * FROM users WHERE id = ?", [
+  userId,
+]);
 ```
 
 ### Avoid Reserved Words
@@ -519,8 +529,8 @@ A list of MySQL reserved words: [MySQL Reserved Words](http://dev.mysql.com/doc/
 
 Role-based access control implemented via `ENUM` fields:
 
-* User roles: `'superadmin'`, `'admin'`, `'attendee'`
-* Team member roles: `'teamMember'`, `'teamAdmin'`
+- User roles: `'superadmin'`, `'admin'`, `'attendee'`
+- Team member roles: `'teamMember'`, `'teamAdmin'`
 
 ## Data Integrity Patterns
 
@@ -552,33 +562,37 @@ SELECT * FROM users WHERE deletedAt IS NULL;
 
 ### ORM Usage
 
-We use Sequelize as our primary ORM. Models should follow the same naming conventions as tables but in singular form and PascalCase:
+We use Sequelize as our primary ORM. Models should follow the same naming conventions as tables\nbut in singular form and PascalCase:
 
 ```javascript
 // User model for 'users' table
-const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    autoIncrement: true,
-    primaryKey: true
+const User = sequelize.define(
+  "User",
+  {
+    id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    userId: {
+      type: DataTypes.STRING(36),
+      allowNull: false,
+      unique: true,
+    },
+    email: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      unique: true,
+    },
+    // Additional fields...
   },
-  userId: {
-    type: DataTypes.STRING(36),
-    allowNull: false,
-    unique: true
+  {
+    tableName: "users",
+    timestamps: true,
+    createdAt: "created",
+    updatedAt: "updated",
   },
-  email: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-    unique: true
-  },
-  // Additional fields...
-}, {
-  tableName: 'users',
-  timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated'
-});
+);
 ```
 
 ### Transaction Management
@@ -590,18 +604,24 @@ const transaction = await sequelize.transaction();
 
 try {
   // Create a team
-  const team = await Team.create({
-    name: 'New Team',
-    teamId: uuidv4()
-  }, { transaction });
-  
+  const team = await Team.create(
+    {
+      name: "New Team",
+      teamId: uuidv4(),
+    },
+    { transaction },
+  );
+
   // Add a member to the team
-  await TeamMember.create({
-    teamId: team.teamId,
-    userId: currentUser.userId,
-    role: 'teamAdmin'
-  }, { transaction });
-  
+  await TeamMember.create(
+    {
+      teamId: team.teamId,
+      userId: currentUser.userId,
+      role: "teamAdmin",
+    },
+    { transaction },
+  );
+
   await transaction.commit();
 } catch (error) {
   await transaction.rollback();
@@ -621,7 +641,7 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
 });
 ```
 
@@ -633,4 +653,6 @@ const pool = mysql.createPool({
 
 ## Conclusion
 
-Following these SQL standards and design patterns will ensure consistency, maintainability, and security in your Node.js applications. The database design supports multi-tenant applications with team-based collaboration, role-based access control, and comprehensive event logging.
+Following these SQL standards and design patterns will ensure consistency, maintainability, and security
+in your Node.js applications. The database design supports multi-tenant applications with team-based
+collaboration, role-based access control, and comprehensive event logging.

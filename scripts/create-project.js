@@ -15,7 +15,7 @@ const { spawn } = require("child_process");
 const { pipeline } = require("stream/promises");
 const UpdateChecker = require("../shared/update-checker");
 const logger = require("../shared/logger");
-const { formatSection, formatStatus, createSpinner } = require("../shared/cli-utils");
+// const { formatSection, formatStatus, createSpinner } = require("../shared/cli-utils");
 
 // Mock functions for missing dependencies
 const getEslintConfigString = () => "module.exports = {};";
@@ -57,7 +57,6 @@ const loadConfig = () => ({
   },
 });
 
-
 // Cache for configuration data
 const configCache = {
   eslintConfig: null,
@@ -98,7 +97,6 @@ function getEnvExample() {
   }
   return configCache.envExample;
 }
-
 
 /**
  * Validates project name to prevent security issues
@@ -693,9 +691,8 @@ async function initGit(projectDir) {
     normalizedPath.includes("..") ||
     !path.isAbsolute(normalizedPath)
   ) {
-    log(
+    logger.warn(
       "WARNING: Invalid or unsafe project directory path, skipping Git initialization",
-      colors.yellow,
     );
     return;
   }
@@ -705,14 +702,12 @@ async function initGit(projectDir) {
     await fs.access(normalizedPath);
   } catch (error) {
     if (error.code === "ENOENT") {
-      log(
+      logger.warn(
         "WARNING: Project directory does not exist, skipping Git initialization",
-        colors.yellow,
       );
     } else {
-      log(
+      logger.warn(
         "WARNING: Cannot access project directory, skipping Git initialization",
-        colors.yellow,
       );
     }
     return;
@@ -736,9 +731,8 @@ async function initGit(projectDir) {
     normalizedPath,
   );
   if (!commitSuccess) {
-    log(
+    logger.warn(
       "WARNING: Could not create initial commit (this is normal if Git user is not configured)",
-      colors.yellow,
     );
     return;
   }
@@ -808,12 +802,12 @@ async function performRollback(projectDir, projectName) {
   if (rollbackSteps.length > 0) {
     logger.info("\nRollback summary:");
     rollbackSteps.forEach((step) => {
-      log(`  Step: ${step}`, colors.gray);
+      logger.info(`  Step: ${step}`);
     });
   }
 
-  log("\nTo try again:", colors.yellow);
-  log(`  node create-project.js ${projectName}`, colors.yellow);
+  logger.warn("\nTo try again:");
+  logger.warn(`  node create-project.js ${projectName}`);
 }
 
 /**
@@ -833,7 +827,7 @@ async function main() {
   }
 
   if (args.length === 0) {
-    log("ERROR: Please provide a project name", colors.red);
+    logger.error("ERROR: Please provide a project name");
     logger.warn("USAGE: node create-project.js <project-name>");
     process.exit(1);
   }
@@ -853,9 +847,8 @@ async function main() {
   // Check if directory already exists
   try {
     await fs.access(projectDir);
-    log(
+    logger.error(
       `ERROR: Directory ${projectDir} already exists. Please choose another name.`,
-      colors.red,
     );
     process.exit(1);
   } catch (error) {

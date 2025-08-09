@@ -9,21 +9,21 @@
 
 const UpdateChecker = require("../shared/update-checker");
 const logger = require("../shared/logger");
-const { formatSection, formatStatus, createBox } = require("../shared/cli-utils");
+const { formatSection } = require("../shared/cli-utils");
 
 function showHelp() {
-  console.log(formatSection('REST-SPEC Update Manager'));
-  console.log('\nUsage: rest-spec-update [command]\n');
-  console.log('Commands:');
-  console.log('  check           Check for updates now');
-  console.log('  disable         Disable automatic update checking');
-  console.log('  enable          Enable automatic update checking');
-  console.log('  status          Show update checking status');
-  console.log('  help            Show this help message');
-  console.log('\nExamples:');
-  console.log('  rest-spec-update check          # Check for updates now');
-  console.log('  rest-spec-update disable        # Disable auto-updates');
-  console.log('  rest-spec-update status         # Show current status');
+  console.log(formatSection("REST-SPEC Update Manager"));
+  console.log("\nUsage: rest-spec-update [command]\n");
+  console.log("Commands:");
+  console.log("  check           Check for updates now");
+  console.log("  disable         Disable automatic update checking");
+  console.log("  enable          Enable automatic update checking");
+  console.log("  status          Show update checking status");
+  console.log("  help            Show this help message");
+  console.log("\nExamples:");
+  console.log("  rest-spec-update check          # Check for updates now");
+  console.log("  rest-spec-update disable        # Disable auto-updates");
+  console.log("  rest-spec-update status         # Show current status");
   console.log();
 }
 
@@ -77,16 +77,23 @@ async function showStatus() {
   const disabled = await updateChecker.isUpdateCheckingDisabled();
   const currentVersion = await updateChecker.getCurrentVersion();
 
-  console.log(formatSection('REST-SPEC Update Status'));
-  logger.labelValue('Current version', currentVersion);
-  logger.labelValue('Automatic update checking', disabled ? 'Disabled' : 'Enabled');
+  console.log(formatSection("REST-SPEC Update Status"));
+  logger.labelValue("Current version", currentVersion);
+  logger.labelValue(
+    "Automatic update checking",
+    disabled ? "Disabled" : "Enabled",
+  );
 
   if (disabled) {
     console.log();
-    logger.highlight('Tip: Enable automatic updates with: rest-spec-update enable');
+    logger.highlight(
+      "Tip: Enable automatic updates with: rest-spec-update enable",
+    );
   } else {
     console.log();
-    logger.muted('Tip: Disable automatic updates with: rest-spec-update disable');
+    logger.muted(
+      "Tip: Disable automatic updates with: rest-spec-update disable",
+    );
   }
 }
 
@@ -117,11 +124,12 @@ async function main() {
       showHelp();
       break;
 
-    case "theme":
+    case "theme": {
       // Hidden command to show theme info for debugging
       const { printThemeInfo } = require("../shared/cli-utils");
       printThemeInfo();
       break;
+    }
 
     default:
       if (command) {
